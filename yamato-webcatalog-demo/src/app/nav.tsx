@@ -1,5 +1,6 @@
 'use client'
 import * as React from 'react'
+import { pageMeta } from '@/lib/meta'
 
 /**
  * ルーティングの抽象化レイヤー。
@@ -59,6 +60,12 @@ export function HashNavProvider({ children }: { children: React.ReactNode }) {
   }, [raw])
 
   React.useEffect(() => { window.scrollTo({ top: 0 }) }, [api.path])
+
+  // 単一HTML版は1つのHTMLで全画面を描くため、<title> を画面遷移に合わせて書き換える。
+  // Next.js 版は各ルートの metadata が担うので、定義は lib/meta.ts で共有している。
+  React.useEffect(() => {
+    document.title = pageMeta(api.path).title
+  }, [api.path])
 
   return <NavContext.Provider value={api}>{children}</NavContext.Provider>
 }
