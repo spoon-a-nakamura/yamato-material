@@ -1,0 +1,31 @@
+name: Deploy static site
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+    steps:
+      - name: checkout
+        uses: actions/checkout@v7
+      - name: setup
+        uses: actions/setup-node@v6
+        with:
+          node-version: '24'
+      - name: build
+        run: |
+          npm install
+          npm run build
+      - name: sync
+        uses: SamKirkland/FTP-Deploy-Action@4.3.2
+        with:
+          server: ${{ secrets.FTPS_SERVER }}
+          username: ${{ secrets.FTPS_USERNAME }}
+          password: ${{ secrets.FTPS_PASSWORD }}
+          protocol: ftps
+          local-dir: ./dist/
+          server-dir: ./yamato-material/
