@@ -120,6 +120,9 @@ body {
 /* 内容が少ないスライドは版面の縦中央に寄せる */
 .slide--center .slide__body { justify-content: center; }
 .slide--tight .slide__body { padding-top: var(--sp-3); }
+/* 見出しも一段落とす。各テーマの級数に対する相対指定なので骨格を問わず効く
+   （tech骨格はより強い値で上書きしている）。 */
+.slide--tight .slide__title { font-size: calc(var(--fs-title) * 0.86); }
 
 /* 章扉の tight。項目数が多い PART 扉用に、巨大数字とリード周りの空きを詰める。
    骨格を問わず効かせたいので共通側に置く（tech骨格ではさらに強く詰める）。 */
@@ -531,6 +534,18 @@ body {
 .t-def table tbody tr:first-child td:first-child { }
 .t-num table td { font-variant-numeric: tabular-nums; }
 .t-right table td:last-child, .t-right table th:last-child { text-align: right; white-space: nowrap; }
+
+/* 金額表（項目｜数量｜金額）。数量と金額を右端に寄せ、項目に幅を残す。 */
+.t-money table td:nth-child(1) { font-weight: 500; color: var(--ink-900); }
+.t-money table td:nth-child(2), .t-money table th:nth-child(2) {
+  width: 20mm; text-align: right; white-space: nowrap;
+}
+.t-money table td:nth-child(3), .t-money table th:nth-child(3) {
+  width: 32mm; text-align: right; white-space: nowrap;
+}
+.t-money table td { font-variant-numeric: tabular-nums; }
+/* 合計行を罫で切り出す */
+.t-money table tbody tr:last-child td { border-top: 0.4mm solid var(--rule-strong); }
 
 /* ---- Agenda (column flow) --------------------------------- */
 /* 左右2列。行トラックを共有しないよう、列ごとに要素を分けて縦積みにする。
