@@ -2,6 +2,7 @@
 import { deck } from '../deck.config';
 interface Props {
   title?: string;
+  /** 左列に入れる項目数。ここで左右を分割します。 */
   rows?: number;
   items: { no?: string; t: string; s?: string; part?: string; ref?: string }[];
 }
@@ -22,6 +23,12 @@ const keyOf = (it: Props['items'][number]) => {
   if (it.no && /^\d+$/.test(it.no)) return `ch:${Number(it.no)}`;
   return undefined;
 };
+
+/* 左右を別の要素に分けます。
+   1つのグリッドに grid-auto-flow: column で流し込むと行トラックが
+   左右で共有され、片方の列の2行項目がもう片方の同じ行まで
+   引き伸ばしてしまうためです。 */
+const columns = [items.slice(0, rows), items.slice(rows)];
 ---
 <section id="contents" class="slide">
   <header class="slide__header">
@@ -32,27 +39,31 @@ const keyOf = (it: Props['items'][number]) => {
     <h2 class="slide__title">{title}</h2>
   </div>
   <div class="slide__body">
-    <div class="agenda" style={`--rows:${rows}`}>
-      {items.map((it) => {
-        const key = keyOf(it);
-        const Tag = key ? 'a' : 'div';
-        return it.part ? (
-          <Tag class="agenda__part" data-ref={key}>
-            <span class="agenda__part-no">{it.part}</span>
-            <span class="agenda__part-t" set:html={it.t} />
-            <span class="agenda__page" />
-          </Tag>
-        ) : (
-          <Tag class="agenda__item" data-ref={key}>
-            <span class="agenda__no">{it.no}</span>
-            <span class="agenda__t">
-              <Fragment set:html={it.t} />
-              {it.s && <small set:html={it.s} />}
-            </span>
-            <span class="agenda__page" />
-          </Tag>
-        );
-      })}
+    <div class="agenda">
+      {columns.map((col) => (
+        <div class="agenda__col">
+          {col.map((it) => {
+            const key = keyOf(it);
+            const Tag = key ? 'a' : 'div';
+            return it.part ? (
+              <Tag class="agenda__part" data-ref={key}>
+                <span class="agenda__part-no">{it.part}</span>
+                <span class="agenda__part-t" set:html={it.t} />
+                <span class="agenda__page" />
+              </Tag>
+            ) : (
+              <Tag class="agenda__item" data-ref={key}>
+                <span class="agenda__no">{it.no}</span>
+                <span class="agenda__t">
+                  <Fragment set:html={it.t} />
+                  {it.s && <small set:html={it.s} />}
+                </span>
+                <span class="agenda__page" />
+              </Tag>
+            );
+          })}
+        </div>
+      ))}
     </div>
   </div>
   <footer class="slide__footer">
