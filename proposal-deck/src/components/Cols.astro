@@ -1,0 +1,7 @@
+---
+interface Props { n?: 2 | 3 | 4 | '1-2' | '2-1'; gap?: string; class?: string; }
+const { n = 2, gap, class: cls = '' } = Astro.props;
+---
+<div class={`cols cols--${n} ${cls}`} style={gap ? `gap:${gap}` : undefined}>
+  <slot />
+</div>

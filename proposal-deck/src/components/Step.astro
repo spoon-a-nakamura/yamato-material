@@ -1,0 +1,9 @@
+---
+interface Props { title?: string; tag?: string; }
+const { title, tag } = Astro.props;
+---
+<div class="step">
+  {title && <span class="step__title" set:html={title} />}
+  <div class="step__body"><slot /></div>
+  {tag && <span class="step__tag" set:html={tag} />}
+</div>

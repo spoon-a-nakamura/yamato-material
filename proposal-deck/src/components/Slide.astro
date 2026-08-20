@@ -1,0 +1,40 @@
+---
+import { deck } from '../deck.config';
+
+interface Props {
+  chapter?: string | number;   // 章番号（例: 2）
+  chapterTitle?: string;       // 章タイトル（例: 現状の理解）
+  no?: string;                 // スライド見出し番号（例: 2-1）
+  title?: string;              // スライド主見出し
+  lead?: string;               // 主見出し直下のリード文
+  variant?: string;            // 追加クラス（tight / center など）
+  class?: string;
+}
+const { chapter, chapterTitle, no, title, lead, variant = '', class: cls = '' } = Astro.props;
+---
+<section class={`slide ${variant ? variant.split(' ').map(v => `slide--${v}`).join(' ') : ''} ${cls}`}>
+  <header class="slide__header">
+    <div class="slide__chapter-label">
+      {chapter !== undefined && <b>{chapter}</b>}
+      {chapterTitle && <span>{chapterTitle}</span>}
+    </div>
+    <div class="slide__brand">{deck.brandMark}</div>
+  </header>
+
+  {(no || title || lead) && (
+    <div class="slide__titleblock">
+      {no && <span class="slide__no">{no}</span>}
+      {title && <h2 class="slide__title" set:html={title} />}
+      {lead && <p class="slide__lead" set:html={lead} />}
+    </div>
+  )}
+
+  <div class="slide__body">
+    <slot />
+  </div>
+
+  <footer class="slide__footer">
+    <span>{deck.footerNote}</span>
+    <span class="slide__pageno"></span>
+  </footer>
+</section>

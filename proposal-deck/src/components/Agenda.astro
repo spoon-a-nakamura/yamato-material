@@ -1,0 +1,42 @@
+---
+import { deck } from '../deck.config';
+interface Props {
+  title?: string;
+  rows?: number;
+  items: { no?: string; t: string; s?: string; part?: string }[];
+}
+const { title = '目次', rows = 13, items } = Astro.props;
+---
+<section class="slide">
+  <header class="slide__header">
+    <div class="slide__chapter-label"><span>CONTENTS</span></div>
+    <div class="slide__brand">{deck.brandMark}</div>
+  </header>
+  <div class="slide__titleblock">
+    <h2 class="slide__title">{title}</h2>
+  </div>
+  <div class="slide__body">
+    <div class="agenda" style={`--rows:${rows}`}>
+      {items.map((it) =>
+        it.part ? (
+          <div class="agenda__part">
+            <span class="agenda__part-no">{it.part}</span>
+            <span class="agenda__part-t" set:html={it.t} />
+          </div>
+        ) : (
+          <div class="agenda__item">
+            <span class="agenda__no">{it.no}</span>
+            <span class="agenda__t">
+              <Fragment set:html={it.t} />
+              {it.s && <small set:html={it.s} />}
+            </span>
+          </div>
+        )
+      )}
+    </div>
+  </div>
+  <footer class="slide__footer">
+    <span>{deck.footerNote}</span>
+    <span class="slide__pageno"></span>
+  </footer>
+</section>

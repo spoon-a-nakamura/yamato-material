@@ -1,0 +1,110 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ==========================================================================
+   デザイントークン
+   紙カタログ（78P）の章タブ色を実測してカテゴリー識別色に採用。
+   本文・UI基調は彩度を抑えた中性色に固定し、色は「情報の区別」にだけ使う。
+   （提案書 9. デザイン方針 ＝ 装飾より情報密度／ブランド訴求要素は置かない）
+   ========================================================================== */
+@layer base {
+  :root {
+    --font-sans: -apple-system, BlinkMacSystemFont, 'Hiragino Sans', 'Hiragino Kaku Gothic ProN',
+      'Noto Sans JP', 'Yu Gothic UI', Meiryo, system-ui, sans-serif;
+    --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, monospace;
+
+    --background: 0 0% 100%;
+    --foreground: 220 14% 16%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 220 14% 16%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 220 14% 16%;
+
+    /* 操作系の基調色：カテゴリー色と競合しない濃紺 */
+    --primary: 214 32% 26%;
+    --primary-foreground: 0 0% 100%;
+
+    --secondary: 214 20% 96%;
+    --secondary-foreground: 214 32% 26%;
+
+    --muted: 220 14% 96%;
+    --muted-foreground: 220 9% 43%;
+
+    --accent: 214 25% 94%;
+    --accent-foreground: 214 32% 26%;
+
+    --destructive: 0 65% 45%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 220 13% 88%;
+    --input: 220 13% 82%;
+    --ring: 214 45% 42%;
+
+    /* 社内限定情報（詳細図面・メーカー情報）— 既定は非表示側 */
+    --internal: 25 85% 42%;
+    --internal-fg: 25 85% 32%;
+    --internal-bg: 33 95% 96%;
+    --internal-border: 30 75% 78%;
+
+    /* 紙カタログ章タブ色（実測値） */
+    --cat-film: 20 45% 58%;
+    --cat-film-fg: 20 47% 46%;
+    --cat-film-bg: 20 45% 95%;
+    --cat-plastic: 110 30% 64%;
+    --cat-plastic-fg: 110 32% 39%;
+    --cat-plastic-bg: 110 30% 95%;
+    --cat-glass: 216 35% 66%;
+    --cat-glass-fg: 216 37% 50%;
+    --cat-glass-bg: 216 35% 95%;
+    --cat-liquor: 42 55% 59%;
+    --cat-liquor-fg: 42 58% 36%;
+    --cat-liquor-bg: 42 55% 95%;
+    --cat-cap: 35 21% 55%;
+    --cat-cap-fg: 35 22% 43%;
+    --cat-cap-bg: 35 21% 95%;
+
+    --radius: 0.375rem;
+    --row-h: 2.25rem;
+  }
+
+  * { @apply border-border; }
+
+  html { -webkit-text-size-adjust: 100%; }
+
+  body {
+    @apply bg-background text-foreground;
+    font-family: var(--font-sans);
+    font-feature-settings: 'palt' 1;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 数値の桁を揃える：仕様一覧の横並び比較に必須 */
+  .num { font-variant-numeric: tabular-nums; letter-spacing: 0.01em; }
+
+  /* キーボード操作の可視化 */
+  :focus-visible { @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background; }
+
+  /* 狭い画面での横スクロール表に、端が続いていることを示す影 */
+  .scroll-x {
+    overflow-x: auto;
+    background:
+      linear-gradient(to right, hsl(var(--background)) 30%, hsl(var(--background) / 0)) left / 3rem 100% no-repeat,
+      linear-gradient(to left, hsl(var(--background)) 30%, hsl(var(--background) / 0)) right / 3rem 100% no-repeat,
+      linear-gradient(to right, hsl(var(--foreground) / 0.10), hsl(var(--foreground) / 0)) left / 1rem 100% no-repeat,
+      linear-gradient(to left, hsl(var(--foreground) / 0.10), hsl(var(--foreground) / 0)) right / 1rem 100% no-repeat;
+    background-attachment: local, local, scroll, scroll;
+  }
+}
+
+/* 検討リストの「簡易図面まとめ出力」用（提案書 8-6） */
+@media print {
+  .no-print { display: none !important; }
+  .print-only { display: block !important; }
+  body { background: #fff; }
+  .print-sheet { break-inside: avoid; page-break-inside: avoid; }
+  @page { size: A4; margin: 12mm; }
+}
+.print-only { display: none; }

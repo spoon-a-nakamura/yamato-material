@@ -1,0 +1,75 @@
+/* ============================================================
+   Design Tokens — Proposal Deck
+   すべての意匠はここを書き換えるだけで変更できます。
+   ============================================================ */
+
+:root {
+  /* ---- Page geometry (A4 landscape) ---------------------- */
+  --page-w: 297mm;
+  --page-h: 210mm;
+  --page-gap: 10mm;              /* 画面表示時のスライド間GAP */
+
+  --pad-x: 20mm;                 /* 左右の版面余白 */
+  --pad-top: 14mm;
+  --pad-bottom: 12mm;
+  --header-h: 9mm;               /* ヘッダ帯の高さ */
+  --footer-h: 8mm;               /* フッタ帯の高さ */
+
+  /* ---- Color ---------------------------------------------- */
+  --paper:        #ffffff;
+  --paper-tint:   #f6f7f8;       /* 表のゼブラ・カード地 */
+  --paper-shade:  #eef0f2;
+
+  --ink-900:      #16191d;       /* 見出し */
+  --ink-700:      #33383f;       /* 本文 */
+  --ink-500:      #5e6670;       /* 副次テキスト */
+  --ink-400:      #828c97;       /* キャプション */
+  --ink-300:      #a8b1ba;       /* ごく薄いラベル */
+
+  --rule-strong:  #2b3138;       /* 見出し直下の強い罫 */
+  --rule:         #d5dade;       /* 通常の罫 */
+  --rule-soft:    #e7eaed;       /* 表の内側罫 */
+
+  --accent:       #1f3a5f;       /* 主アクセント（藍） */
+  --accent-mid:   #43617f;
+  --accent-tint:  #eef2f6;       /* アクセントの淡色地 */
+  --accent-line:  #c3cfdb;
+
+  --mark:         #8c4a2f;       /* 採用マーク等の差し色（控えめな錆色） */
+  --mark-tint:    #f7f0ec;
+
+  /* ---- Typography ----------------------------------------- */
+  --font-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+               "Yu Gothic Medium", "Yu Gothic", "Noto Sans CJK JP", "Meiryo",
+               system-ui, sans-serif;
+  --font-num:  "Inter", "Noto Sans JP", system-ui, sans-serif;
+
+  --fs-cover:      32pt;
+  --fs-chapter-no: 52pt;
+  --fs-chapter:    26pt;
+  --fs-title:      22pt;   /* スライド主見出し */
+  --fs-lead:       12pt; /* 主見出し直下のリード文 */
+  --fs-h4:         13pt;   /* スライド内小見出し */
+  --fs-body:       12pt;
+  --fs-table:      10.4pt;
+  --fs-small:      10pt;
+  --fs-label:      8.6pt;  /* 章ラベル・キャプション */
+
+  --lh-tight:  1.35;
+  --lh-head:   1.45;
+  --lh-body:   1.75;
+  --lh-table:  1.6;
+
+  --ls-label: 0.10em;
+  --ls-head:  0.01em;
+
+  /* ---- Rhythm --------------------------------------------- */
+  --sp-1: 1.5mm;
+  --sp-2: 3mm;
+  --sp-3: 4.5mm;
+  --sp-4: 6mm;
+  --sp-5: 9mm;
+  --sp-6: 12mm;
+
+  --radius: 1.2mm;
+}

@@ -1,0 +1,20 @@
+---
+import { deck } from '../deck.config';
+interface Props { msg?: string; }
+const { msg = '以上、ご検討のほど、<br />どうぞよろしくお願いいたします。' } = Astro.props;
+---
+<section class="slide closing">
+  <header class="slide__header">
+    <div class="slide__chapter-label"></div>
+    <div class="slide__brand">{deck.brandMark}</div>
+  </header>
+  <div class="slide__body" style="display:flex; flex-direction:column; justify-content:center">
+    <p class="closing__msg" set:html={msg} />
+    <div class="cover__rule"></div>
+    <slot />
+  </div>
+  <footer class="slide__footer">
+    <span>{deck.footerNote}</span>
+    <span class="slide__pageno"></span>
+  </footer>
+</section>

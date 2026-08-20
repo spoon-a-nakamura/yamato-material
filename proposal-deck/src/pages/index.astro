@@ -1,0 +1,9 @@
+---
+import Deck from '../layouts/Deck.astro';
+
+const modules = import.meta.glob('../content/deck/*.mdx', { eager: true });
+const entries = Object.keys(modules).sort().map((k) => modules[k].default);
+---
+<Deck>
+  {entries.map((C) => <C />)}
+</Deck>

@@ -1,0 +1,5 @@
+---
+interface Props { tone?: 'solid' | 'outline' | 'mark'; }
+const { tone = 'solid' } = Astro.props;
+---
+<span class={`badge ${tone === 'outline' ? 'badge--outline' : ''} ${tone === 'mark' ? 'badge--mark' : ''}`}><slot /></span>

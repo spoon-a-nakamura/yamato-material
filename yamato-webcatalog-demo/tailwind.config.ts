@@ -1,0 +1,91 @@
+import type { Config } from 'tailwindcss'
+
+/**
+ * デザインシステムの単一の情報源。
+ * 色・角丸・影・タイポは CSS 変数（src/app 側 globals.css）で定義し、
+ * ここでは「意味のある名前」だけを Tailwind に橋渡しする。
+ * → 配色変更は globals.css の :root だけで完結する。
+ */
+const config: Config = {
+  darkMode: ['class'],
+  content: ['./app/**/*.{ts,tsx}', './src/**/*.{ts,tsx}', './standalone/**/*.{ts,tsx,html}'],
+  theme: {
+    container: { center: true, padding: '1rem', screens: { '2xl': '1400px' } },
+    extend: {
+      colors: {
+        background: 'hsl(var(--background))',
+        foreground: 'hsl(var(--foreground))',
+        card: { DEFAULT: 'hsl(var(--card))', foreground: 'hsl(var(--card-foreground))' },
+        popover: { DEFAULT: 'hsl(var(--popover))', foreground: 'hsl(var(--popover-foreground))' },
+        primary: { DEFAULT: 'hsl(var(--primary))', foreground: 'hsl(var(--primary-foreground))' },
+        secondary: { DEFAULT: 'hsl(var(--secondary))', foreground: 'hsl(var(--secondary-foreground))' },
+        muted: { DEFAULT: 'hsl(var(--muted))', foreground: 'hsl(var(--muted-foreground))' },
+        accent: { DEFAULT: 'hsl(var(--accent))', foreground: 'hsl(var(--accent-foreground))' },
+        destructive: { DEFAULT: 'hsl(var(--destructive))', foreground: 'hsl(var(--destructive-foreground))' },
+        border: 'hsl(var(--border))',
+        input: 'hsl(var(--input))',
+        ring: 'hsl(var(--ring))',
+        /** 社内限定情報の識別色（提案書 8-3 / 8-4） */
+        internal: {
+          DEFAULT: 'hsl(var(--internal))',
+          fg: 'hsl(var(--internal-fg))',
+          bg: 'hsl(var(--internal-bg))',
+          border: 'hsl(var(--internal-border))',
+        },
+        /** 紙カタログの章タブ色を継承したカテゴリー識別色 */
+        cat: {
+          film: 'hsl(var(--cat-film))',
+          'film-fg': 'hsl(var(--cat-film-fg))',
+          'film-bg': 'hsl(var(--cat-film-bg))',
+          plastic: 'hsl(var(--cat-plastic))',
+          'plastic-fg': 'hsl(var(--cat-plastic-fg))',
+          'plastic-bg': 'hsl(var(--cat-plastic-bg))',
+          glass: 'hsl(var(--cat-glass))',
+          'glass-fg': 'hsl(var(--cat-glass-fg))',
+          'glass-bg': 'hsl(var(--cat-glass-bg))',
+          liquor: 'hsl(var(--cat-liquor))',
+          'liquor-fg': 'hsl(var(--cat-liquor-fg))',
+          'liquor-bg': 'hsl(var(--cat-liquor-bg))',
+          cap: 'hsl(var(--cat-cap))',
+          'cap-fg': 'hsl(var(--cat-cap-fg))',
+          'cap-bg': 'hsl(var(--cat-cap-bg))',
+        },
+      },
+      borderRadius: {
+        lg: 'var(--radius)',
+        md: 'calc(var(--radius) - 2px)',
+        sm: 'calc(var(--radius) - 4px)',
+      },
+      fontFamily: {
+        sans: ['var(--font-sans)'],
+        mono: ['var(--font-mono)'],
+      },
+      fontSize: {
+        // 仕様表の情報密度用スケール
+        spec: ['0.8125rem', { lineHeight: '1.25rem' }],
+        'spec-sm': ['0.75rem', { lineHeight: '1.125rem' }],
+      },
+      spacing: { 'row': 'var(--row-h)' },
+      boxShadow: {
+        card: '0 1px 2px 0 hsl(var(--foreground) / 0.04), 0 1px 3px 0 hsl(var(--foreground) / 0.06)',
+        pop: '0 4px 12px -2px hsl(var(--foreground) / 0.10), 0 2px 6px -2px hsl(var(--foreground) / 0.08)',
+      },
+      keyframes: {
+        'accordion-down': { from: { height: '0' }, to: { height: 'var(--radix-accordion-content-height)' } },
+        'accordion-up': { from: { height: 'var(--radix-accordion-content-height)' }, to: { height: '0' } },
+        'fade-in': { from: { opacity: '0' }, to: { opacity: '1' } },
+        'slide-in-right': { from: { transform: 'translateX(100%)' }, to: { transform: 'translateX(0)' } },
+        'slide-in-left': { from: { transform: 'translateX(-100%)' }, to: { transform: 'translateX(0)' } },
+      },
+      animation: {
+        'accordion-down': 'accordion-down 0.18s ease-out',
+        'accordion-up': 'accordion-up 0.18s ease-out',
+        'fade-in': 'fade-in 0.15s ease-out',
+        'slide-in-right': 'slide-in-right 0.22s cubic-bezier(0.32,0.72,0,1)',
+        'slide-in-left': 'slide-in-left 0.22s cubic-bezier(0.32,0.72,0,1)',
+      },
+    },
+  },
+  plugins: [require('tailwindcss-animate')],
+}
+export default config

@@ -1,0 +1,19 @@
+---
+import { deck } from '../deck.config';
+---
+<section class="slide cover">
+  <div>
+    <div class="cover__eyebrow">PROPOSAL</div>
+    <h1 class="cover__title" set:html={deck.docTitle} />
+    <div class="cover__rule"></div>
+    <div class="cover__to">{deck.client}　{deck.clientHonorific}</div>
+  </div>
+
+  <div class="cover__foot">
+    <div class="cover__meta">
+      {deck.date}<br />
+      {deck.company}　{deck.author}
+    </div>
+    <div class="slide__brand">{deck.brandMark}</div>
+  </div>
+</section>

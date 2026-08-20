@@ -1,0 +1,8 @@
+---
+interface Props { k: string; kw?: string; }
+const { k, kw } = Astro.props;
+---
+<div class="defrow" style={kw ? `grid-template-columns:${kw} 1fr` : undefined}>
+  <div class="defrow__k" set:html={k} />
+  <div class="defrow__v"><slot /></div>
+</div>

@@ -1,0 +1,27 @@
+---
+import '../styles/tokens.css';
+import '../styles/deck.css';
+import { deck } from '../deck.config';
+---
+<!doctype html>
+<html lang="ja">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{deck.docTitle}｜{deck.client}</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;600;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <main class="deck">
+      <slot />
+    </main>
+    <div class="toolbar">
+      <button onclick="window.print()">PDFに書き出す（A4横）</button>
+    </div>
+  </body>
+</html>

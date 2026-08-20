@@ -1,0 +1,34 @@
+---
+interface Props {
+  no: string | number;
+  title: string;
+  lead?: string;
+  items?: string[];
+}
+const { no, title, lead, items = [] } = Astro.props;
+const label = String(no).padStart(2, '0');
+---
+<section class="slide section">
+  <header class="slide__header" style="border-bottom-color: rgba(255,255,255,.22)">
+    <div class="slide__chapter-label" style="color: rgba(255,255,255,.55)"></div>
+    <div class="slide__brand" style="color: rgba(255,255,255,.45)">STUDIO SPOON</div>
+  </header>
+
+  <div class="slide__body" style="display:flex; flex-direction:column; justify-content:center">
+    <span class="section__eyebrow">PART {label}</span>
+    <div class="section__no">{label}</div>
+    <div class="section__rule"></div>
+    <h2 class="section__title" set:html={title} />
+    {lead && <p class="section__lead" set:html={lead} />}
+    {items.length > 0 && (
+      <div class="section__items">
+        {items.map((it) => <span set:html={`— ${it}`} />)}
+      </div>
+    )}
+  </div>
+
+  <footer class="slide__footer">
+    <span></span>
+    <span class="slide__pageno"></span>
+  </footer>
+</section>

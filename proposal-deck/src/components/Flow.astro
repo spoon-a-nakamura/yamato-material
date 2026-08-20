@@ -1,0 +1,18 @@
+---
+interface Props { items: { title: string; body?: string; tag?: string }[]; }
+const { items } = Astro.props;
+---
+<div class="flow">
+  {items.map((it, i) => (
+    <>
+      <div class="flow__item">
+        <div class="step" style="padding-top: var(--sp-3)">
+          <span class="step__title" set:html={it.title} />
+          {it.body && <div class="step__body" set:html={it.body} />}
+          {it.tag && <span class="step__tag" set:html={it.tag} />}
+        </div>
+      </div>
+      {i < items.length - 1 && <div class="flow__arrow">▶</div>}
+    </>
+  ))}
+</div>
