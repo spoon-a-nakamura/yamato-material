@@ -58,6 +58,15 @@ export function HomeScreen() {
               </Link>
             ))}
           </div>
+          <p className="mt-3 text-center">
+            <Button asChild variant="link" size="sm">
+              <Link href="/contents">
+                <BookOpen className="size-3.5" />
+                目次で全 {dataset.catalogPageCount} ページを見る
+                <ArrowRight />
+              </Link>
+            </Button>
+          </p>
         </div>
       </section>
 

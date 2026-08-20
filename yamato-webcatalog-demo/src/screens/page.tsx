@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react'
-import { ChevronLeft, ChevronRight, Phone } from 'lucide-react'
+import { BookOpen, ChevronLeft, ChevronRight, Phone } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { ProductTable } from '@/components/product-table'
@@ -99,7 +99,15 @@ export function PageScreen({ pageNumber }: { pageNumber: number }) {
       </nav>
 
       <div className="mt-8 rounded-lg border bg-muted/40 p-4">
-        <p className="mb-2 text-xs font-medium text-muted-foreground">別のページを開く</p>
+        <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1">
+          <p className="text-xs font-medium text-muted-foreground">別のページを開く</p>
+          <Button asChild variant="link" size="sm" className="h-auto px-0 py-0">
+            <Link href="/contents">
+              <BookOpen className="size-3.5" />
+              目次から探す
+            </Link>
+          </Button>
+        </div>
         <div className="flex flex-wrap gap-1.5">
           {pages.filter((p) => (productsByPage.get(p.page)?.length ?? 0) > 0).map((p) => (
             <Link

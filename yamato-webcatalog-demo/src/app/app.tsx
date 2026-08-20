@@ -9,6 +9,7 @@ import { HomeScreen } from '@/screens/home'
 import { ProductsScreen } from '@/screens/products'
 import { ProductScreen } from '@/screens/product'
 import { PageScreen } from '@/screens/page'
+import { ContentsScreen } from '@/screens/contents'
 import { ShortlistScreen } from '@/screens/shortlist'
 import { AboutScreen } from '@/screens/about'
 
@@ -50,6 +51,7 @@ export function App() {
   const body = React.useMemo(() => {
     if (path === '/') return <HomeScreen />
     if (path === '/products') return <ProductsScreen />
+    if (path === '/contents') return <ContentsScreen />
     if (path === '/shortlist') return <ShortlistScreen />
     if (path === '/about') return <AboutScreen />
     const prod = path.match(/^\/products\/(.+)$/)

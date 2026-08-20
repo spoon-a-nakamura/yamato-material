@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react'
-import { ClipboardList, Eye, EyeOff, Lock, Menu, X } from 'lucide-react'
+import { BookOpen, ClipboardList, Eye, EyeOff, Lock, Menu, X } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
@@ -140,6 +140,13 @@ export function SiteHeader() {
           <Badge variant="demo" className="hidden sm:inline-flex">デモ</Badge>
         </Link>
 
+        <Button asChild variant="ghost" size="sm" className="hidden shrink-0 gap-1.5 lg:inline-flex">
+          <Link href="/contents">
+            <BookOpen className="size-3.5" />
+            目次
+          </Link>
+        </Button>
+
         <div className="ml-auto hidden max-w-md flex-1 lg:block">
           <CatalogSearch />
         </div>
@@ -158,6 +165,12 @@ export function SiteHeader() {
       <Sheet open={menu} onOpenChange={setMenu}>
         <SheetContent side="left" className="p-4">
           <SheetTitle className="mb-4 pr-8">カテゴリー</SheetTitle>
+          <Button asChild variant="outline" className="mb-3 w-full justify-start gap-2">
+            <Link href="/contents" onClick={() => setMenu(false)}>
+              <BookOpen className="size-4" />
+              目次（全ページ）
+            </Link>
+          </Button>
           <CategoryNav onNavigate={() => setMenu(false)} />
           <div className="mt-6 flex flex-col gap-2 border-t pt-4">
             <InternalModeControl compact />
