@@ -114,6 +114,65 @@ const demo = await page.evaluate(() => {
   }));
 });
 
+/* ---- 参照先の意味的な照合 ------------------------------------
+   解決できるかどうかではなく、指している先が正しいかを検査する。
+   キーの種別と遷移先の属性、表示しているページ番号と実ページ、
+   文言の「第N章」と遷移先の章、目次の文言と章タイトルを突き合わせる。 */
+const semantic = await page.evaluate(() => {
+  const slides = [...document.querySelectorAll('.deck .slide')];
+  const chTitle = {}, partTitle = {};
+  slides.forEach((s) => {
+    if (s.dataset.chapter && !(s.dataset.chapter in chTitle))
+      chTitle[s.dataset.chapter] = (s.querySelector('.slide__chapter-label span')?.textContent || '').trim();
+    if (s.dataset.part)
+      partTitle[s.dataset.part] = (s.querySelector('.section__title')?.textContent || '').trim();
+  });
+  const errors = [];
+  document.querySelectorAll('[data-ref]').forEach((a) => {
+    const key = a.dataset.ref;
+    const href = a.getAttribute('href') || '';
+    const target = href ? document.getElementById(href.slice(1)) : null;
+    const where = a.closest('.agenda') ? '目次' : ('p' + (a.closest('.slide')?.dataset.page || '?'));
+    if (!target) return;   // 解決不能は上の検査で報告済み
+    const [kind, val] = key.split(':');
+    if (kind === 'ch' && target.dataset.chapter !== val)
+      errors.push(`${where} ${key}: 遷移先の章が ${target.dataset.chapter}`);
+    if (kind === 'part' && target.dataset.part !== val)
+      errors.push(`${where} ${key}: 遷移先のPARTが ${target.dataset.part}`);
+    if (kind === 'slide' && target.dataset.no !== val)
+      errors.push(`${where} ${key}: 遷移先の no が ${target.dataset.no}`);
+    const shown = (a.querySelector('.agenda__page, .xref__page')?.textContent || '').trim();
+    if (shown && Number(shown) !== Number(target.dataset.page))
+      errors.push(`${where} ${key}: 表示P ${shown} ≠ 実P ${target.dataset.page}`);
+    const label = (a.querySelector('.agenda__t, .agenda__part-t')?.textContent || a.textContent || '').trim();
+    const m = label.match(/第(\d+)章/);
+    if (m && target.dataset.chapter !== m[1])
+      errors.push(`${where} 文言「第${m[1]}章」→ 遷移先は第${target.dataset.chapter}章`);
+    if (a.closest('.agenda') && kind === 'ch') {
+      const no = (a.querySelector('.agenda__no')?.textContent || '').trim();
+      if (/^\d+$/.test(no) && Number(no) !== Number(target.dataset.chapter))
+        errors.push(`目次 番号 ${no} → 遷移先は第${target.dataset.chapter}章`);
+      const t = chTitle[target.dataset.chapter] || '';
+      const st = (a.querySelector('.agenda__t')?.firstChild?.textContent || '').trim();
+      if (t && st && t !== st) errors.push(`目次「${st}」≠ 章タイトル「${t}」`);
+    }
+    if (a.closest('.agenda') && kind === 'part') {
+      const t = partTitle[target.dataset.part] || '';
+      const st = (a.querySelector('.agenda__part-t')?.textContent || '').trim();
+      if (t && st && t !== st) errors.push(`目次 PART「${st}」≠ 章扉「${t}」`);
+    }
+  });
+  return errors;
+});
+if (semantic.length) {
+  linkBad += semantic.length;
+  console.log(`⚠ 参照先の不一致 ${semantic.length} 件:`);
+  semantic.forEach((e) => console.log('   ' + e));
+} else {
+  console.log('✓ 参照先の章・PART・ページ番号・文言がすべて一致しています');
+}
+console.log('');
+
 console.log('── デモへのリンク ──');
 let demoBad = 0;
 if (!demo.length) {

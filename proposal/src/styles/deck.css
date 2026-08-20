@@ -204,6 +204,9 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
 
 /* ---- Lists ------------------------------------------------ */
 .slide__body ul, .slide__body ol { margin: 0 0 var(--sp-3); padding-left: 0; list-style: none; }
+/* ul は前の要素との間に空きを取る */
+.slide__body ul { margin-top: var(--sp-3); }
+.slide__body > ul:first-child, .card > ul:first-child, .keypoint > ul:first-child { margin-top: 0; }
 .slide__body li { position: relative; padding-left: 6mm; margin-bottom: var(--sp-2); }
 .slide__body li:last-child { margin-bottom: 0; }
 
@@ -211,7 +214,8 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   content: "";
   position: absolute;
   left: 1.4mm;
-  top: 2.05mm;
+  /* 1行目の行送りの中央に合わせる（マーカー高さの半分ぶん戻す） */
+  top: calc(0.5lh - 0.8mm);
   width: 1.6mm;
   height: 1.6mm;
   border-radius: 50%;
@@ -817,27 +821,37 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
 }
 
 /* ---- デモ（Webカタログ試作）へのリンク --------------------- */
-.demolink {
+a.demolink {
   color: var(--accent);
   font-weight: 700;
   text-decoration: none;
   border-bottom: 0.25mm solid var(--accent-line);
   white-space: nowrap;   /* 文言が行中で分断されないように */
 }
-.demolink::after { content: "\2197"; font-weight: 400; margin-left: 0.3em; }
-.demolink:hover { border-bottom-color: var(--accent); }
-.demolink:focus-visible { outline: 0.4mm solid var(--accent); outline-offset: 0.6mm; }
+a.demolink::after { content: "\2197"; font-weight: 400; margin-left: 0.3em; }
+a.demolink:hover { border-bottom-color: var(--accent); }
+a.demolink:focus-visible { outline: 0.4mm solid var(--accent); outline-offset: 0.6mm; }
 
 /* 目立たせたい箇所（要点・デザイン方針・次のステップ）用 */
-.demolink--button {
+a.demolink--button {
   display: inline-block;
+  background: var(--accent);
+  color: #fff;
   border: 0.3mm solid var(--accent);
   border-radius: 99mm;
-  padding: 1.6mm 5mm;
-  font-size: var(--fs-small);
+  padding: 2.4mm 6.5mm;
+  font-size: var(--fs-body);
   line-height: 1.4;
+  letter-spacing: 0.01em;
+  box-shadow: 0 0.6mm 1.6mm rgba(20, 25, 30, .16);
+  transition: background-color .15s ease, box-shadow .15s ease;
 }
-.demolink--button:hover { background: var(--accent-tint); border-color: var(--accent); }
+a.demolink--button:hover {
+  background: var(--accent-mid);
+  border-color: var(--accent-mid);
+  box-shadow: 0 0.9mm 2.4mm rgba(20, 25, 30, .22);
+}
+@media print { a.demolink--button { box-shadow: none; } }
 
 /* ---- Utility ---------------------------------------------- */
 .mt-2 { margin-top: var(--sp-2); }
