@@ -26,7 +26,8 @@ export interface TableGroup {
   items: Product[]
 }
 
-const TH = 'h-8 whitespace-nowrap px-2 text-left align-middle text-[0.6875rem] font-semibold text-muted-foreground'
+/* 見出しは太さで押し出さず、小さめ・字間・色で「ラベル」として扱う */
+const TH = 'h-9 whitespace-nowrap px-2 text-left align-middle text-[0.6875rem] font-normal tracking-[0.06em] text-muted-foreground'
 const TD = 'whitespace-nowrap px-2 align-middle text-spec'
 
 export function ProductTable({
@@ -41,11 +42,11 @@ export function ProductTable({
   return (
     <div className={cn('scroll-x rounded-md border', className)}>
       <table className="w-full border-collapse text-spec">
-        <thead className="sticky top-0 z-10 bg-muted/95 backdrop-blur">
-          <tr className="border-b">
+        <thead className="sticky top-0 z-10 bg-background/95 backdrop-blur">
+          <tr className="border-b-2">
             <th className={cn(TH, 'w-8 px-1.5 text-center')}><span className="sr-only">検討</span></th>
             <th className={cn(TH, 'w-9 px-1')}><span className="sr-only">形状</span></th>
-            <th className={cn(TH, 'sticky left-0 z-10 min-w-[10rem] bg-muted/95')}>品番</th>
+            <th className={cn(TH, 'sticky left-0 z-10 min-w-[10rem] bg-background/95')}>品番</th>
             <th className={cn(TH, 'text-right')}>容量<span className="font-normal">（㎖）</span></th>
             <th className={TH}>口部</th>
             <th className={cn(TH, 'text-right')}>重量<span className="font-normal">（g）</span></th>
@@ -104,7 +105,7 @@ export function ProductTable({
                   <th scope="row" className={cn(TD, 'sticky left-0 z-10 bg-inherit text-left font-medium')}>
                     <span className="flex items-center gap-1.5">
                       <Link href={`/products/${p.slug}`} className="hover:text-primary hover:underline">
-                        {p.sku}
+                        <span className="num">{p.sku}</span>
                       </Link>
                       {p.isOriginal && <Badge variant="outline" className="hidden sm:inline-flex">自社</Badge>}
                       {p.isDemo && <DemoBadge className="hidden lg:inline-flex" />}

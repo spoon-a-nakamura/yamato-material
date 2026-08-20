@@ -93,7 +93,7 @@ export function ShortlistScreen() {
                 <th key={p.slug} className="min-w-[9rem] border-l px-2 py-2 text-left align-top">
                   <span className="flex items-start gap-1">
                     <Link href={`/products/${p.slug}`} className="flex-1 text-spec font-semibold hover:text-primary hover:underline">
-                      {p.sku}
+                      <span className="num">{p.sku}</span>
                     </Link>
                     <button
                       type="button"
@@ -153,7 +153,7 @@ export function ShortlistScreen() {
           <figure key={p.slug} className={cn('print-sheet rounded-md border bg-card p-3')}>
             <SimpleDrawing product={p} className="h-64" />
             <figcaption className="mt-2 border-t pt-2">
-              <p className="text-spec font-semibold">{p.sku}</p>
+              <p className="num text-spec font-semibold">{p.sku}</p>
               <p className="num mt-0.5 text-[0.6875rem] text-muted-foreground">
                 容量 {capacity(p)}㎖ ／ 全高 {n(p.heightMm)}mm ／ {p.material}
                 {p.mouthLabel && ` ／ ${p.mouthLabel}`}

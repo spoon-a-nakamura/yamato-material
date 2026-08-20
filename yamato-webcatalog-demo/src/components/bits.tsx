@@ -100,14 +100,29 @@ export function Notice({
   )
 }
 
+/**
+ * セクション見出し。太字を大きくするのではなく
+ *   ・上に字間を開けた小さなラベル（罫線つき）
+ *   ・その下に大きめの見出し
+ * の2段構えにして、文字サイズの差で階層を作る。
+ */
 export function SectionTitle({
-  children, sub, action, className,
-}: { children: React.ReactNode; sub?: React.ReactNode; action?: React.ReactNode; className?: string }) {
+  children, sub, action, label, className,
+}: {
+  children: React.ReactNode
+  sub?: React.ReactNode
+  action?: React.ReactNode
+  label?: string
+  className?: string
+}) {
   return (
-    <div className={cn('mb-3 flex flex-wrap items-end justify-between gap-2', className)}>
-      <div>
-        <h2 className="text-base font-semibold tracking-tight">{children}</h2>
-        {sub && <p className="mt-0.5 text-xs text-muted-foreground">{sub}</p>}
+    <div className={cn('mb-5 flex flex-wrap items-end justify-between gap-3 border-t pt-4', className)}>
+      <div className="min-w-0">
+        {label && (
+          <p className="mb-1.5 text-[0.6875rem] tracking-[0.08em] text-muted-foreground">{label}</p>
+        )}
+        <h2 className="text-xl font-bold tracking-tight sm:text-2xl">{children}</h2>
+        {sub && <p className="mt-1.5 max-w-2xl text-xs leading-relaxed text-muted-foreground">{sub}</p>}
       </div>
       {action}
     </div>
