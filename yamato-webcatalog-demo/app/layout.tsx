@@ -1,4 +1,5 @@
 import type { Metadata, Viewport } from 'next'
+import { AppProviders } from '@/app/app'
 import './globals.css'
 
 export const metadata: Metadata = {
@@ -18,7 +19,11 @@ export const viewport: Viewport = {
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="ja">
-      <body>{children}</body>
+      <body>
+        {/* 検討リスト・社内モードの状態は、ページ遷移をまたいで保持される必要があるため
+            ここ（layout）に置く。page.tsx 側に置くと遷移のたびにリセットされる */}
+        <AppProviders>{children}</AppProviders>
+      </body>
     </html>
   )
 }
