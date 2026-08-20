@@ -596,7 +596,7 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   display: flex;
   align-items: baseline;
   gap: var(--sp-2);
-  padding: var(--sp-2) 0 var(--sp-1);
+  padding: var(--agenda-part-pad) 0;
   margin-top: var(--sp-2);
   border-bottom: 0.4mm solid var(--rule-strong);
   background: var(--agenda-part-bg);
@@ -604,7 +604,9 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
     calc(var(--agenda-bleed) * -1) 0 0 var(--agenda-part-bg),
     var(--agenda-bleed) 0 0 var(--agenda-part-bg);
 }
-.agenda__part:first-child { margin-top: 0; padding-top: 0; }
+.agenda__part:first-child { margin-top: 0; }
+/* 列頭の文字位置を左右で揃える（列2の先頭は通常の項目行のため） */
+.agenda__col > .agenda__item:first-child { padding-top: var(--agenda-part-pad); }
 .agenda__part-no {
   font-family: var(--font-num);
   font-size: var(--fs-label);

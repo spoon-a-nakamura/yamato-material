@@ -81,6 +81,9 @@
   --agenda-hover: var(--rule-soft);
   /* 目次のPART見出しの地色。章の区切りを見やすくするための淡い面。 */
   --agenda-part-bg: var(--accent-tint);
+  /* PART見出しの上下padding。上下対称にして帯の高さを揃える。
+     従来の 3mm + 1.5mm と合計が同じになる値にしており、版面の高さは増えない。 */
+  --agenda-part-pad: 2.25mm;
 
   /* strong に添える淡いラインマーカー。既に太字なので、ごく薄く。 */
   --marker: color-mix(in srgb, var(--accent) 14%, transparent);
