@@ -1,5 +1,5 @@
 {
-  "name": "yamato-webcatalog-demo",
+  "name": "demo",
   "version": "0.1.0",
   "private": true,
   "description": "ヤマトマテリアル Webカタログ フロントエンド・デモ（バックエンド不要）",

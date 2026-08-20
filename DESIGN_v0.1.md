@@ -384,7 +384,7 @@ src/app/nav.tsx        ルーティングの抽象化（useNav / <Link>）
 ### 7-2. ディレクトリ構成
 
 ```
-yamato-webcatalog-demo/
+demo/
 ├ app/                        Next.js のルート定義（薄いラッパー）
 │  ├ layout.tsx
 │  ├ page.tsx                 /

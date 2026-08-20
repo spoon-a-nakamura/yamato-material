@@ -161,7 +161,7 @@ npm run pdf
 ## 8. 構成
 
 ```
-proposal-deck/
+proposal/
 ├── src/
 │   ├── content/deck/     原稿（MDX）— テキスト修正はここだけ
 │   ├── components/       スライドの部品

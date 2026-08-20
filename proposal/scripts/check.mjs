@@ -100,6 +100,38 @@ if (links.unstable.length) {
 }
 console.log('');
 
+/* ---- デモへのリンク ----------------------------------------
+   URLは deck.config.ts の demoUrl から組み立てています。
+   相対パスは公開サイト上でしか解決できないため、PDF配布時に
+   絶対URLへ差し替え忘れていないかをここで検出します。 */
+const demo = await page.evaluate(() => {
+  const links = [...document.querySelectorAll('[data-demo]')];
+  return links.map((a) => ({
+    パス: a.dataset.demo,
+    href: a.getAttribute('href'),
+    ページ: a.closest('.slide')?.dataset.page || '?',
+    文言: (a.textContent || '').trim().slice(0, 26),
+  }));
+});
+
+console.log('── デモへのリンク ──');
+let demoBad = 0;
+if (!demo.length) {
+  console.log('（なし）');
+} else {
+  const relative = demo.filter((d) => !/^https?:\/\//.test(d.href));
+  demo.forEach((d) => console.log(`  p${String(d.ページ).padStart(2, '0')}  ${d.href.padEnd(34)} 「${d.文言}」`));
+  if (relative.length) {
+    demoBad = relative.length;
+    console.log(`\n△ ${relative.length}件が相対パスです。公開サイト上では解決しますが、`);
+    console.log('  PDFやローカルHTMLからは開けません。PDFで配布する場合は');
+    console.log('  deck.config.ts の demoUrl を絶対URLに書き換えてください。');
+  } else {
+    console.log('✓ すべて絶対URLです（PDFからも開けます）');
+  }
+}
+console.log('');
+
 console.log('── 版面の溢れ ──');
 let bad = 0;
 for (const r of report) {
@@ -111,5 +143,6 @@ for (const r of report) {
   );
 }
 console.log(`\n合計 ${report.length} ページ / 溢れ ${bad} ページ / 参照エラー ${linkBad} 件`);
+console.log(`デモへのリンク ${demo.length} 件${demoBad ? `（うち相対パス ${demoBad} 件）` : ''}`);
 await browser.close();
 process.exit(bad > 0 || linkBad > 0 ? 1 : 0);

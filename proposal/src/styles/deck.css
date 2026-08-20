@@ -750,6 +750,29 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   .xref--broken { background: none; }
 }
 
+/* ---- デモ（Webカタログ試作）へのリンク --------------------- */
+.demolink {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+  border-bottom: 0.25mm solid var(--accent-line);
+  white-space: nowrap;   /* 文言が行中で分断されないように */
+}
+.demolink::after { content: "\2197"; font-weight: 400; margin-left: 0.3em; }
+.demolink:hover { border-bottom-color: var(--accent); }
+.demolink:focus-visible { outline: 0.4mm solid var(--accent); outline-offset: 0.6mm; }
+
+/* 目立たせたい箇所（要点・デザイン方針・次のステップ）用 */
+.demolink--button {
+  display: inline-block;
+  border: 0.3mm solid var(--accent);
+  border-radius: 99mm;
+  padding: 1.6mm 5mm;
+  font-size: var(--fs-small);
+  line-height: 1.4;
+}
+.demolink--button:hover { background: var(--accent-tint); border-color: var(--accent); }
+
 /* ---- Utility ---------------------------------------------- */
 .mt-2 { margin-top: var(--sp-2); }
 .mt-3 { margin-top: var(--sp-3); }

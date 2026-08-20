@@ -1,0 +1,36 @@
+---
+import { deck } from '../deck.config';
+/* ============================================================
+   デモ（Webカタログ試作）へのリンク。
+   ------------------------------------------------------------
+   URLは原稿に書かず、deck.config.ts の demoUrl から組み立てます。
+   公開先が変わっても原稿を触る必要がありません。
+
+     <DemoLink>デモを開く</DemoLink>                    … トップ
+     <DemoLink to="/products/">一覧のデモ</DemoLink>     … 任意のパス
+     <DemoLink product>商品詳細のデモ</DemoLink>         … サンプル商品の詳細
+     <DemoLink variant="button">…</DemoLink>            … 囲み付きで目立たせる
+   ============================================================ */
+interface Props {
+  /** デモ内のパス。省略するとトップ。 */
+  to?: string;
+  /** true にすると deck.demoSampleProduct の商品詳細へ。 */
+  product?: boolean;
+  /** "button" を渡すと囲み付きの表示になります。 */
+  variant?: string;
+}
+const { to, product = false, variant = '' } = Astro.props;
+
+const path = product ? `/products/${deck.demoSampleProduct}/` : (to ?? '/');
+const href = `${deck.demoUrl.replace(/\/+$/, '')}/${String(path).replace(/^\/+/, '')}`;
+const variantClass = variant
+  ? variant.split(' ').filter(Boolean).map((v) => `demolink--${v}`).join(' ')
+  : '';
+---
+<a
+  class={`demolink ${variantClass}`}
+  href={href}
+  target="_blank"
+  rel="noopener noreferrer"
+  data-demo={path}
+><slot /></a>

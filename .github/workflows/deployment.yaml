@@ -6,8 +6,8 @@ on:
       - main
 
 # このリポジトリはモノレポで、ルートに package.json が無い。
-#   proposal-deck/           提案書デッキ（Astro）        → dist/
-#   yamato-webcatalog-demo/  Webカタログ（Next.js export） → out/
+#   proposal/  提案書デッキ（Astro）         → dist/
+#   demo/      Webカタログ（Next.js export） → out/
 # そのため各ステップで working-directory を指定し、FTPS の送信先も分ける。
 jobs:
   deploy:
@@ -24,13 +24,13 @@ jobs:
 
       # lockfile があるので npm ci を使う（npm install と違い lockfile 通りに入る）
       - name: build deck
-        working-directory: ./proposal-deck
+        working-directory: ./proposal
         run: |
           npm ci
           npm run build
 
       - name: build webcatalog
-        working-directory: ./yamato-webcatalog-demo
+        working-directory: ./demo
         run: |
           npm ci
           npm run build
@@ -42,7 +42,7 @@ jobs:
           username: ${{ secrets.FTPS_USERNAME }}
           password: ${{ secrets.FTPS_PASSWORD }}
           protocol: ftps
-          local-dir: ./proposal-deck/dist/
+          local-dir: ./proposal/dist/
           server-dir: ./yamato-material/deck/
 
       - name: sync webcatalog
@@ -52,5 +52,5 @@ jobs:
           username: ${{ secrets.FTPS_USERNAME }}
           password: ${{ secrets.FTPS_PASSWORD }}
           protocol: ftps
-          local-dir: ./yamato-webcatalog-demo/out/
+          local-dir: ./demo/out/
           server-dir: ./yamato-material/catalog/

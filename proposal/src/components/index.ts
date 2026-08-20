@@ -16,3 +16,4 @@ export { default as DefRow } from './DefRow.astro';
 export { default as Badge } from './Badge.astro';
 export { default as Table } from './Table.astro';
 export { default as Ref } from './Ref.astro';
+export { default as DemoLink } from './DemoLink.astro';
