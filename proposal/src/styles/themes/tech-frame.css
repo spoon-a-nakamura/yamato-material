@@ -1,0 +1,363 @@
+/* ============================================================
+   Frame: Tech — 版面の骨格（配色から独立）
+   ------------------------------------------------------------
+   ここには色を持たない「骨格」だけを置きます。実際の色は
+   themes/tech.css（黒）と themes/air.css（青・淡グレイ）が
+   トークンで与えます。骨格は共通のまま配色だけ差し替えられます。
+
+     ・ヘッダ帯／フッタ帯という水平3分割の枠組みを解体する
+     ・見出しと本文の級数比を 1.8倍 → 3.6倍 に開く
+     ・表紙と章扉を枠のない全面（フルブリード）にする
+     ・variant="center" のページだけ見出しをさらに大きくし、
+       ページごとに密度の差をつくる
+     ・数値・ラベル・ページ番号を mono に寄せ、
+       「情報の階層」と「メタ情報」を書体で分離する
+   ============================================================ */
+
+/* ============================================================
+   1. 枠の解体 — ヘッダ帯とフッタ帯の罫をなくす
+   ============================================================ */
+[data-frame="tech"] .slide {
+  box-shadow: 0 0 0 1px var(--slide-edge);
+  border: none;
+}
+[data-frame="tech"] .slide__header {
+  border-bottom: none;
+  padding-bottom: 0;
+  align-items: center;
+}
+[data-frame="tech"] .slide__footer {
+  border-top: none;
+  padding-top: 0;
+  align-items: flex-end;
+}
+[data-frame="tech"] .slide__chapter-label {
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  letter-spacing: 0.04em;
+  color: var(--ink-400);
+  gap: 1.6mm;
+}
+[data-frame="tech"] .slide__chapter-label b { color: var(--ink-900); font-weight: 500; }
+[data-frame="tech"] .slide__brand {
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  letter-spacing: 0.04em;
+  color: var(--ink-300);
+}
+[data-frame="tech"] .slide__footer > span:first-child { color: var(--ink-300); font-size: var(--fs-label); }
+[data-frame="tech"] .slide__pageno {
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  color: var(--ink-400);
+}
+[data-frame="tech"] .slide__pageno::before { content: counter(slide, decimal-leading-zero); }
+
+/* ============================================================
+   2. 見出し — 級数を上げ、装飾罫を完全に廃止
+   ============================================================ */
+[data-frame="tech"] .slide__titleblock { padding-top: var(--sp-5); }
+[data-frame="tech"] .slide__titleblock::after { content: none; }
+[data-frame="tech"] .slide__no {
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.04em;
+  color: var(--ink-400);
+  margin-bottom: var(--sp-2);
+}
+[data-frame="tech"] .slide__title {
+  font-weight: 600;
+  letter-spacing: var(--ls-head);
+  line-height: var(--lh-tight);
+  max-width: 235mm;
+}
+[data-frame="tech"] .slide__lead {
+  margin-top: var(--sp-3);
+  color: var(--ink-500);
+  line-height: 1.75;
+  max-width: 150mm;   /* 本文は約52字で折り返す */
+}
+[data-frame="tech"] .slide__body { padding-top: var(--sp-5); }
+
+/* 内容の少ないページ（variant="center"）はさらに大きく組み、密度差をつくる */
+[data-frame="tech"] .slide--center .slide__title { font-size: 44pt; letter-spacing: -0.04em; }
+[data-frame="tech"] .slide--center .slide__lead { font-size: 12pt; max-width: 168mm; }
+[data-frame="tech"] .slide--center .keypoint { font-size: 13pt; letter-spacing: -0.02em; }
+/* variant="tight": 情報量が多く版面に収まらないページ用。
+   見出しを一段落とし、見出し前後の空きを詰めて本文の高さを稼ぐ。
+   deck.css 側の .slide--tight と詳細度が並ぶため、こちらにも書く。 */
+[data-frame="tech"] .slide--tight .slide__title { font-size: 27pt; }
+[data-frame="tech"] .slide--tight .slide__titleblock { padding-top: var(--sp-3); }
+[data-frame="tech"] .slide--tight .slide__body { padding-top: var(--sp-3); }
+[data-frame="tech"] .slide--tight .slide__lead { margin-top: var(--sp-2); line-height: 1.62; }
+
+/* 章扉の tight。巨大数字を落として項目リストの高さを確保する。 */
+[data-frame="tech"] .section.slide--tight { --fs-chapter-no: 104pt; }
+[data-frame="tech"] .section.slide--tight .section__title { font-size: 30pt; }
+[data-frame="tech"] .section.slide--tight .section__lead { margin-top: var(--sp-3); }
+[data-frame="tech"] .section.slide--tight .section__items { margin-top: var(--sp-3); }
+
+/* ============================================================
+   3. 本文まわり
+   ============================================================ */
+[data-frame="tech"] .slide__body h4,
+[data-frame="tech"] .h4 {
+  border-left: none;
+  padding-left: 0;
+  font-size: var(--fs-h4);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  margin-bottom: var(--sp-3);
+}
+[data-frame="tech"] .slide__body h5,
+[data-frame="tech"] .h5 {
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+[data-frame="tech"] .slide__body em {
+  background: none;
+  color: var(--ink-900);
+  font-weight: 600;
+}
+[data-frame="tech"] .slide__body ul > li::before {
+  width: 1.1mm; height: 1.1mm;
+  top: 2.2mm;
+  background: var(--ink-300);
+}
+[data-frame="tech"] .slide__body ol > li::before {
+  background: none;
+  border-radius: 0;
+  color: var(--ink-400);
+  font-family: var(--font-num);
+  font-size: var(--fs-small);
+  font-weight: 400;
+  text-align: left;
+  width: 5mm;
+  line-height: inherit;
+  top: 0;
+}
+
+/* ---- Card: 1px の hairline ＋ 大きな内側余白 -------------- */
+[data-frame="tech"] .card {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  background: var(--paper);
+}
+[data-frame="tech"] .card--tint { background: var(--paper-tint); border-color: var(--rule); }
+[data-frame="tech"] .card--accent { background: var(--paper); border-color: var(--ink-900); }
+[data-frame="tech"] .card--mark { background: var(--paper-tint); border-color: var(--rule); }
+[data-frame="tech"] .card__label {
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-400);
+  margin-bottom: var(--sp-2);
+}
+[data-frame="tech"] .card--accent .card__label,
+[data-frame="tech"] .card--mark .card__label { color: var(--ink-900); }
+[data-frame="tech"] .card__title { font-size: var(--fs-h4); font-weight: 600; letter-spacing: -0.015em; }
+
+/* ---- Keypoint: 罫や地を廃し、級数だけで際立たせる -------- */
+[data-frame="tech"] .keypoint {
+  border-left: none;
+  border-radius: 0;
+  background: none;
+  padding: 0;
+  font-size: 15pt;
+  font-weight: 500;
+  letter-spacing: -0.025em;
+  line-height: 1.5;
+  color: var(--ink-900);
+  max-width: 180mm;
+}
+
+/* ---- Steps: 番号を mono の極小ラベルに ------------------- */
+[data-frame="tech"] .step {
+  border: 1px solid var(--rule);
+  border-radius: var(--radius);
+  padding: var(--sp-4);
+  padding-top: calc(var(--sp-4) + 4mm);
+  background: var(--paper);
+}
+[data-frame="tech"] .step::before {
+  content: "0" counter(step);
+  background: none;
+  border-radius: 0;
+  color: var(--ink-400);
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  width: auto; height: auto;
+  line-height: 1;
+  top: var(--sp-4);
+  left: var(--sp-4);
+  text-align: left;
+}
+[data-frame="tech"] .step__title { font-weight: 600; letter-spacing: -0.015em; }
+[data-frame="tech"] .step__tag {
+  border: 1px solid var(--rule);
+  border-radius: 99mm;
+  background: var(--paper-tint);
+  color: var(--ink-700);
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  padding: 1.2mm 3mm;
+}
+
+/* ---- Badge: mono の小さなピル --------------------------- */
+[data-frame="tech"] .badge {
+  font-family: var(--font-num);
+  font-weight: 400;
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-radius: 99mm;
+  padding: 1mm 2.8mm;
+  background: var(--ink-900);
+  color: #fff;
+}
+[data-frame="tech"] .badge--outline { background: transparent; color: var(--ink-700); border: 1px solid var(--rule); }
+[data-frame="tech"] .badge--mark { background: var(--accent); }
+
+/* ---- Table: 縦罫なし、ヘッダは mono の極小ラベル --------- */
+[data-frame="tech"] .slide__body table thead th {
+  background: none;
+  color: var(--ink-400);
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  font-weight: 400;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  border-bottom: 1px solid var(--rule);
+}
+[data-frame="tech"] .slide__body table td { border-bottom: 1px solid var(--rule-soft); }
+[data-frame="tech"] .slide__body table tbody tr:last-child td { border-bottom: 1px solid var(--rule); }
+[data-frame="tech"] .t-def table td:first-child,
+[data-frame="tech"] .t-def table th:first-child,
+[data-frame="tech"] .t-def table thead th:first-child { background: none; font-weight: 500; }
+[data-frame="tech"] .t-zebra table tbody tr:nth-child(even) td { background: var(--paper-tint); }
+
+/* ---- Flow / Metric / DefRow ----------------------------- */
+[data-frame="tech"] .flow__arrow,
+[data-frame="tech"] .ba__arrow { color: var(--ink-300); }
+[data-frame="tech"] .metric__value {
+  font-family: var(--font-num);
+  font-size: 34pt;
+  font-weight: 500;
+  letter-spacing: -0.04em;
+  color: var(--ink-900);
+}
+[data-frame="tech"] .metric__label {
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+[data-frame="tech"] .defrow { border-bottom-color: var(--rule-soft); }
+[data-frame="tech"] .defrow:first-child { border-top: 1px solid var(--rule); }
+[data-frame="tech"] .defrow:last-child { border-bottom: 1px solid var(--rule); }
+[data-frame="tech"] .defrow__k { font-weight: 600; letter-spacing: -0.01em; }
+[data-frame="tech"] .caption {
+  font-family: var(--font-num);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--ink-400);
+}
+
+/* ============================================================
+   4. 表紙・章扉 — 枠を捨てた全面黒（フルブリード）
+   ============================================================ */
+[data-frame="tech"] .cover {
+  background: var(--cover-bg);
+  color: var(--cover-fg);
+  padding: 30mm var(--pad-x) 18mm;
+}
+[data-frame="tech"] .cover__eyebrow {
+  font-family: var(--font-num);
+  font-weight: 400;
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  color: var(--cover-eyebrow);
+}
+[data-frame="tech"] .cover__title {
+  color: var(--cover-fg);
+  font-weight: 600;
+  letter-spacing: -0.045em;
+  line-height: 1.1;
+  max-width: 230mm;
+}
+[data-frame="tech"] .cover__rule { display: none; }
+[data-frame="tech"] .cover__to { color: var(--cover-fg); font-size: 14pt; font-weight: 500; letter-spacing: -0.02em; margin-top: var(--sp-5); }
+[data-frame="tech"] .cover__meta { font-family: var(--font-num); font-size: 9pt; color: var(--cover-muted); line-height: 2; }
+[data-frame="tech"] .cover__foot { border-top: 1px solid var(--cover-rule); }
+[data-frame="tech"] .cover .slide__brand { color: var(--cover-muted); }
+
+[data-frame="tech"] .section {
+  background: var(--section-bg);
+  color: var(--section-fg);
+  padding: 18mm var(--pad-x) 14mm;
+}
+[data-frame="tech"] .section .slide__header { border-bottom: none; }
+[data-frame="tech"] .section .slide__chapter-label,
+[data-frame="tech"] .section .slide__brand { color: var(--section-muted); }
+[data-frame="tech"] .section__eyebrow {
+  font-family: var(--font-num);
+  font-weight: 400;
+  font-size: var(--fs-label);
+  letter-spacing: 0.14em;
+  color: var(--section-eyebrow);
+  margin-bottom: 0;
+}
+[data-frame="tech"] .section .section__no {
+  font-family: "Geist", var(--font-sans);   /* mono のスラッシュ付きゼロを避ける */
+  font-weight: 500;
+  color: var(--section-no);
+  letter-spacing: -0.06em;
+  line-height: 0.88;
+  margin: var(--sp-2) 0 0 -2mm;
+}
+[data-frame="tech"] .section .section__rule { display: none; }
+[data-frame="tech"] .section .section__title {
+  color: var(--section-fg);
+  font-weight: 600;
+  letter-spacing: -0.04em;
+  margin-top: var(--sp-3);
+}
+[data-frame="tech"] .section .section__lead { color: var(--section-muted); max-width: 150mm; }
+[data-frame="tech"] .section .section__items {
+  color: var(--section-muted);
+  border-top: 1px solid var(--section-rule);
+  font-family: var(--font-num);
+  font-size: 8.4pt;
+}
+[data-frame="tech"] .section .slide__footer { border-top: none; }
+[data-frame="tech"] .section .slide__footer > span:first-child,
+[data-frame="tech"] .section .slide__pageno { color: var(--section-muted); }
+
+/* ============================================================
+   5. 目次・結び
+   ============================================================ */
+[data-frame="tech"] .agenda__no,
+[data-frame="tech"] .agenda__page,
+[data-frame="tech"] .agenda__part-no {
+  font-family: var(--font-num);
+  font-weight: 400;
+  letter-spacing: 0.02em;
+  color: var(--ink-400);
+}
+[data-frame="tech"] .agenda__part-no { color: var(--ink-900); font-weight: 500; }
+[data-frame="tech"] .agenda__item { border-bottom-color: var(--rule-soft); }
+[data-frame="tech"] .agenda__part { border-bottom: 1px solid var(--ink-900); }
+[data-frame="tech"] .agenda__part-t { letter-spacing: -0.02em; }
+[data-frame="tech"] .agenda__t { font-weight: 400; }
+[data-frame="tech"] .closing__msg { font-size: 22pt; font-weight: 600; letter-spacing: -0.035em; }

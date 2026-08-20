@@ -1,0 +1,26 @@
+{
+  "name": "proposal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "astro dev",
+    "build": "astro build",
+    "bundle": "astro build && node scripts/inline.mjs",
+    "pdf": "npm run bundle && node scripts/pdf.mjs",
+    "check": "npm run bundle && node scripts/check.mjs",
+    "preview": "astro preview",
+    "shot": "node scripts/shot.mjs"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@astrojs/mdx": "^7.0.7",
+    "astro": "^7.2.4"
+  },
+  "devDependencies": {
+    "playwright": "^1.62.1"
+  },
+  "type": "module"
+}
