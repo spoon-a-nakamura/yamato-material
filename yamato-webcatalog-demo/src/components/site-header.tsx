@@ -11,6 +11,7 @@ import { Link, useNav } from '@/app/nav'
 import { DEMO_PASSCODE, useInternalMode } from '@/app/internal-mode'
 import { useShortlist } from '@/app/shortlist'
 import { CATEGORIES, catClasses, countByCategory } from '@/lib/catalog'
+import { LOGO_YAMATO } from '@/assets/logo'
 import { cn } from '@/lib/utils'
 
 function InternalModeControl({ compact }: { compact?: boolean }) {
@@ -133,11 +134,23 @@ export function SiteHeader() {
         </Button>
 
         <Link href="/" className="flex shrink-0 items-center gap-2">
-          <span className="text-[0.9375rem] font-bold leading-tight tracking-tight">
-            Yamato Material
-            <span className="ml-1.5 font-medium text-muted-foreground">Webカタログ</span>
+          {/* スマートフォンではロゴと横並びにすると「Webカタログ」を置く幅が足りないため、
+              SPだけ縦積みにする（ヘッダー高 56px に収まる） */}
+          <span className="flex flex-col items-start gap-px sm:flex-row sm:items-center sm:gap-2">
+            {/* ロゴは data URI。単一HTML版（file:// の1ファイル配布）でも表示させるため。
+                width/height は原寸を渡し、読み込み前のレイアウトのずれを防ぐ */}
+            <img
+              src={LOGO_YAMATO}
+              alt="ヤマトマテリアル株式会社"
+              width={496}
+              height={96}
+              className="h-6 w-auto sm:h-8"
+            />
+            <span className="text-[0.6875rem] font-medium leading-none text-muted-foreground sm:text-[0.9375rem]">
+              Webカタログ
+            </span>
           </span>
-          <Badge variant="demo" className="hidden sm:inline-flex">デモ</Badge>
+          <Badge variant="demo" className="hidden shrink-0 sm:inline-flex">デモ</Badge>
         </Link>
 
         <Button asChild variant="ghost" size="sm" className="hidden shrink-0 gap-1.5 lg:inline-flex">
