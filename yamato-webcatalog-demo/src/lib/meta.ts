@@ -33,8 +33,8 @@ const STATIC: Record<string, PageMeta> = {
   '/contents': {
     title: withSite('目次'),
     description:
-      `紙カタログ全${dataset.catalogPageCount}ページの章立てです。` +
-      `目次のページ番号から、そのページに掲載されている商品の一覧を開けます。`,
+      `紙カタログ全${dataset.catalogPageCount}ページと連動した目次です。` +
+      `目次のページ番号から、そのページに掲載されている商品を確認することができます。`,
   },
   '/products': {
     title: withSite('商品一覧'),

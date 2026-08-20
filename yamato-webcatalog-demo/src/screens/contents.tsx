@@ -2,7 +2,6 @@
 import * as React from 'react'
 import { BookOpen, ChevronRight, ListTree } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
-import { Notice } from '@/components/bits'
 import { Link } from '@/app/nav'
 import { CATEGORY_LABEL, catClasses, dataset, pages, productsByPage } from '@/lib/catalog'
 import { cn } from '@/lib/utils'
@@ -107,9 +106,8 @@ export function ContentsScreen() {
           目次
         </h1>
         <p className="mt-0.5 text-xs leading-relaxed text-muted-foreground">
-          紙カタログ全 <span className="num font-medium text-foreground">{dataset.catalogPageCount}</span> ページの章立てです。
-          目次のページ番号を押すと、この画面のその位置までスクロールします。
-          一覧の行を押すと、そのページの商品一覧が開きます。
+          紙カタログ全 <span className="num font-medium text-foreground">{dataset.catalogPageCount}</span> ページと連動した目次です。
+          目次のページ番号から、そのページに掲載されている商品を確認することができます。
         </p>
       </header>
 
@@ -201,11 +199,6 @@ export function ContentsScreen() {
               </section>
             )
           })}
-
-          <Notice>
-            誌面ページと商品の対応は「00_ページ対応表.csv」から機械的に作成しています。
-            商品が登録されていないページは、今回のWeb移行対象範囲外か、データ収集が未完了のページです（提案書 4-1 / 14-2）。
-          </Notice>
         </main>
       </div>
     </div>
