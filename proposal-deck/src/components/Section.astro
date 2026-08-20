@@ -5,11 +5,16 @@ interface Props {
   title: string;
   lead?: string;
   items?: string[];
+  /** 追加クラス。項目数が多く版面に収まらない章扉には "tight" を渡します。 */
+  variant?: string;
 }
-const { no, title, lead, items = [] } = Astro.props;
+const { no, title, lead, items = [], variant = '' } = Astro.props;
+const variantClass = variant
+  ? variant.split(' ').filter(Boolean).map((v) => `slide--${v}`).join(' ')
+  : '';
 const label = String(no).padStart(2, '0');
 ---
-<section id={`part-${no}`} data-part={String(no)} class="slide section">
+<section id={`part-${no}`} data-part={String(no)} class={`slide section ${variantClass}`}>
   <header class="slide__header">
     <div class="slide__chapter-label"></div>
     <div class="slide__brand">{deck.brandMark}</div>

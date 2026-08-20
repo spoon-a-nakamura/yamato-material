@@ -85,7 +85,19 @@
 [data-frame="tech"] .slide--center .slide__title { font-size: 44pt; letter-spacing: -0.04em; }
 [data-frame="tech"] .slide--center .slide__lead { font-size: 12pt; max-width: 168mm; }
 [data-frame="tech"] .slide--center .keypoint { font-size: 13pt; letter-spacing: -0.02em; }
+/* variant="tight": 情報量が多く版面に収まらないページ用。
+   見出しを一段落とし、見出し前後の空きを詰めて本文の高さを稼ぐ。
+   deck.css 側の .slide--tight と詳細度が並ぶため、こちらにも書く。 */
 [data-frame="tech"] .slide--tight .slide__title { font-size: 27pt; }
+[data-frame="tech"] .slide--tight .slide__titleblock { padding-top: var(--sp-3); }
+[data-frame="tech"] .slide--tight .slide__body { padding-top: var(--sp-3); }
+[data-frame="tech"] .slide--tight .slide__lead { margin-top: var(--sp-2); line-height: 1.62; }
+
+/* 章扉の tight。巨大数字を落として項目リストの高さを確保する。 */
+[data-frame="tech"] .section.slide--tight { --fs-chapter-no: 104pt; }
+[data-frame="tech"] .section.slide--tight .section__title { font-size: 30pt; }
+[data-frame="tech"] .section.slide--tight .section__lead { margin-top: var(--sp-3); }
+[data-frame="tech"] .section.slide--tight .section__items { margin-top: var(--sp-3); }
 
 /* ============================================================
    3. 本文まわり
