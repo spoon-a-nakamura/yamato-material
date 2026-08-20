@@ -5,6 +5,10 @@ on:
     branches:
       - main
 
+# このリポジトリはモノレポで、ルートに package.json が無い。
+#   proposal-deck/           提案書デッキ（Astro）        → dist/
+#   yamato-webcatalog-demo/  Webカタログ（Next.js export） → out/
+# そのため各ステップで working-directory を指定し、FTPS の送信先も分ける。
 jobs:
   deploy:
     name: Deploy
@@ -12,20 +16,41 @@ jobs:
     steps:
       - name: checkout
         uses: actions/checkout@v7
+
       - name: setup
         uses: actions/setup-node@v6
         with:
           node-version: '24'
-      - name: build
+
+      # lockfile があるので npm ci を使う（npm install と違い lockfile 通りに入る）
+      - name: build deck
+        working-directory: ./proposal-deck
         run: |
-          npm install
+          npm ci
           npm run build
-      - name: sync
+
+      - name: build webcatalog
+        working-directory: ./yamato-webcatalog-demo
+        run: |
+          npm ci
+          npm run build
+
+      - name: sync deck
         uses: SamKirkland/FTP-Deploy-Action@4.3.2
         with:
           server: ${{ secrets.FTPS_SERVER }}
           username: ${{ secrets.FTPS_USERNAME }}
           password: ${{ secrets.FTPS_PASSWORD }}
           protocol: ftps
-          local-dir: ./dist/
-          server-dir: ./yamato-material/
+          local-dir: ./proposal-deck/dist/
+          server-dir: ./yamato-material/deck/
+
+      - name: sync webcatalog
+        uses: SamKirkland/FTP-Deploy-Action@4.3.2
+        with:
+          server: ${{ secrets.FTPS_SERVER }}
+          username: ${{ secrets.FTPS_USERNAME }}
+          password: ${{ secrets.FTPS_PASSWORD }}
+          protocol: ftps
+          local-dir: ./yamato-webcatalog-demo/out/
+          server-dir: ./yamato-material/catalog/
