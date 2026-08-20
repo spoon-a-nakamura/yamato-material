@@ -443,6 +443,10 @@ body {
 
 /* Section divider */
 .section { justify-content: center; background: var(--accent); color: #fff; }
+.section .slide__body { display: flex; flex-direction: column; justify-content: center; }
+.section .slide__header { border-bottom-color: rgba(255,255,255,.22); }
+.section .slide__chapter-label { color: rgba(255,255,255,.55); }
+.section .slide__brand { color: rgba(255,255,255,.45); }
 .section .section__no {
   font-family: var(--font-num);
   font-size: var(--fs-chapter-no);
@@ -460,7 +464,6 @@ body {
 .section .slide__pageno { color: rgba(255,255,255,.7); }
 
 /* Agenda */
-.agenda { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--sp-6); }
 .agenda__item {
   display: grid;
   grid-template-columns: 8mm 1fr;
@@ -507,7 +510,7 @@ body {
   font-size: 12px;
   font-family: var(--font-sans);
 }
-.toolbar button, .toolbar a {
+.toolbar button, .toolbar a, .toolbar__btn {
   background: var(--ink-900); color: #fff;
   border: none; border-radius: 6px;
   padding: 7px 12px; cursor: pointer;
@@ -524,13 +527,19 @@ body {
 .t-right table td:last-child, .t-right table th:last-child { text-align: right; white-space: nowrap; }
 
 /* ---- Agenda (column flow) --------------------------------- */
+/* 左右2列。行トラックを共有しないよう、列ごとに要素を分けて縦積みにする。
+   1つのグリッドに grid-auto-flow: column で流すと行の高さが左右で
+   揃ってしまい、片方の2行項目がもう片方の1行項目まで引き伸ばす。 */
 .agenda {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  grid-template-rows: repeat(var(--rows, 13), auto);
-  grid-auto-flow: column;
   column-gap: var(--sp-6);
-  align-content: start;
+  align-items: start;
+}
+.agenda__col {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;          /* 長い項目名でのカラム破綻を防ぐ */
 }
 .agenda__part {
   display: flex;
@@ -548,6 +557,192 @@ body {
   color: var(--accent);
 }
 .agenda__part-t { font-size: var(--fs-small); font-weight: 700; color: var(--ink-900); letter-spacing: 0.02em; }
+
+/* ---- Agenda: ページ番号アンカー ---------------------------- */
+html { scroll-behavior: smooth; }
+.slide { scroll-margin-top: var(--page-gap); }
+
+.agenda__item { grid-template-columns: 8mm 1fr auto; }
+.agenda__part { position: relative; }
+.agenda__part .agenda__page { margin-left: auto; }
+
+.agenda__page {
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  font-weight: 600;
+  color: var(--ink-400);
+  font-variant-numeric: tabular-nums;
+  align-self: baseline;
+}
+.agenda__part .agenda__page { color: var(--accent); }
+
+a.agenda__item, a.agenda__part {
+  color: inherit;
+  text-decoration: none;
+  transition: background-color .15s ease, box-shadow .15s ease;
+}
+/* 左右の box-shadow が背景を --agenda-bleed 分だけ外へ延長します。
+   外側の影は境界ボックス内には描かれないため、行の罫には干渉しません。 */
+a.agenda__item:hover, a.agenda__part:hover {
+  background: var(--agenda-hover);
+  box-shadow:
+    calc(var(--agenda-bleed) * -1) 0 0 var(--agenda-hover),
+    var(--agenda-bleed) 0 0 var(--agenda-hover);
+}
+a.agenda__item:hover .agenda__page, a.agenda__part:hover .agenda__page { color: var(--accent); }
+a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm solid var(--accent); outline-offset: 0.6mm; }
+
+@media print {
+  html { scroll-behavior: auto; }
+  a.agenda__item:hover, a.agenda__part:hover { background: none; box-shadow: none; }
+}
+
+/* ============================================================
+   Nav menu（画面専用）
+   ------------------------------------------------------------
+   中身は Deck.astro のスクリプトが DOM から生成します。
+   スライドを追加・削除・並べ替えても、ここは触りません。
+   ============================================================ */
+.navmenu {
+  position: fixed;
+  top: 0; right: 0;
+  z-index: 60;
+  width: min(420px, 92vw);
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  background: var(--paper);
+  border-left: 1px solid var(--rule);
+  box-shadow: -8px 0 32px rgba(16, 24, 32, .14);
+  font-family: var(--font-sans);
+}
+.navmenu[hidden] { display: none; }
+
+.navmenu__scrim {
+  position: fixed;
+  inset: 0;
+  z-index: 55;
+  background: rgba(13, 31, 51, .32);
+}
+.navmenu__scrim[hidden] { display: none; }
+
+.navmenu__head {
+  flex: 0 0 auto;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 18px 12px;
+  border-bottom: 1px solid var(--rule);
+}
+.navmenu__title {
+  font-family: var(--font-num);
+  font-size: 12px;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--ink-500);
+}
+.navmenu__close {
+  appearance: none;
+  border: 1px solid var(--rule);
+  background: var(--paper);
+  color: var(--ink-500);
+  width: 28px; height: 28px;
+  line-height: 1;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+.navmenu__close:hover { background: var(--paper-tint); color: var(--ink-900); }
+
+.navmenu__filter {
+  flex: 0 0 auto;
+  margin: 12px 18px;
+  padding: 8px 10px;
+  font: inherit;
+  font-size: 13px;
+  color: var(--ink-900);
+  background: var(--paper);
+  border: 1px solid var(--rule);
+  border-radius: 4px;
+}
+.navmenu__filter:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+
+.navmenu__list {
+  flex: 1 1 auto;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  padding: 0 10px 24px;
+}
+.navmenu__group { padding-top: 10px; }
+.navmenu__group[hidden] { display: none; }
+
+.navmenu__item {
+  display: grid;
+  grid-template-columns: 48px 1fr auto;
+  gap: 10px;
+  align-items: baseline;
+  padding: 7px 8px;
+  border-radius: 4px;
+  text-decoration: none;
+  color: var(--ink-700);
+  font-size: 13px;
+  line-height: 1.5;
+}
+.navmenu__item[hidden] { display: none; }
+.navmenu__item:hover { background: var(--paper-tint); }
+.navmenu__item:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.navmenu__item.is-current { background: var(--accent-tint); color: var(--ink-900); }
+.navmenu__item.is-current .navmenu__page { color: var(--accent); }
+
+.navmenu__item--part {
+  margin-top: 6px;
+  border-top: 1px solid var(--rule);
+  padding-top: 12px;
+  font-weight: 700;
+  color: var(--ink-900);
+  border-radius: 0;
+}
+.navmenu__group:first-child .navmenu__item--part { border-top: none; margin-top: 0; }
+
+.navmenu__no {
+  font-family: var(--font-num);
+  font-size: 11px;
+  color: var(--ink-400);
+  white-space: nowrap;
+}
+.navmenu__item--part .navmenu__no { color: var(--accent); font-size: 10px; letter-spacing: .06em; }
+.navmenu__t { overflow-wrap: anywhere; }
+.navmenu__page {
+  font-family: var(--font-num);
+  font-size: 11px;
+  color: var(--ink-400);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---- 本文内のスライド間参照 ------------------------------- */
+.xref {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 0.2mm solid var(--accent-line);
+  white-space: nowrap;
+}
+.xref__page::before { content: "（P."; }
+.xref__page::after  { content: "）"; }
+.xref__page {
+  font-family: var(--font-num);
+  font-size: 0.86em;
+  font-variant-numeric: tabular-nums;
+  margin-left: 0.05em;
+}
+/* 解決できなかった参照は、画面上では必ず目立たせる（黙って壊れないように） */
+.xref--broken { color: #b00020; border-bottom-color: #b00020; background: #fdeaec; }
+.xref--broken::after { content: " ⚠参照先なし"; font-size: .8em; }
+
+@media print {
+  .navmenu, .navmenu__scrim { display: none !important; }
+  .xref { color: inherit; border-bottom: none; }
+  .xref--broken { background: none; }
+}
 
 /* ---- Utility ---------------------------------------------- */
 .mt-2 { margin-top: var(--sp-2); }

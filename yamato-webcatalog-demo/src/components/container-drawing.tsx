@@ -19,13 +19,25 @@ const STROKE = { vectorEffect: 'non-scaling-stroke' } as const
 interface Pad { l: number; r: number; t: number; b: number }
 
 function Shell({
-  geom, pad, children, className, label,
-}: { geom: ContainerGeom; pad: Pad; children: React.ReactNode; className?: string; label: string }) {
+  geom, pad, children, className, label, align = 'center',
+}: {
+  geom: ContainerGeom
+  pad: Pad
+  children: React.ReactNode
+  className?: string
+  label: string
+  /**
+   * 枠内での置き方。
+   * 'bottom' は下端合わせ。キャップのように横長の形は縦方向に余白ができるため、
+   * 中央配置だと枠の中で浮いて、隣のボトルと接地面が揃わない。
+   */
+  align?: 'center' | 'bottom'
+}) {
   return (
     <svg
       viewBox={`${-geom.w / 2 - pad.l} ${-pad.t} ${geom.w + pad.l + pad.r} ${geom.h + pad.t + pad.b}`}
       className={cn('block h-full w-full', className)}
-      preserveAspectRatio="xMidYMid meet"
+      preserveAspectRatio={align === 'bottom' ? 'xMidYMax meet' : 'xMidYMid meet'}
       role="img"
     >
       <title>{label}</title>
@@ -36,8 +48,16 @@ function Shell({
 
 /* ---------------- 一覧・カード用の小さなシルエット ---------------- */
 export function ContainerSilhouette({
-  product, className, tone = 'muted',
-}: { product: Product; className?: string; tone?: 'muted' | 'category' }) {
+  product, className, tone = 'muted', shapeClassName, align = 'center',
+}: {
+  product: Product
+  className?: string
+  tone?: 'muted' | 'category'
+  /** 塗り・線のクラスを呼び出し側で指定する（誌面カテゴリー色で塗る場合など） */
+  shapeClassName?: string
+  /** 複数を並べて接地面を揃えたいときは 'bottom' */
+  align?: 'center' | 'bottom'
+}) {
   const geom = React.useMemo(() => buildGeom(product), [product])
   if (!geom) {
     return <div className={cn('flex items-center justify-center text-[0.625rem] text-muted-foreground/60', className)}>—</div>
@@ -49,12 +69,16 @@ export function ContainerSilhouette({
       pad={{ l: m, r: m, t: geom.h * 0.04, b: geom.h * 0.04 }}
       className={className}
       label={`${product.sku} のシルエット`}
+      align={align}
     >
       <path
         d={geom.path}
-        className={tone === 'muted'
-          ? 'fill-muted-foreground/25 stroke-muted-foreground/45'
-          : 'fill-primary/10 stroke-primary/50'}
+        className={
+          shapeClassName ??
+          (tone === 'muted'
+            ? 'fill-muted-foreground/25 stroke-muted-foreground/45'
+            : 'fill-primary/10 stroke-primary/50')
+        }
         strokeWidth={1}
         {...STROKE}
       />

@@ -9,23 +9,35 @@ import { HomeScreen } from '@/screens/home'
 import { ProductsScreen } from '@/screens/products'
 import { ProductScreen } from '@/screens/product'
 import { PageScreen } from '@/screens/page'
+import { ContentsScreen } from '@/screens/contents'
 import { ShortlistScreen } from '@/screens/shortlist'
 import { AboutScreen } from '@/screens/about'
 
-/** 画面の外枠（ヘッダー・フッター・各プロバイダ） */
-export function AppShell({ children }: { children: React.ReactNode }) {
+/**
+ * 状態を持つプロバイダ群。
+ * Next.js 版ではページ遷移で page.tsx のツリーごと差し替わるため、
+ * これを画面の枠（AppShell）側に置くと検討リストと社内モードが遷移のたびに失われる。
+ * そのため app/layout.tsx（遷移をまたいで保持される階層）に置き、
+ * 単一HTML版では App() が直接ラップする。
+ */
+export function AppProviders({ children }: { children: React.ReactNode }) {
   return (
     <InternalModeProvider>
       <ShortlistProvider>
-        <TooltipProvider delayDuration={200}>
-          <div className="flex min-h-dvh flex-col">
-            <SiteHeader />
-            <div className="flex-1">{children}</div>
-            <SiteFooter />
-          </div>
-        </TooltipProvider>
+        <TooltipProvider delayDuration={200}>{children}</TooltipProvider>
       </ShortlistProvider>
     </InternalModeProvider>
+  )
+}
+
+/** 画面の外枠（ヘッダー・フッター） */
+export function AppShell({ children }: { children: React.ReactNode }) {
+  return (
+    <div className="flex min-h-dvh flex-col">
+      <SiteHeader />
+      <div className="flex-1">{children}</div>
+      <SiteFooter />
+    </div>
   )
 }
 
@@ -50,6 +62,7 @@ export function App() {
   const body = React.useMemo(() => {
     if (path === '/') return <HomeScreen />
     if (path === '/products') return <ProductsScreen />
+    if (path === '/contents') return <ContentsScreen />
     if (path === '/shortlist') return <ShortlistScreen />
     if (path === '/about') return <AboutScreen />
     const prod = path.match(/^\/products\/(.+)$/)
@@ -59,7 +72,11 @@ export function App() {
     return <NotFound path={path} />
   }, [path])
 
-  return <AppShell>{body}</AppShell>
+  return (
+    <AppProviders>
+      <AppShell>{body}</AppShell>
+    </AppProviders>
+  )
 }
 
 function NotFound({ path }: { path: string }) {

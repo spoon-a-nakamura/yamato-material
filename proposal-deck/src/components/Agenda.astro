@@ -2,12 +2,35 @@
 import { deck } from '../deck.config';
 interface Props {
   title?: string;
+  /** 左列に入れる項目数。ここで左右を分割します。 */
   rows?: number;
-  items: { no?: string; t: string; s?: string; part?: string }[];
+  items: { no?: string; t: string; s?: string; part?: string; ref?: string }[];
 }
 const { title = '目次', rows = 13, items } = Astro.props;
+
+/* 目次の各行から、リンク先スライドを特定するためのキーを組み立てます。
+   キーの文法は <Ref> と共通で、Deck.astro の解決器が両方を処理します。
+   ・ref 指定あり  → id:<slide id>
+   ・PART 行       → part:<番号>（Section の no と対応）
+   ・章番号あり    → ch:<番号>（Slide の chapter と対応）
+   ページ番号は並び順で変わるため、ここでは持たせません。 */
+const keyOf = (it: Props['items'][number]) => {
+  if (it.ref) return `id:${it.ref}`;
+  if (it.part) {
+    const m = String(it.part).match(/(\d+)/);
+    return m ? `part:${Number(m[1])}` : undefined;
+  }
+  if (it.no && /^\d+$/.test(it.no)) return `ch:${Number(it.no)}`;
+  return undefined;
+};
+
+/* 左右を別の要素に分けます。
+   1つのグリッドに grid-auto-flow: column で流し込むと行トラックが
+   左右で共有され、片方の列の2行項目がもう片方の同じ行まで
+   引き伸ばしてしまうためです。 */
+const columns = [items.slice(0, rows), items.slice(rows)];
 ---
-<section class="slide">
+<section id="contents" class="slide">
   <header class="slide__header">
     <div class="slide__chapter-label"><span>CONTENTS</span></div>
     <div class="slide__brand">{deck.brandMark}</div>
@@ -16,23 +39,31 @@ const { title = '目次', rows = 13, items } = Astro.props;
     <h2 class="slide__title">{title}</h2>
   </div>
   <div class="slide__body">
-    <div class="agenda" style={`--rows:${rows}`}>
-      {items.map((it) =>
-        it.part ? (
-          <div class="agenda__part">
-            <span class="agenda__part-no">{it.part}</span>
-            <span class="agenda__part-t" set:html={it.t} />
-          </div>
-        ) : (
-          <div class="agenda__item">
-            <span class="agenda__no">{it.no}</span>
-            <span class="agenda__t">
-              <Fragment set:html={it.t} />
-              {it.s && <small set:html={it.s} />}
-            </span>
-          </div>
-        )
-      )}
+    <div class="agenda">
+      {columns.map((col) => (
+        <div class="agenda__col">
+          {col.map((it) => {
+            const key = keyOf(it);
+            const Tag = key ? 'a' : 'div';
+            return it.part ? (
+              <Tag class="agenda__part" data-ref={key}>
+                <span class="agenda__part-no">{it.part}</span>
+                <span class="agenda__part-t" set:html={it.t} />
+                <span class="agenda__page" />
+              </Tag>
+            ) : (
+              <Tag class="agenda__item" data-ref={key}>
+                <span class="agenda__no">{it.no}</span>
+                <span class="agenda__t">
+                  <Fragment set:html={it.t} />
+                  {it.s && <small set:html={it.s} />}
+                </span>
+                <span class="agenda__page" />
+              </Tag>
+            );
+          })}
+        </div>
+      ))}
     </div>
   </div>
   <footer class="slide__footer">

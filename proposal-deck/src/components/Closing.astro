@@ -3,7 +3,7 @@ import { deck } from '../deck.config';
 interface Props { msg?: string; }
 const { msg = '以上、ご検討のほど、<br />どうぞよろしくお願いいたします。' } = Astro.props;
 ---
-<section class="slide closing">
+<section id="closing" class="slide closing">
   <header class="slide__header">
     <div class="slide__chapter-label"></div>
     <div class="slide__brand">{deck.brandMark}</div>

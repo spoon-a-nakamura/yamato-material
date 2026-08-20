@@ -1,0 +1,252 @@
+/* ============================================================
+   Theme: Swiss / International Typographic Style
+   ------------------------------------------------------------
+   ・階層は「位置」と「級数」でつくる。面（塗り）を使わない。
+   ・角丸・影・淡色地をすべて排し、罫は水平方向のみ。
+   ・差し色は1色（signal red）。線と数字だけに使う。
+   ============================================================ */
+
+:root[data-theme="swiss"] {
+  /* ---- Color: 無彩色グレースケール ＋ 差し色1色 ---------- */
+  --paper:        #ffffff;
+  --paper-tint:   #f4f4f4;
+  --paper-shade:  #e8e8e8;
+
+  --ink-900:      #0f0f0f;
+  --ink-700:      #333333;
+  --ink-500:      #6b6b6b;
+  --ink-400:      #949494;
+  --ink-300:      #c2c2c2;
+
+  --rule-strong:  #0f0f0f;
+  --rule:         #d4d4d4;
+  --rule-soft:    #e9e9e9;
+
+  --accent:       #e2231a;   /* signal red */
+  --accent-mid:   #e2231a;
+  --accent-tint:  transparent;
+  --accent-line:  #e2231a;
+
+  --mark:         #0f0f0f;
+  --mark-tint:    transparent;
+
+  /* ---- Typography ---------------------------------------- */
+  --font-sans: "Zen Kaku Gothic New", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+               "Yu Gothic Medium", "Meiryo", system-ui, sans-serif;
+  --font-num:  "Archivo", "Zen Kaku Gothic New", system-ui, sans-serif;
+
+  /* 級数差を大きく取り、見出しと本文のコントラストで階層をつくる */
+  --fs-cover:      40pt;
+  --fs-chapter-no: 108pt;
+  --fs-chapter:    30pt;
+  --fs-title:      25pt;
+  --fs-lead:       10.6pt;
+  --fs-h4:         11pt;
+  --fs-body:       10.6pt;
+  --fs-table:      9.6pt;
+  --fs-small:      9.4pt;
+  --fs-label:      7.6pt;
+
+  --lh-tight:  1.24;
+  --lh-head:   1.4;
+  --lh-body:   1.72;
+  --lh-table:  1.55;
+
+  --ls-label: 0.16em;
+  --ls-head:  0;
+
+  --radius: 0;
+}
+
+/* ---- 面と装飾を全廃 --------------------------------------- */
+[data-theme="swiss"] .slide {
+  box-shadow: none;
+  border: 0.25mm solid var(--rule);
+}
+[data-theme="swiss"] .card,
+[data-theme="swiss"] .step,
+[data-theme="swiss"] .keypoint,
+[data-theme="swiss"] .step__tag,
+[data-theme="swiss"] .badge {
+  border-radius: 0;
+  background: transparent;
+}
+
+/* ---- Header / Footer: ヘアラインのみ ---------------------- */
+[data-theme="swiss"] .slide__header { border-bottom: 0.25mm solid var(--rule-strong); }
+[data-theme="swiss"] .slide__chapter-label b { color: var(--accent); font-family: var(--font-num); }
+[data-theme="swiss"] .slide__brand { font-family: var(--font-num); font-weight: 500; }
+[data-theme="swiss"] .slide__footer { border-top: 0.25mm solid var(--rule); }
+[data-theme="swiss"] .slide__pageno { font-family: var(--font-num); font-size: 11pt; color: var(--ink-900); }
+
+/* ---- Title block: 短いアクセント線を全幅の罫に置換 --------- */
+[data-theme="swiss"] .slide__no {
+  font-family: var(--font-num);
+  color: var(--accent);
+  letter-spacing: 0.08em;
+}
+[data-theme="swiss"] .slide__title { font-weight: 700; }
+[data-theme="swiss"] .slide__lead { color: var(--ink-500); max-width: 190mm; }
+[data-theme="swiss"] .slide__titleblock::after {
+  width: 100%;
+  height: 0.2mm;
+  background: var(--rule);
+  margin-top: var(--sp-3);
+}
+
+/* ---- 小見出し: 左縦棒を廃し、上罫＋赤ラベルに ------------- */
+[data-theme="swiss"] .slide__body h4,
+[data-theme="swiss"] .h4 {
+  padding-left: 0;
+  border-left: none;
+  border-top: 0.6mm solid var(--rule-strong);
+  padding-top: var(--sp-2);
+  font-size: var(--fs-h4);
+  letter-spacing: 0;
+}
+[data-theme="swiss"] .slide__body h5,
+[data-theme="swiss"] .h5 { color: var(--accent); letter-spacing: 0; }
+
+/* ---- 強調: 蛍光ペン風グラデを廃し、赤の下罫に ------------- */
+[data-theme="swiss"] .slide__body em {
+  background: none;
+  box-shadow: inset 0 -0.5mm 0 var(--accent);
+}
+
+/* ---- リスト: 丸を正方形に、番号は赤の素の数字 ------------- */
+[data-theme="swiss"] .slide__body ul > li::before {
+  border-radius: 0;
+  width: 1.4mm; height: 1.4mm;
+  top: 2.3mm;
+  background: var(--accent);
+}
+[data-theme="swiss"] .slide__body li > ul > li::before { background: none; border: 0.25mm solid var(--ink-400); }
+[data-theme="swiss"] .slide__body ol > li::before {
+  background: none;
+  border-radius: 0;
+  color: var(--accent);
+  font-family: var(--font-num);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  text-align: left;
+  width: 5mm;
+  line-height: inherit;
+  top: 0;
+}
+
+/* ---- Card: 塗りと枠を廃し、上罫でモジュールを示す --------- */
+[data-theme="swiss"] .card {
+  border: none;
+  border-top: 0.6mm solid var(--rule-strong);
+  padding: var(--sp-2) 0 0;
+}
+[data-theme="swiss"] .card--tint { border-top-color: var(--rule); }
+[data-theme="swiss"] .card--accent { border-top-color: var(--accent); }
+[data-theme="swiss"] .card--mark { border-top-color: var(--accent); }
+[data-theme="swiss"] .card__label {
+  font-family: var(--font-num);
+  color: var(--ink-400);
+  font-weight: 600;
+}
+[data-theme="swiss"] .card--accent .card__label,
+[data-theme="swiss"] .card--mark .card__label { color: var(--accent); }
+
+/* ---- Keypoint: 面を廃し、上下の罫で挟む ------------------- */
+[data-theme="swiss"] .keypoint {
+  border-left: none;
+  border-top: 0.8mm solid var(--accent);
+  border-bottom: 0.25mm solid var(--rule);
+  padding: var(--sp-3) 0;
+  font-size: 12.5pt;
+  line-height: 1.6;
+}
+
+/* ---- Steps: 丸バッジを廃し、大きな数字を置く -------------- */
+[data-theme="swiss"] .step {
+  border: none;
+  border-top: 0.6mm solid var(--rule-strong);
+  padding: var(--sp-2) 0 0;
+  padding-top: calc(var(--sp-2) + 6mm);
+}
+[data-theme="swiss"] .step::before {
+  background: none;
+  border-radius: 0;
+  color: var(--accent);
+  font-family: var(--font-num);
+  font-size: 15pt;
+  font-weight: 700;
+  width: auto; height: auto;
+  line-height: 1;
+  top: var(--sp-2);
+  left: 0;
+  text-align: left;
+}
+[data-theme="swiss"] .step__tag {
+  border: none;
+  padding: 0;
+  color: var(--accent);
+  font-weight: 600;
+  border-top: 0.25mm solid var(--accent);
+  padding-top: 1.2mm;
+  width: 100%;
+}
+
+/* ---- Badge: 角丸なしのベタ ------------------------------- */
+[data-theme="swiss"] .badge { background: var(--accent); color: #fff; }
+[data-theme="swiss"] .badge--outline { background: transparent; color: var(--accent); border: 0.25mm solid var(--accent); }
+[data-theme="swiss"] .badge--mark { background: var(--ink-900); }
+
+/* ---- Table: ヘッダの地色を廃し、罫の強弱のみ -------------- */
+[data-theme="swiss"] .slide__body table thead th {
+  background: none;
+  color: var(--ink-900);
+  border-bottom: 0.5mm solid var(--rule-strong);
+  border-top: 0.5mm solid var(--rule-strong);
+  font-family: var(--font-num);
+}
+[data-theme="swiss"] .t-def table td:first-child,
+[data-theme="swiss"] .t-def table th:first-child,
+[data-theme="swiss"] .t-def table thead th:first-child { background: none; }
+[data-theme="swiss"] .t-zebra table tbody tr:nth-child(even) td { background: none; }
+[data-theme="swiss"] .slide__body table tbody tr:last-child td { border-bottom: 0.5mm solid var(--rule-strong); }
+
+/* ---- Flow / Metric --------------------------------------- */
+[data-theme="swiss"] .flow__arrow,
+[data-theme="swiss"] .ba__arrow { color: var(--accent); }
+[data-theme="swiss"] .metric__value { font-family: var(--font-num); font-size: 30pt; color: var(--ink-900); }
+[data-theme="swiss"] .metric__label { font-family: var(--font-num); }
+[data-theme="swiss"] .defrow__k { font-size: var(--fs-small); }
+
+/* ---- Cover: 非対称・全幅の赤罫 ---------------------------- */
+[data-theme="swiss"] .cover { padding: 38mm var(--pad-x) 16mm; }
+[data-theme="swiss"] .cover__eyebrow { font-family: var(--font-num); color: var(--accent); letter-spacing: 0.2em; }
+[data-theme="swiss"] .cover__title { letter-spacing: -0.01em; line-height: 1.22; max-width: 230mm; }
+[data-theme="swiss"] .cover__rule { width: 100%; height: 1.2mm; background: var(--accent); margin: var(--sp-5) 0 var(--sp-4); }
+[data-theme="swiss"] .cover__foot { border-top: 0.25mm solid var(--rule-strong); }
+[data-theme="swiss"] .cover__meta { font-family: var(--font-num); }
+
+/* ---- Section: 藍ベタを廃し、白地＋巨大な赤数字 ------------ */
+[data-theme="swiss"] .section { background: var(--paper); color: var(--ink-900); }
+[data-theme="swiss"] .section .slide__header { border-bottom-color: var(--rule-strong); }
+[data-theme="swiss"] .section .slide__chapter-label { color: var(--ink-400); }
+[data-theme="swiss"] .section .slide__brand { color: var(--ink-400); }
+[data-theme="swiss"] .section__eyebrow { color: var(--accent); font-family: var(--font-num); letter-spacing: 0.2em; }
+[data-theme="swiss"] .section .section__no {
+  font-family: var(--font-num);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: -0.03em;
+  margin-top: -4mm;
+}
+[data-theme="swiss"] .section .section__rule { width: 100%; height: 0.25mm; background: var(--rule-strong); }
+[data-theme="swiss"] .section .section__title { color: var(--ink-900); }
+[data-theme="swiss"] .section .section__lead { color: var(--ink-500); }
+[data-theme="swiss"] .section .section__items { color: var(--ink-500); border-top-color: var(--rule); }
+[data-theme="swiss"] .section .slide__footer { border-top-color: var(--rule); color: var(--ink-400); }
+[data-theme="swiss"] .section .slide__pageno { color: var(--ink-900); }
+
+/* ---- Agenda: 番号をArchivoに ------------------------------ */
+[data-theme="swiss"] .agenda__no,
+[data-theme="swiss"] .agenda__page,
+[data-theme="swiss"] .agenda__part-no { font-family: var(--font-num); }
+[data-theme="swiss"] .agenda__part { border-bottom-width: 0.5mm; }

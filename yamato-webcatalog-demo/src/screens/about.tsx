@@ -16,9 +16,7 @@ export function AboutScreen() {
     <div className="mx-auto max-w-3xl px-4 py-6 pb-20">
       <h1 className="text-xl font-bold tracking-tight">このデモサイトについて</h1>
       <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-        「Webカタログ構築のご提案書」（2026年8月21日／スタジオスプーン株式会社）に記載した機能を、
-        バックエンド無しのフロントエンドのみで再現した確認用のデモです。
-        商品データはブラウザに同梱したJSONを読み込んでおり、サーバーとの通信は行いません。
+        こちらのサイトは「Webカタログ構築のご提案書」に記載した機能を、管理画面無しの仮想環境で再現した仕上がりイメージ確認用のデモです。
       </p>
 
       <SectionTitle className="mt-8" sub="画面上でも「デモデータ」バッジで区別しています">データの出典</SectionTitle>
@@ -52,7 +50,7 @@ export function AboutScreen() {
             <tr className="border-t">
               <td className="px-3 py-2">誌面ページ</td>
               <td className="num px-3 py-2 text-right font-medium">{dataset.pages.length}</td>
-              <td className="px-3 py-2 text-muted-foreground">00_ページ対応表.csv（ノンブル 1〜77）</td>
+              <td className="px-3 py-2 text-muted-foreground">現状のWebカタログを参照して作成いたしました</td>
             </tr>
           </tbody>
         </table>
@@ -60,31 +58,15 @@ export function AboutScreen() {
 
       <Notice className="mt-3">
         メーカー名は、実データ側はxlsxの記載どおり、デモデータ側は「（デモ）A硝子」のように架空の名称にしています。
-        実在企業に架空の商品を紐付けないための措置です。
       </Notice>
-
-      <SectionTitle className="mt-8" sub="推測で埋めず、確認が必要な項目として残しています">
-        データ変換時に検出した確認事項（{dataIssues.length}件）
-      </SectionTitle>
-      <ul className="space-y-1.5">
-        {dataIssues.map((i, k) => (
-          <li key={k} className="rounded-md border border-orange-200 bg-orange-50/60 px-3 py-2 text-spec">
-            <span className="font-medium">{i.sku}</span>
-            <span className="mx-1.5 text-muted-foreground">／</span>
-            <span>{i.field}</span>
-            {i.value && <span className="ml-1.5 rounded bg-background px-1 font-mono text-[0.6875rem]">{i.value}</span>}
-            <p className="mt-0.5 text-[0.6875rem] text-orange-900">{i.note}</p>
-          </li>
-        ))}
-      </ul>
 
       <SectionTitle className="mt-8">デモで再現していない範囲</SectionTitle>
       <ul className="list-inside list-disc space-y-1.5 text-sm leading-relaxed text-muted-foreground">
-        <li>管理画面（商品データベース／CSV一括登録）— バックエンドを伴うため、画面設計のみ設計書に記載</li>
-        <li>Excel・Spreadsheet の同期（提案書 10-1）— 同梱JSONで代替</li>
-        <li>共有クラウドドライブ連携（オプション④）— ファイル名規則の設計のみ</li>
-        <li>検討リストのお客さま単位の保存 — メモリ内保持のみ（タブを閉じるとリセット）</li>
-        <li>詳細図面 — メーカー支給図面が未支給のため、仕様値からの生成図で表示枠を再現</li>
+        <li>管理画面（商品データベース／CSV一括登録等）</li>
+        <li>Excel・Spreadsheet の同期（提案書 10-1）</li>
+        <li>共有クラウドドライブ連携（オプション④）</li>
+        <li>検討リストのお客さま単位の保存</li>
+        <li>詳細図面（メーカー支給図面を挿入予定）</li>
       </ul>
     </div>
   )

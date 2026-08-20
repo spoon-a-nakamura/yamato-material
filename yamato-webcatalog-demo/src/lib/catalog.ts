@@ -39,22 +39,32 @@ const CAT_CLASSES = {
   film: {
     bar: 'bg-cat-film', text: 'text-cat-film-fg', bg: 'bg-cat-film-bg',
     border: 'border-cat-film', ring: 'ring-cat-film',
+    hoverBg: 'hover:bg-cat-film-bg',
+    shape: 'fill-cat-film/25 stroke-cat-film group-hover:fill-cat-film/50',
   },
   plastic: {
     bar: 'bg-cat-plastic', text: 'text-cat-plastic-fg', bg: 'bg-cat-plastic-bg',
     border: 'border-cat-plastic', ring: 'ring-cat-plastic',
+    hoverBg: 'hover:bg-cat-plastic-bg',
+    shape: 'fill-cat-plastic/25 stroke-cat-plastic group-hover:fill-cat-plastic/50',
   },
   glass: {
     bar: 'bg-cat-glass', text: 'text-cat-glass-fg', bg: 'bg-cat-glass-bg',
     border: 'border-cat-glass', ring: 'ring-cat-glass',
+    hoverBg: 'hover:bg-cat-glass-bg',
+    shape: 'fill-cat-glass/25 stroke-cat-glass group-hover:fill-cat-glass/50',
   },
   liquor: {
     bar: 'bg-cat-liquor', text: 'text-cat-liquor-fg', bg: 'bg-cat-liquor-bg',
     border: 'border-cat-liquor', ring: 'ring-cat-liquor',
+    hoverBg: 'hover:bg-cat-liquor-bg',
+    shape: 'fill-cat-liquor/25 stroke-cat-liquor group-hover:fill-cat-liquor/50',
   },
   cap: {
     bar: 'bg-cat-cap', text: 'text-cat-cap-fg', bg: 'bg-cat-cap-bg',
     border: 'border-cat-cap', ring: 'ring-cat-cap',
+    hoverBg: 'hover:bg-cat-cap-bg',
+    shape: 'fill-cat-cap/25 stroke-cat-cap group-hover:fill-cat-cap/50',
   },
 } as const
 

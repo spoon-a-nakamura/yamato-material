@@ -83,7 +83,9 @@ export function CatalogSearch({
             )}
           />
         </div>
-        <Button type="submit" size={hero ? 'xl' : 'default'} className={cn(hero && 'rounded-lg')}>
+        {/* hero では入力欄が h-16 なので、ボタンも同じ高さに揃える
+            （size="xl" は h-14 のため、そのままだと 8px 低くなる） */}
+        <Button type="submit" size={hero ? 'xl' : 'default'} className={cn(hero && 'h-16 rounded-lg')}>
           {hero ? 'このページを開く' : '検索'}
           <ArrowRight />
         </Button>

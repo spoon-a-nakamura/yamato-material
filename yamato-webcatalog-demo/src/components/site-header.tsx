@@ -1,6 +1,6 @@
 'use client'
 import * as React from 'react'
-import { ClipboardList, Eye, EyeOff, Lock, Menu, X } from 'lucide-react'
+import { BookOpen, ClipboardList, Eye, EyeOff, Lock, Menu, X } from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Dialog, DialogContent, DialogDescription, DialogTitle } from '@/components/ui/dialog'
@@ -11,6 +11,7 @@ import { Link, useNav } from '@/app/nav'
 import { DEMO_PASSCODE, useInternalMode } from '@/app/internal-mode'
 import { useShortlist } from '@/app/shortlist'
 import { CATEGORIES, catClasses, countByCategory } from '@/lib/catalog'
+import { LOGO_YAMATO } from '@/assets/logo'
 import { cn } from '@/lib/utils'
 
 function InternalModeControl({ compact }: { compact?: boolean }) {
@@ -133,12 +134,31 @@ export function SiteHeader() {
         </Button>
 
         <Link href="/" className="flex shrink-0 items-center gap-2">
-          <span className="text-[0.9375rem] font-bold leading-tight tracking-tight">
-            Yamato Material
-            <span className="ml-1.5 font-medium text-muted-foreground">Webカタログ</span>
+          {/* スマートフォンではロゴと横並びにすると「Webカタログ」を置く幅が足りないため、
+              SPだけ縦積みにする（ヘッダー高 56px に収まる） */}
+          <span className="flex flex-col items-start gap-px sm:flex-row sm:items-center sm:gap-2">
+            {/* ロゴは data URI。単一HTML版（file:// の1ファイル配布）でも表示させるため。
+                width/height は原寸を渡し、読み込み前のレイアウトのずれを防ぐ */}
+            <img
+              src={LOGO_YAMATO}
+              alt="ヤマトマテリアル株式会社"
+              width={496}
+              height={96}
+              className="h-6 w-auto sm:h-8"
+            />
+            <span className="text-[0.6875rem] font-medium leading-none text-muted-foreground sm:text-[0.9375rem]">
+              Webカタログ
+            </span>
           </span>
-          <Badge variant="demo" className="hidden sm:inline-flex">デモ</Badge>
+          <Badge variant="demo" className="hidden shrink-0 sm:inline-flex">デモ</Badge>
         </Link>
+
+        <Button asChild variant="ghost" size="sm" className="hidden shrink-0 gap-1.5 lg:inline-flex">
+          <Link href="/contents">
+            <BookOpen className="size-3.5" />
+            目次
+          </Link>
+        </Button>
 
         <div className="ml-auto hidden max-w-md flex-1 lg:block">
           <CatalogSearch />
@@ -158,6 +178,12 @@ export function SiteHeader() {
       <Sheet open={menu} onOpenChange={setMenu}>
         <SheetContent side="left" className="p-4">
           <SheetTitle className="mb-4 pr-8">カテゴリー</SheetTitle>
+          <Button asChild variant="outline" className="mb-3 w-full justify-start gap-2">
+            <Link href="/contents" onClick={() => setMenu(false)}>
+              <BookOpen className="size-4" />
+              目次（全ページ）
+            </Link>
+          </Button>
           <CategoryNav onNavigate={() => setMenu(false)} />
           <div className="mt-6 flex flex-col gap-2 border-t pt-4">
             <InternalModeControl compact />

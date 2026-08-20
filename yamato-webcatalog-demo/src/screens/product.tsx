@@ -121,7 +121,7 @@ export function ProductScreen({ slug }: { slug: string }) {
             )}
           </div>
 
-          <h1 className="mt-1.5 text-2xl font-bold tracking-tight">{p.sku}</h1>
+          <h1 className="num mt-1.5 text-[1.75rem] font-bold leading-tight tracking-[-0.04em] sm:text-[2rem]">{p.sku}</h1>
           <p className="mt-1 text-sm text-muted-foreground">
             {p.group}
             {p.series && <> ／ {p.series}</>}

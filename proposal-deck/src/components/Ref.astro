@@ -1,0 +1,36 @@
+---
+/* ============================================================
+   スライド間の相互参照。
+   ------------------------------------------------------------
+   ページ番号は並び順で変わるため、原稿には決して書きません。
+   「どのスライドを指すか」だけを書き、リンク先とページ番号は
+   描画時に解決します。並べ替え・追加・削除に追随します。
+
+     <Ref ch="8">第8章</Ref>        … 第8章の先頭スライドへ
+     <Ref slide="5-1" />            … スライド 5-1 へ
+     <Ref part="3">PART 3</Ref>     … PART 3 の扉へ
+     <Ref id="intro">はじめに</Ref> … id を明示したスライドへ
+
+   page={false} を渡すとページ番号の併記を省きます。
+   解決できなかった場合は画面上でのみ警告表示になり、
+   `npm run check` がビルドを失敗させます（黙って壊れません）。
+   ============================================================ */
+interface Props {
+  ch?: string | number;
+  part?: string | number;
+  slide?: string;
+  id?: string;
+  page?: boolean;
+}
+const { ch, part, slide, id, page = true } = Astro.props;
+
+const key =
+  id !== undefined ? `id:${id}`
+  : slide !== undefined ? `slide:${slide}`
+  : part !== undefined ? `part:${part}`
+  : ch !== undefined ? `ch:${ch}`
+  : undefined;
+
+if (!key) throw new Error('<Ref> には ch / part / slide / id のいずれかが必要です。');
+---
+<a class="xref" data-ref={key} data-page={page ? '1' : undefined}><slot />{page && <span class="xref__page" />}</a>

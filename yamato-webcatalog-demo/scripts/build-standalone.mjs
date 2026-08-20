@@ -6,6 +6,7 @@
  */
 import { build } from 'esbuild'
 import { readFile, writeFile, mkdir, rm } from 'node:fs/promises'
+import { Buffer } from 'node:buffer'
 import { dirname, resolve } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import postcss from 'postcss'
@@ -45,6 +46,25 @@ const js = await build({
 })
 const jsCode = js.outputFiles[0].text
 
+/* ---- meta（src/lib/meta.ts と定義を合わせる） ---- */
+// TS を直接 import できないため、esbuild で一時的に評価して初期表示ぶんの meta を取り出す
+const metaBundle = await build({
+  entryPoints: [resolve(root, 'src/lib/meta.ts')],
+  bundle: true,
+  format: 'esm',
+  target: ['es2020'],
+  loader: { '.json': 'json' },
+  alias: { '@': resolve(root, 'src') },
+  write: false,
+})
+const metaMod = await import(
+  'data:text/javascript;base64,' + Buffer.from(metaBundle.outputFiles[0].text).toString('base64')
+)
+const { title: homeTitle, description: homeDescription } = metaMod.pageMeta('/')
+
+const escapeAttr = (v) =>
+  v.replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;').replace(/>/g, '&gt;')
+
 /* ---- CSS ---- */
 const cssSrc = await readFile(resolve(root, 'src/styles/globals.css'), 'utf8')
 const cssResult = await postcss([
@@ -64,7 +84,15 @@ const html = `<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<title>ヤマトマテリアル Webカタログ（デモ）</title>
+<meta name="format-detection" content="telephone=no,address=no,email=no">
+<meta name="description" content="${escapeAttr(homeDescription)}">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="ja_JP">
+<meta property="og:site_name" content="${escapeAttr(metaMod.SITE_NAME)}">
+<meta property="og:title" content="${escapeAttr(homeTitle)}">
+<meta property="og:description" content="${escapeAttr(homeDescription)}">
+<meta name="theme-color" content="#33415c">
+<title>${escapeAttr(homeTitle)}</title>
 <style>${css}</style>
 </head>
 <body>

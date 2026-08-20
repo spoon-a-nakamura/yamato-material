@@ -48,7 +48,7 @@ export function ProductCard({ p }: { p: Product }) {
       <div className="min-w-0 flex-1">
         <div className="flex items-start gap-2">
           <h3 className="min-w-0 flex-1 text-sm font-semibold leading-snug">
-            <Link href={`/products/${p.slug}`} className="hover:text-primary hover:underline">{p.sku}</Link>
+            <Link href={`/products/${p.slug}`} className="num hover:underline">{p.sku}</Link>
           </h3>
           <Checkbox checked={picked} onCheckedChange={() => toggle(p.slug)} aria-label={`${p.sku} を検討リストに追加`} className="mt-0.5" />
         </div>

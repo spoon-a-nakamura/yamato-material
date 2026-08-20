@@ -2,6 +2,8 @@ import type { Config } from 'tailwindcss'
 
 /**
  * デザインシステムの単一の情報源。
+ * UI基調色・角丸・影はデジタル庁デザインシステムのトークンに準拠
+ * （@digital-go-jp/design-tokens v2.0.1 / MIT。出典は globals.css の冒頭に記載）。
  * 色・角丸・影・タイポは CSS 変数（src/app 側 globals.css）で定義し、
  * ここでは「意味のある名前」だけを Tailwind に橋渡しする。
  * → 配色変更は globals.css の :root だけで完結する。
@@ -60,6 +62,18 @@ const config: Config = {
         sans: ['var(--font-sans)'],
         mono: ['var(--font-mono)'],
       },
+      /**
+       * 公式トークンの font-weight は 400 と 700 の2段階のみ。
+       * 中間の太さ（500/600）は「AI生成っぽさ」の一因でもあるため、
+       * クラス名は既存のまま、実際の重みだけを2段階に寄せる。
+       * → コード側の font-medium / font-semibold を書き換えずに済む。
+       */
+      fontWeight: {
+        normal: '400',
+        medium: '400',
+        semibold: '700',
+        bold: '700',
+      },
       fontSize: {
         // 仕様表の情報密度用スケール
         spec: ['0.8125rem', { lineHeight: '1.25rem' }],
@@ -67,8 +81,14 @@ const config: Config = {
       },
       spacing: { 'row': 'var(--row-h)' },
       boxShadow: {
-        card: '0 1px 2px 0 hsl(var(--foreground) / 0.04), 0 1px 3px 0 hsl(var(--foreground) / 0.06)',
-        pop: '0 4px 12px -2px hsl(var(--foreground) / 0.10), 0 2px 6px -2px hsl(var(--foreground) / 0.08)',
+        /**
+         * デジタル庁デザインシステムは面の階層を罫線と面色で作り、影は
+         * 浮いている要素（ダイアログ・ドロワー等）にだけ使う。
+         * そのため card は影を持たせず、border で輪郭を出す。
+         * pop は公式 --elevation-2 に相当する値。
+         */
+        card: 'none',
+        pop: '0 2px 12px 2px rgb(0 0 0 / 0.10), 0 1px 6px 0 rgb(0 0 0 / 0.30)',
       },
       keyframes: {
         'accordion-down': { from: { height: '0' }, to: { height: 'var(--radix-accordion-content-height)' } },
