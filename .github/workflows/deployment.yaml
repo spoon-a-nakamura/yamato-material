@@ -43,7 +43,7 @@ jobs:
           password: ${{ secrets.FTPS_PASSWORD }}
           protocol: ftps
           local-dir: ./proposal/dist/
-          server-dir: ./yamato-material/deck/
+          server-dir: ./yamato-material/proposal/
 
       - name: sync webcatalog
         uses: SamKirkland/FTP-Deploy-Action@4.3.2
@@ -53,4 +53,4 @@ jobs:
           password: ${{ secrets.FTPS_PASSWORD }}
           protocol: ftps
           local-dir: ./demo/out/
-          server-dir: ./yamato-material/catalog/
+          server-dir: ./yamato-material/demo/

@@ -11,7 +11,6 @@ export const deck = {
   client: 'ヤマトマテリアル株式会社',
   clientHonorific: '御中',
   company: 'スタジオスプーン株式会社',
-  author: '中村 明史',
   date: '2026年8月21日',
   brandMark: 'STUDIO SPOON',
   /* ヘッダーのブランド表記のリンク先。控えめに辿れるようにするためのもの。 */
@@ -20,14 +19,14 @@ export const deck = {
 
   /* ---- デモ（Webカタログ試作）の公開先 ------------------------
      デプロイ構成では以下のように並びます（.github/workflows/deployment.yaml）。
-       提案書デッキ → /yamato-material/deck/
-       デモ         → /yamato-material/catalog/
+       提案書デッキ → /yamato-material/proposal/
+       デモ         → /yamato-material/demo/
      そのため既定は相対パスにしています。公開サイト上ではこれで解決します。
 
      ⚠ PDFやローカルHTMLから開く場合、相対パスは解決できません。
-       PDFで配布する際は絶対URL（例 https://example.com/yamato-material/catalog/）
+       PDFで配布する際は絶対URL（例 https://example.com/yamato-material/demo/）
        に書き換えてください。npm run check が相対パスのまま残っていれば警告します。 */
-  demoUrl: '../catalog/',
+  demoUrl: '../demo/',
 
   /* 商品詳細画面へリンクするときのサンプル商品。
      実在する slug を指定します（demo/src/data/dataset.json の slug）。 */
