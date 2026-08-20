@@ -218,6 +218,12 @@
 [data-theme="swiss"] .defrow__k { font-size: var(--fs-small); }
 
 /* ---- Cover: 非対称・全幅の赤罫 ---------------------------- */
+/* 共通CSS側で表紙を藍地にしたため、この案では白地に戻す */
+[data-theme="swiss"] .cover { background: var(--paper); color: var(--ink-900); }
+[data-theme="swiss"] .cover__title { color: var(--ink-900); }
+[data-theme="swiss"] .cover__to { color: var(--ink-900); }
+[data-theme="swiss"] .cover__meta { color: var(--ink-500); }
+[data-theme="swiss"] .cover .slide__brand { color: var(--ink-300); }
 [data-theme="swiss"] .cover { padding: 38mm var(--pad-x) 16mm; }
 [data-theme="swiss"] .cover__eyebrow { font-family: var(--font-num); color: var(--accent); letter-spacing: 0.2em; }
 [data-theme="swiss"] .cover__title { letter-spacing: -0.01em; line-height: 1.22; max-width: 230mm; }

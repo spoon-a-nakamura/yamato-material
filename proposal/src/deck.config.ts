@@ -5,7 +5,7 @@ export type DeckTheme = 'base' | 'swiss' | 'mincho' | 'tech' | 'air';
 
 export const deck = {
   /* 意匠テーマ。この1行の差し替えで全ページの見た目が変わります。 */
-  theme: 'air' as DeckTheme,
+  theme: 'base' as DeckTheme,
 
   docTitle: 'Webカタログ構築のご提案書',
   client: 'ヤマトマテリアル株式会社',

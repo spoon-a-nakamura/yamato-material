@@ -211,6 +211,12 @@
 [data-theme="mincho"] .defrow__k { font-family: var(--font-serif); }
 
 /* ---- Cover ---------------------------------------------- */
+/* 共通CSS側で表紙を藍地にしたため、この案では白地に戻す */
+[data-theme="mincho"] .cover { background: var(--paper); color: var(--ink-900); }
+[data-theme="mincho"] .cover__title { color: var(--ink-900); }
+[data-theme="mincho"] .cover__to { color: var(--ink-900); }
+[data-theme="mincho"] .cover__meta { color: var(--ink-500); }
+[data-theme="mincho"] .cover .slide__brand { color: var(--ink-300); }
 [data-theme="mincho"] .cover { padding: 44mm var(--pad-x) 18mm; }
 [data-theme="mincho"] .cover__eyebrow { color: var(--accent); letter-spacing: 0.3em; font-weight: 400; }
 [data-theme="mincho"] .cover__title { font-weight: 900; letter-spacing: 0.06em; line-height: 1.5; }

@@ -311,10 +311,10 @@ body {
 
 /* ---- Keypoint band --------------------------------------- */
 .keypoint {
-  border-left: 1.2mm solid var(--accent);
+  border: 0.1mm solid var(--accent);
   background: var(--accent-tint);
   padding: var(--sp-3) var(--sp-4);
-  border-radius: 0 var(--radius) var(--radius) 0;
+  border-radius: var(--radius);
   font-size: var(--fs-lead);
   line-height: 1.7;
   color: var(--ink-900);
@@ -442,13 +442,15 @@ body {
    Special slides
    ============================================================ */
 /* Cover */
-.cover { justify-content: space-between; padding: 46mm var(--pad-x) 18mm; }
-.cover__eyebrow { font-size: var(--fs-label); letter-spacing: 0.18em; color: var(--accent); font-weight: 700; }
-.cover__title { margin: var(--sp-4) 0 0; font-size: var(--fs-cover); font-weight: 700; line-height: 1.35; color: var(--ink-900); letter-spacing: 0.01em; }
-.cover__rule { width: 24mm; height: 0.7mm; background: var(--accent); margin: var(--sp-5) 0 var(--sp-4); }
-.cover__to { font-size: 13pt; font-weight: 700; color: var(--ink-900); }
-.cover__meta { font-size: var(--fs-body); color: var(--ink-500); line-height: 1.9; }
-.cover__foot { display: flex; align-items: flex-end; justify-content: space-between; border-top: 0.3mm solid var(--rule); padding-top: var(--sp-3); }
+/* 表紙は章扉（.section）と同じ藍地。白抜きの階調も章扉に揃えている。 */
+.cover { justify-content: space-between; padding: 46mm var(--pad-x) 18mm; background: var(--accent); color: #fff; }
+.cover__eyebrow { font-size: var(--fs-label); letter-spacing: 0.18em; color: rgba(255,255,255,.6); font-weight: 700; }
+.cover__title { margin: var(--sp-4) 0 0; font-size: var(--fs-cover); font-weight: 700; line-height: 1.35; color: #fff; letter-spacing: 0.01em; }
+.cover__rule { width: 24mm; height: 0.7mm; background: rgba(255,255,255,.5); margin: var(--sp-5) 0 var(--sp-4); }
+.cover__to { font-size: 13pt; font-weight: 700; color: #fff; }
+.cover__meta { font-size: var(--fs-body); color: rgba(255,255,255,.78); line-height: 1.9; }
+.cover__foot { display: flex; align-items: flex-end; justify-content: space-between; border-top: 0.3mm solid rgba(255,255,255,.22); padding-top: var(--sp-3); }
+.cover .slide__brand { color: rgba(255,255,255,.45); }
 
 /* Section divider */
 .section { justify-content: center; background: var(--accent); color: #fff; }
@@ -562,14 +564,21 @@ body {
   flex-direction: column;
   min-width: 0;          /* 長い項目名でのカラム破綻を防ぐ */
 }
+/* PART見出し。章の区切りが見えるよう、上に空きを取り、淡い地色を敷く。
+   地色は box-shadow で左右へ広げているため、文字位置は動かない。 */
 .agenda__part {
   display: flex;
   align-items: baseline;
   gap: var(--sp-2);
   padding: var(--sp-2) 0 var(--sp-1);
+  margin-top: var(--sp-2);
   border-bottom: 0.4mm solid var(--rule-strong);
+  background: var(--agenda-part-bg);
+  box-shadow:
+    calc(var(--agenda-bleed) * -1) 0 0 var(--agenda-part-bg),
+    var(--agenda-bleed) 0 0 var(--agenda-part-bg);
 }
-.agenda__part:first-child { padding-top: 0; }
+.agenda__part:first-child { margin-top: 0; padding-top: 0; }
 .agenda__part-no {
   font-family: var(--font-num);
   font-size: var(--fs-label);

@@ -79,4 +79,6 @@
      背景を外側へ延長しています（罫の幅は変わりません）。 */
   --agenda-bleed: 2.6mm;
   --agenda-hover: var(--rule-soft);
+  /* 目次のPART見出しの地色。章の区切りを見やすくするための淡い面。 */
+  --agenda-part-bg: var(--accent-tint);
 }
