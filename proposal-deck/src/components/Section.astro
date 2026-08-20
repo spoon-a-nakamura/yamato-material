@@ -1,4 +1,5 @@
 ---
+import { deck } from '../deck.config';
 interface Props {
   no: string | number;
   title: string;
@@ -8,13 +9,13 @@ interface Props {
 const { no, title, lead, items = [] } = Astro.props;
 const label = String(no).padStart(2, '0');
 ---
-<section class="slide section">
-  <header class="slide__header" style="border-bottom-color: rgba(255,255,255,.22)">
-    <div class="slide__chapter-label" style="color: rgba(255,255,255,.55)"></div>
-    <div class="slide__brand" style="color: rgba(255,255,255,.45)">STUDIO SPOON</div>
+<section id={`part-${no}`} data-part={String(no)} class="slide section">
+  <header class="slide__header">
+    <div class="slide__chapter-label"></div>
+    <div class="slide__brand">{deck.brandMark}</div>
   </header>
 
-  <div class="slide__body" style="display:flex; flex-direction:column; justify-content:center">
+  <div class="slide__body">
     <span class="section__eyebrow">PART {label}</span>
     <div class="section__no">{label}</div>
     <div class="section__rule"></div>

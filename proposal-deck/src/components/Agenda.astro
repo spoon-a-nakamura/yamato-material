@@ -3,11 +3,27 @@ import { deck } from '../deck.config';
 interface Props {
   title?: string;
   rows?: number;
-  items: { no?: string; t: string; s?: string; part?: string }[];
+  items: { no?: string; t: string; s?: string; part?: string; ref?: string }[];
 }
 const { title = '目次', rows = 13, items } = Astro.props;
+
+/* 目次の各行から、リンク先スライドを特定するためのキーを組み立てます。
+   キーの文法は <Ref> と共通で、Deck.astro の解決器が両方を処理します。
+   ・ref 指定あり  → id:<slide id>
+   ・PART 行       → part:<番号>（Section の no と対応）
+   ・章番号あり    → ch:<番号>（Slide の chapter と対応）
+   ページ番号は並び順で変わるため、ここでは持たせません。 */
+const keyOf = (it: Props['items'][number]) => {
+  if (it.ref) return `id:${it.ref}`;
+  if (it.part) {
+    const m = String(it.part).match(/(\d+)/);
+    return m ? `part:${Number(m[1])}` : undefined;
+  }
+  if (it.no && /^\d+$/.test(it.no)) return `ch:${Number(it.no)}`;
+  return undefined;
+};
 ---
-<section class="slide">
+<section id="contents" class="slide">
   <header class="slide__header">
     <div class="slide__chapter-label"><span>CONTENTS</span></div>
     <div class="slide__brand">{deck.brandMark}</div>
@@ -17,22 +33,26 @@ const { title = '目次', rows = 13, items } = Astro.props;
   </div>
   <div class="slide__body">
     <div class="agenda" style={`--rows:${rows}`}>
-      {items.map((it) =>
-        it.part ? (
-          <div class="agenda__part">
+      {items.map((it) => {
+        const key = keyOf(it);
+        const Tag = key ? 'a' : 'div';
+        return it.part ? (
+          <Tag class="agenda__part" data-ref={key}>
             <span class="agenda__part-no">{it.part}</span>
             <span class="agenda__part-t" set:html={it.t} />
-          </div>
+            <span class="agenda__page" />
+          </Tag>
         ) : (
-          <div class="agenda__item">
+          <Tag class="agenda__item" data-ref={key}>
             <span class="agenda__no">{it.no}</span>
             <span class="agenda__t">
               <Fragment set:html={it.t} />
               {it.s && <small set:html={it.s} />}
             </span>
-          </div>
-        )
-      )}
+            <span class="agenda__page" />
+          </Tag>
+        );
+      })}
     </div>
   </div>
   <footer class="slide__footer">

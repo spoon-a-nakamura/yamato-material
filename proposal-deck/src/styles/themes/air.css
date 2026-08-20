@@ -1,0 +1,120 @@
+/* ============================================================
+   Palette: Air（爽やかな青 ＋ 白に近いグレイ）
+   ------------------------------------------------------------
+   骨格は themes/tech-frame.css と同一。色だけが違います。
+     ・純黒(#000)をやめ、青みを含む濃紺 #0d1f33 を最も暗い色にする
+     ・章扉を反転させ、白に近い青みグレイの地に淡い青の巨大数字を置く
+     ・グレイはすべて青に寄せる（無彩色を使わない）
+   コントラスト比は WCAG 2.1 の AA を満たすよう選定しています。
+     本文 #2b4257 / 白        10.40:1
+     副次 #5b7286 / 白         5.00:1
+     淡色 #7b93a8 / 白         3.19:1
+     青   #0a6ed6 / 白         4.98:1、淡地 4.68:1
+   ============================================================ */
+
+:root[data-theme="air"] {
+  /* ---- Geometry: 骨格と同一 ------------------------------ */
+  --pad-x:      24mm;
+  --pad-top:    18mm;
+  --pad-bottom: 14mm;
+  --header-h:   5mm;
+  --footer-h:   6mm;
+
+  /* ---- Color: グレイはすべて青に寄せる ------------------- */
+  --paper:        #ffffff;
+  --paper-tint:   #f5f8fc;   /* 白に近い青みグレイ */
+  --paper-shade:  #eaf1f8;
+
+  --ink-900:      #0d1f33;   /* 純黒の代わりの濃紺 */
+  --ink-700:      #2b4257;
+  --ink-500:      #5b7286;
+  --ink-400:      #7b93a8;
+  --ink-300:      #aec0d0;
+
+  --rule-strong:  #0d1f33;
+  --rule:         #e0e9f2;
+  --rule-soft:    #eef4fa;
+
+  --accent:       #0a6ed6;   /* 爽やかな青。文字色に使うので AA を満たす明度 */
+  --accent-mid:   #4d9bf0;
+  --accent-tint:  #eaf3fe;
+  --accent-line:  #cbe1fb;
+
+  --mark:         #0d1f33;
+  --mark-tint:    #f5f8fc;
+
+  /* ---- Typography: 骨格と同一 ---------------------------- */
+  --font-sans: "Geist", "Murecho", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+               "Yu Gothic Medium", "Meiryo", system-ui, sans-serif;
+  --font-num:  "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  --fs-cover:      46pt;
+  --fs-chapter-no: 150pt;
+  --fs-chapter:    38pt;
+  --fs-title:      34pt;
+  --fs-lead:       10.4pt;
+  --fs-h4:         12pt;
+  --fs-body:       9.6pt;
+  --fs-table:      9pt;
+  --fs-small:      9pt;
+  --fs-label:      7pt;
+
+  --lh-tight:  1.18;
+  --lh-head:   1.45;
+  --lh-body:   1.8;
+  --lh-table:  1.6;
+
+  --ls-label: 0.08em;
+  --ls-head:  -0.035em;
+
+  --radius: 2.6mm;
+
+  /* ---- 面の色 -------------------------------------------- */
+  --agenda-hover:    #eaf3fe;   /* accent-tint と同値 */
+  --slide-edge:      #e6edf4;
+
+  /* 表紙は濃紺。黒より軽く、青みで清潔感を持たせる */
+  --cover-bg:        #0d1f33;
+  --cover-fg:        #ffffff;
+  --cover-eyebrow:   #7fb4ee;
+  --cover-muted:     #9db4c9;
+  --cover-rule:      rgba(255,255,255,.16);
+
+  /* 章扉は反転。白に近い青みグレイの地に、淡い青の巨大数字 */
+  --section-bg:      #f5f8fc;
+  --section-fg:      #0d1f33;
+  --section-eyebrow: #0a6ed6;
+  --section-muted:   #5b7286;
+  --section-no:      #d5e6f7;
+  --section-rule:    #dde8f2;
+}
+
+/* ============================================================
+   青の置きどころ（面ではなく、線と小さな文字に効かせる）
+   ============================================================ */
+[data-theme="air"] .slide__no { color: var(--accent); }
+[data-theme="air"] .slide__body h5,
+[data-theme="air"] .h5 { color: var(--accent); }
+[data-theme="air"] .caption { color: var(--accent); }
+[data-theme="air"] .card--accent { border-color: var(--accent); }
+[data-theme="air"] .card--accent .card__label { color: var(--accent); }
+[data-theme="air"] .step__tag {
+  background: var(--accent-tint);
+  border-color: var(--accent-line);
+  color: var(--accent);
+}
+[data-theme="air"] .badge { background: var(--accent); }
+[data-theme="air"] .badge--outline { color: var(--accent); border-color: var(--accent-line); }
+[data-theme="air"] .metric__value { color: var(--accent); }
+[data-theme="air"] .flow__arrow,
+[data-theme="air"] .ba__arrow { color: var(--accent-mid); }
+[data-theme="air"] .slide__body ul > li::before { background: var(--accent-mid); }
+[data-theme="air"] .slide__body ol > li::before { color: var(--accent); }
+[data-theme="air"] .agenda__part-no { color: var(--accent); }
+[data-theme="air"] .agenda__page { color: var(--ink-400); }
+
+/* 章扉は明るい地なので、ヘッダとフッタの文字も地に合わせる */
+[data-theme="air"] .section .slide__chapter-label,
+[data-theme="air"] .section .slide__brand { color: var(--ink-400); }
+[data-theme="air"] .section .slide__footer > span:first-child,
+[data-theme="air"] .section .slide__pageno { color: var(--ink-400); }

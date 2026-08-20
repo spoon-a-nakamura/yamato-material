@@ -1,0 +1,78 @@
+/* ============================================================
+   Palette: Tech（黒）— 骨格は themes/tech-frame.css
+   Vercel / Geist を参照したモノクローム。
+   ============================================================ */
+
+:root[data-theme="tech"] {
+  /* ---- Geometry: 帯を廃し、上に大きく空きを取る ---------- */
+  --pad-x:      24mm;
+  --pad-top:    18mm;
+  --pad-bottom: 14mm;
+  --header-h:   5mm;
+  --footer-h:   6mm;
+
+  /* ---- Color: モノクローム。青は最小限にしか使わない ----- */
+  --paper:        #ffffff;
+  --paper-tint:   #fafafa;
+  --paper-shade:  #f2f2f2;
+
+  --ink-900:      #000000;
+  --ink-700:      #171717;
+  --ink-500:      #666666;
+  --ink-400:      #8f8f8f;
+  --ink-300:      #a1a1a1;
+
+  --rule-strong:  #000000;
+  --rule:         #eaeaea;
+  --rule-soft:    #f2f2f2;
+
+  --accent:       #0070f3;
+  --accent-mid:   #0070f3;
+  --accent-tint:  #fafafa;
+  --accent-line:  #eaeaea;
+
+  --mark:         #000000;
+  --mark-tint:    #fafafa;
+
+  /* ---- Typography ---------------------------------------- */
+  --font-sans: "Geist", "Murecho", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+               "Yu Gothic Medium", "Meiryo", system-ui, sans-serif;
+  --font-num:  "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+
+  /* 見出しと本文の級数比を大きく開く（旧 22/12=1.8倍 → 34/9.6=3.6倍） */
+  --fs-cover:      46pt;
+  --fs-chapter-no: 150pt;
+  --fs-chapter:    38pt;
+  --fs-title:      34pt;
+  --fs-lead:       10.4pt;
+  --fs-h4:         12pt;
+  --fs-body:       9.6pt;
+  --fs-table:      9pt;
+  --fs-small:      9pt;
+  --fs-label:      7pt;
+
+  --lh-tight:  1.18;
+  --lh-head:   1.45;
+  --lh-body:   1.8;
+  --lh-table:  1.6;
+
+  --ls-label: 0.08em;
+  --ls-head:  -0.035em;   /* 大きな見出しは字間を詰める */
+
+  --radius: 2.6mm;        /* ≒10px */
+
+  /* ---- 面の色（骨格CSSはこのトークンだけを見ます） ------- */
+  --agenda-hover:    #fafafa;
+  --slide-edge:      #ededed;
+  --cover-bg:        #000000;
+  --cover-fg:        #ffffff;
+  --cover-eyebrow:   rgba(255,255,255,.50);
+  --cover-muted:     rgba(255,255,255,.55);
+  --cover-rule:      rgba(255,255,255,.15);
+  --section-bg:      #000000;
+  --section-fg:      #ffffff;
+  --section-eyebrow: rgba(255,255,255,.50);
+  --section-muted:   rgba(255,255,255,.45);
+  --section-no:      rgba(255,255,255,.18);
+  --section-rule:    rgba(255,255,255,.15);
+}

@@ -1,0 +1,244 @@
+/* ============================================================
+   Theme: 和文エディトリアル（明朝主導）
+   ------------------------------------------------------------
+   ・見出しを明朝、本文をUDゴシックで組む。
+   ・面（塗り）を全廃し、罫の強弱と余白だけで階層をつくる。
+   ・色は墨と朱の2色。紙はごくわずかに温かみを持たせる。
+   ============================================================ */
+
+:root[data-theme="mincho"] {
+  /* ---- Color: 墨と朱 -------------------------------------- */
+  --paper:        #fdfcf9;
+  --paper-tint:   #f5f2ec;
+  --paper-shade:  #ece8df;
+
+  --ink-900:      #1a1a18;
+  --ink-700:      #3a3833;
+  --ink-500:      #6a675f;
+  --ink-400:      #928e84;
+  --ink-300:      #b8b3a8;
+
+  --rule-strong:  #1a1a18;
+  --rule:         #cfc9bc;
+  --rule-soft:    #e4dfd4;
+
+  --accent:       #9c3d2e;   /* 朱 */
+  --accent-mid:   #b0553f;
+  --accent-tint:  transparent;
+  --accent-line:  #c8a294;
+
+  --mark:         #6b6244;
+  --mark-tint:    transparent;
+
+  /* ---- Typography ---------------------------------------- */
+  --font-sans: "BIZ UDPGothic", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
+               "Yu Gothic Medium", "Meiryo", system-ui, sans-serif;
+  --font-serif: "Zen Old Mincho", "Hiragino Mincho ProN", "Yu Mincho",
+                "YuMincho", "MS PMincho", serif;
+  --font-num:  "Shippori Mincho", "Zen Old Mincho", serif;
+
+  --fs-cover:      31pt;
+  --fs-chapter-no: 76pt;
+  --fs-chapter:    25pt;
+  --fs-title:      22pt;
+  --fs-lead:       11.4pt;
+  --fs-h4:         13pt;
+  --fs-body:       11.4pt;
+  --fs-table:      10.2pt;
+  --fs-small:      10pt;
+  --fs-label:      8.4pt;
+
+  --lh-tight:  1.42;
+  --lh-head:   1.55;
+  --lh-body:   1.9;
+  --lh-table:  1.7;
+
+  --ls-label: 0.14em;
+  --ls-head:  0.05em;   /* 明朝は字間をわずかに開ける */
+
+  --radius: 0;
+}
+
+/* ---- 見出しはすべて明朝 ---------------------------------- */
+[data-theme="mincho"] .slide__title,
+[data-theme="mincho"] .cover__title,
+[data-theme="mincho"] .section__title,
+[data-theme="mincho"] .card__title,
+[data-theme="mincho"] .slide__body h4,
+[data-theme="mincho"] .h4,
+[data-theme="mincho"] .keypoint,
+[data-theme="mincho"] .closing__msg,
+[data-theme="mincho"] .agenda__part-t {
+  font-family: var(--font-serif);
+  font-weight: 700;
+}
+[data-theme="mincho"] .slide__title { font-weight: 900; }
+
+/* ---- 面と装飾を全廃 --------------------------------------- */
+[data-theme="mincho"] .slide {
+  box-shadow: none;
+  border: 0.25mm solid var(--rule);
+}
+[data-theme="mincho"] .card,
+[data-theme="mincho"] .step,
+[data-theme="mincho"] .keypoint,
+[data-theme="mincho"] .step__tag,
+[data-theme="mincho"] .badge { border-radius: 0; background: transparent; }
+
+/* ---- Header / Footer ------------------------------------- */
+[data-theme="mincho"] .slide__header { border-bottom: 0.25mm solid var(--rule); }
+[data-theme="mincho"] .slide__chapter-label b { font-family: var(--font-serif); color: var(--accent); }
+[data-theme="mincho"] .slide__brand { letter-spacing: 0.2em; }
+[data-theme="mincho"] .slide__pageno { font-family: var(--font-num); font-size: 10.5pt; color: var(--ink-500); }
+
+/* ---- Title block: 短い線を細い全幅罫に -------------------- */
+[data-theme="mincho"] .slide__no { font-family: var(--font-num); color: var(--accent); }
+[data-theme="mincho"] .slide__titleblock::after {
+  width: 100%;
+  height: 0.2mm;
+  background: var(--rule);
+  margin-top: var(--sp-3);
+}
+[data-theme="mincho"] .slide__lead { color: var(--ink-500); max-width: 190mm; }
+
+/* ---- 小見出し: 左縦棒を細い朱罫に ------------------------- */
+[data-theme="mincho"] .slide__body h4,
+[data-theme="mincho"] .h4 {
+  border-left: 0.4mm solid var(--accent);
+  padding-left: 3.5mm;
+}
+[data-theme="mincho"] .slide__body h5,
+[data-theme="mincho"] .h5 { color: var(--accent); font-family: var(--font-serif); }
+
+/* ---- 強調: 蛍光ペン風を廃し、圏点に近い下線へ ------------- */
+[data-theme="mincho"] .slide__body em {
+  background: none;
+  box-shadow: inset 0 -0.35mm 0 var(--accent-line);
+}
+
+/* ---- リスト ---------------------------------------------- */
+[data-theme="mincho"] .slide__body ul > li::before {
+  width: 1.3mm; height: 1.3mm; top: 2.6mm;
+  background: var(--accent);
+}
+[data-theme="mincho"] .slide__body ol > li::before {
+  background: none;
+  border-radius: 0;
+  color: var(--accent);
+  font-family: var(--font-num);
+  font-size: var(--fs-small);
+  font-weight: 700;
+  text-align: left;
+  width: 5mm;
+  line-height: inherit;
+  top: 0;
+}
+
+/* ---- Card: 罫のみ ---------------------------------------- */
+[data-theme="mincho"] .card {
+  border: none;
+  border-top: 0.5mm solid var(--rule-strong);
+  padding: var(--sp-2) 0 0;
+}
+[data-theme="mincho"] .card--tint { border-top: 0.2mm solid var(--rule); }
+[data-theme="mincho"] .card--accent { border-top-color: var(--accent); }
+[data-theme="mincho"] .card--mark { border-top-color: var(--mark); }
+[data-theme="mincho"] .card__label { font-family: var(--font-num); color: var(--ink-400); }
+[data-theme="mincho"] .card--accent .card__label { color: var(--accent); }
+[data-theme="mincho"] .card--mark .card__label { color: var(--mark); }
+
+/* ---- Keypoint: 上下の罫で挟む ---------------------------- */
+[data-theme="mincho"] .keypoint {
+  border-left: none;
+  border-top: 0.5mm solid var(--rule-strong);
+  border-bottom: 0.2mm solid var(--rule);
+  padding: var(--sp-3) 0;
+  font-size: 13pt;
+  line-height: 1.8;
+}
+
+/* ---- Steps --------------------------------------------- */
+[data-theme="mincho"] .step {
+  border: none;
+  border-top: 0.2mm solid var(--rule);
+  padding: var(--sp-2) 0 0;
+  padding-top: calc(var(--sp-2) + 6mm);
+}
+[data-theme="mincho"] .step::before {
+  background: none;
+  border-radius: 0;
+  color: var(--accent);
+  font-family: var(--font-num);
+  font-size: 16pt;
+  font-weight: 700;
+  width: auto; height: auto;
+  line-height: 1;
+  top: var(--sp-1);
+  left: 0;
+  text-align: left;
+}
+[data-theme="mincho"] .step__tag {
+  border: none;
+  border-top: 0.2mm solid var(--accent-line);
+  padding: 1.2mm 0 0;
+  color: var(--accent);
+  width: 100%;
+}
+
+/* ---- Badge ---------------------------------------------- */
+[data-theme="mincho"] .badge { background: var(--accent); color: var(--paper); letter-spacing: 0.12em; }
+[data-theme="mincho"] .badge--outline { background: transparent; color: var(--accent); border: 0.2mm solid var(--accent-line); }
+[data-theme="mincho"] .badge--mark { background: var(--mark); }
+
+/* ---- Table: 地色を廃し罫の強弱で ------------------------- */
+[data-theme="mincho"] .slide__body table thead th {
+  background: none;
+  color: var(--ink-900);
+  font-family: var(--font-serif);
+  border-top: 0.4mm solid var(--rule-strong);
+  border-bottom: 0.2mm solid var(--rule);
+}
+[data-theme="mincho"] .t-def table td:first-child,
+[data-theme="mincho"] .t-def table th:first-child,
+[data-theme="mincho"] .t-def table thead th:first-child { background: none; font-family: var(--font-serif); }
+[data-theme="mincho"] .t-zebra table tbody tr:nth-child(even) td { background: none; }
+[data-theme="mincho"] .slide__body table tbody tr:last-child td { border-bottom: 0.4mm solid var(--rule-strong); }
+
+/* ---- Flow / Metric -------------------------------------- */
+[data-theme="mincho"] .flow__arrow,
+[data-theme="mincho"] .ba__arrow { color: var(--accent); }
+[data-theme="mincho"] .metric__value { font-family: var(--font-num); font-size: 26pt; color: var(--accent); }
+[data-theme="mincho"] .defrow__k { font-family: var(--font-serif); }
+
+/* ---- Cover ---------------------------------------------- */
+[data-theme="mincho"] .cover { padding: 44mm var(--pad-x) 18mm; }
+[data-theme="mincho"] .cover__eyebrow { color: var(--accent); letter-spacing: 0.3em; font-weight: 400; }
+[data-theme="mincho"] .cover__title { font-weight: 900; letter-spacing: 0.06em; line-height: 1.5; }
+[data-theme="mincho"] .cover__rule { width: 32mm; height: 0.4mm; background: var(--accent); }
+[data-theme="mincho"] .cover__to { font-family: var(--font-serif); font-weight: 700; letter-spacing: 0.08em; }
+[data-theme="mincho"] .cover__foot { border-top: 0.2mm solid var(--rule); }
+
+/* ---- Section: 朱ベタを廃し、紙地＋大きな明朝数字 --------- */
+[data-theme="mincho"] .section { background: var(--paper-tint); color: var(--ink-900); }
+[data-theme="mincho"] .section .slide__header { border-bottom-color: var(--rule); }
+[data-theme="mincho"] .section .slide__chapter-label,
+[data-theme="mincho"] .section .slide__brand { color: var(--ink-400); }
+[data-theme="mincho"] .section__eyebrow { color: var(--accent); letter-spacing: 0.3em; font-weight: 400; }
+[data-theme="mincho"] .section .section__no {
+  font-family: var(--font-num);
+  font-weight: 700;
+  color: var(--accent);
+  letter-spacing: 0.02em;
+}
+[data-theme="mincho"] .section .section__rule { width: 100%; height: 0.2mm; background: var(--rule); }
+[data-theme="mincho"] .section .section__title { color: var(--ink-900); }
+[data-theme="mincho"] .section .section__lead { color: var(--ink-500); }
+[data-theme="mincho"] .section .section__items { color: var(--ink-500); border-top-color: var(--rule); }
+[data-theme="mincho"] .section .slide__footer { border-top-color: var(--rule); color: var(--ink-400); }
+[data-theme="mincho"] .section .slide__pageno { color: var(--ink-500); }
+
+/* ---- Agenda --------------------------------------------- */
+[data-theme="mincho"] .agenda__no,
+[data-theme="mincho"] .agenda__page,
+[data-theme="mincho"] .agenda__part-no { font-family: var(--font-num); }
+[data-theme="mincho"] .agenda__part { border-bottom-width: 0.4mm; }

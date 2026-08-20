@@ -1,27 +1,173 @@
 ---
 import '../styles/tokens.css';
 import '../styles/deck.css';
+import '../styles/themes/swiss.css';
+import '../styles/themes/mincho.css';
+import '../styles/themes/tech-frame.css';
+import '../styles/themes/tech.css';
+import '../styles/themes/air.css';
 import { deck } from '../deck.config';
+
+/* テーマごとに必要な書体だけを読み込みます（Google Fonts が唯一の配信元） */
+const fontQuery = {
+  base:   'family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;600;700',
+  swiss:  'family=Zen+Kaku+Gothic+New:wght@400;500;700&family=Archivo:wght@400;500;600;700',
+  mincho: 'family=Zen+Old+Mincho:wght@400;500;700;900&family=BIZ+UDPGothic:wght@400;700&family=Shippori+Mincho:wght@400;500;700;800',
+  /* Geist は CJK を持たないため、和文は Murecho が受け持ちます */
+  tech:   'family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Murecho:wght@300;400;500;600;700',
+  air:    'family=Geist:wght@300;400;500;600;700&family=Geist+Mono:wght@400;500&family=Murecho:wght@300;400;500;600;700',
+}[deck.theme];
+
+/* 骨格（frame）と配色（theme）を分離。tech と air は同じ骨格を共有します。 */
+const frame = { base: 'base', swiss: 'base', mincho: 'base', tech: 'tech', air: 'tech' }[deck.theme];
 ---
 <!doctype html>
-<html lang="ja">
+<html lang="ja" data-theme={deck.theme} data-frame={frame}>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>{deck.docTitle}｜{deck.client}</title>
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;700&family=Inter:wght@300;400;600;700&display=swap"
-      rel="stylesheet"
-    />
+    <link href={`https://fonts.googleapis.com/css2?${fontQuery}&display=swap`} rel="stylesheet" />
   </head>
   <body>
     <main class="deck">
       <slot />
     </main>
     <div class="toolbar">
-      <button onclick="window.print()">PDFに書き出す（A4横）</button>
+      <button type="button" class="toolbar__btn" data-nav-toggle aria-expanded="false" aria-controls="navmenu">
+        目次
+      </button>
+      <button type="button" class="toolbar__btn" onclick="window.print()">PDFに書き出す（A4横）</button>
     </div>
+
+    <!-- 中身は描画時にDOMから生成します。スライドを増減しても編集不要です。 -->
+    <aside id="navmenu" class="navmenu" hidden aria-label="スライド一覧">
+      <div class="navmenu__head">
+        <span class="navmenu__title">目次</span>
+        <button type="button" class="navmenu__close" data-nav-close aria-label="目次を閉じる">×</button>
+      </div>
+      <input type="search" class="navmenu__filter" data-nav-filter placeholder="ページを絞り込む" aria-label="ページを絞り込む" />
+      <nav class="navmenu__list" data-nav-list></nav>
+    </aside>
+    <div class="navmenu__scrim" data-nav-scrim hidden></div>
+
+    <script is:inline>
+      /* ============================================================
+         スライドの並び順に依存しない参照解決とナビゲーション。
+         ------------------------------------------------------------
+         ページ番号は CSS カウンタ counter(slide) で描画されるため、
+         DOM を同じ順序で数えて番号を得ます。番号は「並び順」なので
+         原稿には持たせず、アンカーは内容から決まる安定IDを使います。
+         ============================================================ */
+      (function () {
+        var slides = [].slice.call(document.querySelectorAll('.deck .slide'));
+        if (!slides.length) return;
+
+        /* ---- 1. 参照レジストリを組み立てる ------------------- */
+        var reg = {};                       // 参照キー -> スライド要素
+        var put = function (k, el) { if (k && !(k in reg)) reg[k] = el; };
+
+        slides.forEach(function (el, i) {
+          var n = i + 1;
+          el.dataset.page = String(n);
+          if (!el.id) el.id = 'slide-index-' + n;   // 安定IDが無い場合の最後の受け皿
+          put('id:' + el.id, el);
+          if (el.dataset.no) put('slide:' + el.dataset.no, el);
+          if (el.dataset.chapter) put('ch:' + el.dataset.chapter, el);
+          if (el.dataset.part) put('part:' + el.dataset.part, el);
+        });
+
+        var pad = function (n) { return n < 10 ? '0' + n : String(n); };
+
+        /* ---- 2. すべての参照を解決する（目次・本文とも同じ文法）-- */
+        var broken = [];
+        [].forEach.call(document.querySelectorAll('[data-ref]'), function (a) {
+          var target = reg[a.dataset.ref];
+          if (!target) { a.classList.add('xref--broken'); broken.push(a.dataset.ref); return; }
+          a.setAttribute('href', '#' + target.id);
+          var slot = a.querySelector('.agenda__page, .xref__page');
+          if (slot) slot.textContent = pad(Number(target.dataset.page));
+        });
+        if (broken.length) console.warn('解決できない参照:', broken);
+        document.documentElement.dataset.brokenRefs = String(broken.length);
+
+        /* ---- 3. ナビメニューをDOMから生成する ----------------- */
+        var list = document.querySelector('[data-nav-list]');
+        var titleOf = function (el) {
+          var t = el.querySelector('.slide__title, .section__title, .cover__title, .closing__msg');
+          return t ? t.textContent.trim().replace(/\s+/g, ' ') : '(無題)';
+        };
+        var group = null;
+        slides.forEach(function (el) {
+          if (el.dataset.part) {
+            group = document.createElement('div');
+            group.className = 'navmenu__group';
+            list.appendChild(group);
+          }
+          var a = document.createElement('a');
+          a.className = 'navmenu__item' + (el.dataset.part ? ' navmenu__item--part' : '');
+          a.href = '#' + el.id;
+          a.dataset.target = el.id;
+          var no = document.createElement('span');
+          no.className = 'navmenu__no';
+          no.textContent = el.dataset.part ? 'PART ' + el.dataset.part : (el.dataset.no || '—');
+          var tx = document.createElement('span');
+          tx.className = 'navmenu__t';
+          tx.textContent = titleOf(el);
+          var pg = document.createElement('span');
+          pg.className = 'navmenu__page';
+          pg.textContent = pad(Number(el.dataset.page));
+          a.appendChild(no); a.appendChild(tx); a.appendChild(pg);
+          (group || list).appendChild(a);
+        });
+
+        /* ---- 4. 開閉 ----------------------------------------- */
+        var menu = document.getElementById('navmenu');
+        var scrim = document.querySelector('[data-nav-scrim]');
+        var toggle = document.querySelector('[data-nav-toggle]');
+        var filter = document.querySelector('[data-nav-filter]');
+        var open = function (v) {
+          menu.hidden = !v;
+          scrim.hidden = !v;
+          toggle.setAttribute('aria-expanded', String(v));
+          if (v) filter.focus();
+        };
+        toggle.addEventListener('click', function () { open(menu.hidden); });
+        scrim.addEventListener('click', function () { open(false); });
+        document.querySelector('[data-nav-close]').addEventListener('click', function () { open(false); });
+        document.addEventListener('keydown', function (e) {
+          if (e.key === 'Escape' && !menu.hidden) open(false);
+        });
+        list.addEventListener('click', function (e) {
+          if (e.target.closest('.navmenu__item')) open(false);
+        });
+
+        /* ---- 5. 絞り込み ------------------------------------- */
+        filter.addEventListener('input', function () {
+          var q = filter.value.trim().toLowerCase();
+          [].forEach.call(list.querySelectorAll('.navmenu__item'), function (a) {
+            a.hidden = q ? a.textContent.toLowerCase().indexOf(q) < 0 : false;
+          });
+          [].forEach.call(list.querySelectorAll('.navmenu__group'), function (g) {
+            g.hidden = !g.querySelector('.navmenu__item:not([hidden])');
+          });
+        });
+
+        /* ---- 6. 現在位置の追随 -------------------------------- */
+        if ('IntersectionObserver' in window) {
+          var items = {};
+          [].forEach.call(list.querySelectorAll('.navmenu__item'), function (a) { items[a.dataset.target] = a; });
+          var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (en) {
+              var a = items[en.target.id];
+              if (a) a.classList.toggle('is-current', en.isIntersecting);
+            });
+          }, { rootMargin: '-45% 0px -45% 0px' });
+          slides.forEach(function (el) { io.observe(el); });
+        }
+      })();
+    </script>
   </body>
 </html>
