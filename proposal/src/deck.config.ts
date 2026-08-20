@@ -14,6 +14,8 @@ export const deck = {
   author: '中村 明史',
   date: '2026年8月21日',
   brandMark: 'STUDIO SPOON',
+  /* ヘッダーのブランド表記のリンク先。控えめに辿れるようにするためのもの。 */
+  brandUrl: 'https://studio-spoon.co.jp/works/',
   footerNote: 'Webカタログ構築のご提案書｜スタジオスプーン株式会社',
 
   /* ---- デモ（Webカタログ試作）の公開先 ------------------------

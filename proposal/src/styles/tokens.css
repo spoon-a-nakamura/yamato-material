@@ -81,4 +81,8 @@
   --agenda-hover: var(--rule-soft);
   /* 目次のPART見出しの地色。章の区切りを見やすくするための淡い面。 */
   --agenda-part-bg: var(--accent-tint);
+
+  /* strong に添える淡いラインマーカー。既に太字なので、ごく薄く。 */
+  --marker: color-mix(in srgb, var(--accent) 14%, transparent);
+  --marker-on-dark: rgba(255, 255, 255, 0.16);
 }

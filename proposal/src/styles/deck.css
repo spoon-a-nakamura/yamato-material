@@ -70,6 +70,17 @@ body {
   color: var(--ink-300);
 }
 
+/* ブランド表記のリンク。強調しない。ホバーで細い罫が出るだけ。 */
+a.slide__brand {
+  text-decoration: none;
+  color: inherit;
+  border-bottom: 0.2mm solid transparent;
+  transition: border-bottom-color .15s ease, opacity .15s ease;
+}
+a.slide__brand:hover { border-bottom-color: currentColor; }
+a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset: 0.6mm; }
+@media print { a.slide__brand { border-bottom-color: transparent; } }
+
 /* ---- Title block ----------------------------------------- */
 .slide__titleblock { flex: 0 0 auto; padding-top: var(--sp-4); }
 
@@ -157,7 +168,17 @@ body {
 
 .slide__body p { margin: 0 0 var(--sp-3); max-width: 205mm; }
 .cols .slide__body p, .cols p, .card p, .keypoint p { max-width: none; }
-.slide__body strong { font-weight: 700; color: var(--ink-900); }
+/* strong は太字に加えて、ごく淡いラインマーカーを重ねる。
+   下側3割程度だけを塗るため、蛍光ペンで軽く引いたような見え方になる。 */
+.slide__body strong {
+  font-weight: 700;
+  color: var(--ink-900);
+  background: linear-gradient(transparent 68%, var(--marker) 68%);
+}
+/* リード文は .slide__body の外にあるため個別に指定する（色は変えない） */
+.slide__lead strong { background: linear-gradient(transparent 68%, var(--marker) 68%); }
+/* 濃い地の上（章扉・表紙）では白のマーカーに切り替える */
+.section strong, .cover strong { color: inherit; background: linear-gradient(transparent 68%, var(--marker-on-dark) 68%); }
 .slide__body em { font-style: normal; background: linear-gradient(transparent 62%, var(--accent-tint) 62%); }
 
 .slide__body h4, .h4 {
@@ -465,6 +486,7 @@ body {
   line-height: 1;
   color: rgba(255,255,255,.55);
   letter-spacing: 0.02em;
+  margin-left: -2mm;
 }
 .section .section__title { margin: var(--sp-3) 0 0; font-size: var(--fs-chapter); font-weight: 700; line-height: 1.35; }
 .section .section__lead { margin: var(--sp-4) 0 0; font-size: var(--fs-lead); color: rgba(255,255,255,.78); line-height: 1.85; max-width: 168mm; }
@@ -637,6 +659,11 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   position: fixed;
   top: 0; right: 0;
   z-index: 60;
+  /* 開閉アニメーション。display:none では遷移できないため
+     visibility と transform で出し入れする。 */
+  transform: translateX(100%);
+  visibility: hidden;
+  transition: transform .28s cubic-bezier(.22,.75,.2,1), visibility .28s linear;
   width: min(420px, 92vw);
   height: 100dvh;
   display: flex;
@@ -646,15 +673,22 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   box-shadow: -8px 0 32px rgba(16, 24, 32, .14);
   font-family: var(--font-sans);
 }
-.navmenu[hidden] { display: none; }
+.navmenu.is-open { transform: translateX(0); visibility: visible; }
 
 .navmenu__scrim {
   position: fixed;
   inset: 0;
   z-index: 55;
   background: rgba(13, 31, 51, .32);
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity .28s ease, visibility .28s linear;
 }
-.navmenu__scrim[hidden] { display: none; }
+.navmenu__scrim.is-open { opacity: 1; visibility: visible; }
+
+@media (prefers-reduced-motion: reduce) {
+  .navmenu, .navmenu__scrim { transition: none; }
+}
 
 .navmenu__head {
   flex: 0 0 auto;
@@ -721,18 +755,26 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
 .navmenu__item[hidden] { display: none; }
 .navmenu__item:hover { background: var(--paper-tint); }
 .navmenu__item:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
-.navmenu__item.is-current { background: var(--accent-tint); color: var(--ink-900); }
+/* 現在位置。PART見出しと地色が同じでは区別できないため、左に細いバーを足す。 */
+.navmenu__item.is-current {
+  background: var(--accent-tint);
+  color: var(--ink-900);
+  box-shadow: inset 3px 0 0 var(--accent);
+}
 .navmenu__item.is-current .navmenu__page { color: var(--accent); }
 
+/* PART見出し。印刷版の目次と同じ考え方で、上に空きを取り淡い地色を敷く。 */
 .navmenu__item--part {
-  margin-top: 6px;
-  border-top: 1px solid var(--rule);
-  padding-top: 12px;
+  margin-top: 16px;
+  padding: 10px 8px;
   font-weight: 700;
   color: var(--ink-900);
-  border-radius: 0;
+  background: var(--agenda-part-bg);
+  border-bottom: 1px solid var(--rule);
+  border-radius: 4px 4px 0 0;
 }
-.navmenu__group:first-child .navmenu__item--part { border-top: none; margin-top: 0; }
+.navmenu__group:first-child .navmenu__item--part { margin-top: 0; }
+.navmenu__item--part:hover { background: var(--accent-line); }
 
 .navmenu__no {
   font-family: var(--font-num);

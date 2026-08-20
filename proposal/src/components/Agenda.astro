@@ -1,5 +1,6 @@
 ---
 import { deck } from '../deck.config';
+import Brand from './Brand.astro';
 interface Props {
   title?: string;
   /** 左列に入れる項目数。ここで左右を分割します。 */
@@ -33,7 +34,7 @@ const columns = [items.slice(0, rows), items.slice(rows)];
 <section id="contents" class="slide">
   <header class="slide__header">
     <div class="slide__chapter-label"><span>CONTENTS</span></div>
-    <div class="slide__brand">{deck.brandMark}</div>
+    <Brand />
   </header>
   <div class="slide__titleblock">
     <h2 class="slide__title">{title}</h2>

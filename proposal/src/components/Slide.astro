@@ -1,5 +1,6 @@
 ---
 import { deck } from '../deck.config';
+import Brand from './Brand.astro';
 
 interface Props {
   chapter?: string | number;   // 章番号（例: 2）
@@ -29,7 +30,7 @@ const anchorId =
       {chapter !== undefined && <b>{chapter}</b>}
       {chapterTitle && <span>{chapterTitle}</span>}
     </div>
-    <div class="slide__brand">{deck.brandMark}</div>
+    <Brand />
   </header>
 
   {(no || title || lead) && (

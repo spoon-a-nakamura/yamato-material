@@ -1,5 +1,6 @@
 ---
 import { deck } from '../deck.config';
+import Brand from './Brand.astro';
 ---
 <section id="cover" class="slide cover">
   <div>
@@ -14,6 +15,6 @@ import { deck } from '../deck.config';
       {deck.date}<br />
       {deck.company}　{deck.author}
     </div>
-    <div class="slide__brand">{deck.brandMark}</div>
+    <Brand />
   </div>
 </section>

@@ -43,7 +43,7 @@ const frame = { base: 'base', swiss: 'base', mincho: 'base', tech: 'tech', air: 
     </div>
 
     <!-- 中身は描画時にDOMから生成します。スライドを増減しても編集不要です。 -->
-    <aside id="navmenu" class="navmenu" hidden aria-label="スライド一覧">
+    <aside id="navmenu" class="navmenu" aria-label="スライド一覧">
       <div class="navmenu__head">
         <span class="navmenu__title">目次</span>
         <button type="button" class="navmenu__close" data-nav-close aria-label="目次を閉じる">×</button>
@@ -51,7 +51,7 @@ const frame = { base: 'base', swiss: 'base', mincho: 'base', tech: 'tech', air: 
       <input type="search" class="navmenu__filter" data-nav-filter placeholder="ページを絞り込む" aria-label="ページを絞り込む" />
       <nav class="navmenu__list" data-nav-list></nav>
     </aside>
-    <div class="navmenu__scrim" data-nav-scrim hidden></div>
+    <div class="navmenu__scrim" data-nav-scrim></div>
 
     <script is:inline>
       /* ============================================================
@@ -128,17 +128,22 @@ const frame = { base: 'base', swiss: 'base', mincho: 'base', tech: 'tech', air: 
         var scrim = document.querySelector('[data-nav-scrim]');
         var toggle = document.querySelector('[data-nav-toggle]');
         var filter = document.querySelector('[data-nav-filter]');
+        /* display:none では遷移が効かないため、クラスで開閉する。
+           閉じている間は CSS 側が visibility:hidden にしており、
+           支援技術からも読み上げ対象にならない。 */
+        var isOpen = function () { return menu.classList.contains('is-open'); };
         var open = function (v) {
-          menu.hidden = !v;
-          scrim.hidden = !v;
+          menu.classList.toggle('is-open', v);
+          scrim.classList.toggle('is-open', v);
           toggle.setAttribute('aria-expanded', String(v));
           if (v) filter.focus();
+          else toggle.focus();
         };
-        toggle.addEventListener('click', function () { open(menu.hidden); });
+        toggle.addEventListener('click', function () { open(!isOpen()); });
         scrim.addEventListener('click', function () { open(false); });
         document.querySelector('[data-nav-close]').addEventListener('click', function () { open(false); });
         document.addEventListener('keydown', function (e) {
-          if (e.key === 'Escape' && !menu.hidden) open(false);
+          if (e.key === 'Escape' && isOpen()) open(false);
         });
         list.addEventListener('click', function (e) {
           if (e.target.closest('.navmenu__item')) open(false);

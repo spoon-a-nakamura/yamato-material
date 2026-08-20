@@ -1,12 +1,13 @@
 ---
 import { deck } from '../deck.config';
+import Brand from './Brand.astro';
 interface Props { msg?: string; }
 const { msg = '以上、ご検討のほど、<br />どうぞよろしくお願いいたします。' } = Astro.props;
 ---
 <section id="closing" class="slide closing">
   <header class="slide__header">
     <div class="slide__chapter-label"></div>
-    <div class="slide__brand">{deck.brandMark}</div>
+    <Brand />
   </header>
   <div class="slide__body" style="display:flex; flex-direction:column; justify-content:center">
     <p class="closing__msg" set:html={msg} />
