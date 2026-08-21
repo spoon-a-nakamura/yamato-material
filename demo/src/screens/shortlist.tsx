@@ -43,7 +43,7 @@ export function ShortlistScreen() {
         <h1 className="text-lg font-bold">検討リストは空です</h1>
         <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
           商品一覧のチェックボックス、または商品ページの「検討リストに追加」から候補を入れてください。
-          次回のお電話のときに、この一覧をそのまま呼び出して続きから会話できます。
+          次回お電話の際にも再活用が可能です。
         </p>
         <Button asChild className="mt-5"><Link href="/products">商品一覧へ</Link></Button>
       </div>

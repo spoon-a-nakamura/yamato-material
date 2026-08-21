@@ -85,7 +85,7 @@ export function FilterPanel({
         <span className="text-[0.8125rem] leading-snug">
           <span className="font-medium">Web移行対象範囲のみ表示</span>
           <span className="mt-0.5 block text-[0.6875rem] text-muted-foreground">
-            提案書 4-1（誌面 29〜38・40〜62・65〜68ページ）
+            （誌面 29〜38・40〜62・65〜68ページ）
           </span>
         </span>
       </label>
