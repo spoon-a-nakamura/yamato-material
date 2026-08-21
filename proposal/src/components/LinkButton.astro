@@ -1,0 +1,19 @@
+---
+/* 外部サイトへの控えめなボタン。デモへの導線（DemoLink）は塗りのボタンで
+   主役なので、こちらは線だけの副次的な見え方に留めています。 */
+interface Props {
+  href: string;
+  label?: string;    // ボタン上段の小さな見出し
+  class?: string;
+}
+const { href, label, class: cls = '' } = Astro.props;
+---
+<a class={`linkbtn ${cls}`} href={href} target="_blank" rel="noopener noreferrer">
+  {label && <span class="linkbtn__label">{label}</span>}
+  <span class="linkbtn__body">
+    <slot />
+    <svg class="linkbtn__out" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M8 16 16 8" /><path d="M9.5 8H16v6.5" />
+    </svg>
+  </span>
+</a>

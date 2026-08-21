@@ -1,0 +1,272 @@
+/* ============================================================
+   会社紹介（第17章）とクロージング専用の意匠
+   ------------------------------------------------------------
+   この章だけで使う部品をまとめています。deck.css を太らせないため
+   に分けており、tokens.css の変数だけを参照します。
+   ============================================================ */
+
+/* ---- 画像 -------------------------------------------------- */
+.fig { display: block; max-width: 100%; }
+img.fig { height: auto; border-radius: var(--radius); }
+.fig--svg { line-height: 0; }
+.fig--svg svg { display: block; width: 100%; height: auto; }
+
+/* ---- 外部サイトへの控えめなボタン -------------------------- */
+a.linkbtn {
+  display: inline-flex;
+  flex-direction: column;
+  gap: 0.6mm;
+  text-decoration: none;
+  border: 0.3mm solid var(--accent-line);
+  border-radius: var(--radius);
+  padding: 2.6mm 4.5mm;
+  background: var(--paper);
+  transition: border-color .15s ease, background .15s ease;
+}
+a.linkbtn:hover { border-color: var(--accent); background: var(--accent-tint); }
+a.linkbtn:focus-visible { outline: 0.4mm solid var(--accent); outline-offset: 0.6mm; }
+.linkbtn__label {
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  color: var(--ink-400);
+  font-weight: 700;
+}
+.linkbtn__body {
+  display: inline-flex;
+  align-items: center;
+  gap: 1.6mm;
+  font-size: var(--fs-small);
+  color: var(--accent);
+  font-weight: 500;
+}
+.linkbtn__out {
+  width: 3mm; height: 3mm; flex: 0 0 auto;
+  fill: none; stroke: currentColor; stroke-width: 2.1;
+  stroke-linecap: round; stroke-linejoin: round;
+}
+
+/* ---- 認定・受賞 -------------------------------------------- */
+.awards { display: flex; flex-direction: column; gap: var(--sp-2); }
+.awards__list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 1.4mm; }
+.slide__body ul.awards__list > li {
+  font-size: var(--fs-small);
+  color: var(--ink-700);
+  padding-left: 6mm;
+  position: relative;
+  line-height: 1.5;
+  margin: 0;
+}
+/* 行頭は中黒ではなく短い罫にします。受賞名は英数字が多く、
+   点より罫のほうが視線の入口として静かに働くためです。
+   deck.css の `.slide__body ul > li::before` を上書きするので、
+   同じ詳細度以上のセレクタで書いています。 */
+.slide__body ul.awards__list > li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: calc(0.5lh - 0.15mm);
+  width: 3mm;
+  height: 0.3mm;
+  border-radius: 0;
+  background: var(--accent-line);
+}
+.awards__logos {
+  border: 0.3mm solid var(--rule);
+  border-radius: var(--radius);
+  padding: 2.6mm 4mm;
+  background: var(--paper);
+}
+
+/* ---- 4つの強み --------------------------------------------- */
+/* 「本件でどう活かすか」の一文。カード本文とは罫で分け、
+   一般論ではなく本提案への接続であることを見た目で示す。 */
+.apply {
+  margin: 1.6mm 0 0;
+  padding-top: 2mm;
+  border-top: 0.3mm solid var(--rule-soft);
+  font-size: var(--fs-label);
+  line-height: 1.55;
+  color: var(--accent);
+}
+.strengths { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-2); }
+/* 4枚を2×2で並べるため、1枚あたりの幅が狭い。本文は版面の既定より
+   一段落として、3行程度で収まるようにしている。 */
+.strengths .card { padding: 3mm 4mm; font-size: var(--fs-small); }
+.strengths .card p { line-height: 1.65; }
+.strengths .card__title { margin-bottom: 1.6mm; }
+.strengths .apply { font-size: 8.2pt; line-height: 1.5; }
+
+/* 「こんなときに、選ばれています」の帯 */
+.picked {
+  border-left: 0.8mm solid var(--accent);
+  background: var(--paper-tint);
+  padding: var(--sp-2) var(--sp-4);
+}
+.picked__h {
+  display: block;
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  font-weight: 700;
+  color: var(--ink-700);
+  margin-bottom: 1.6mm;
+}
+.picked__list {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 0;
+}
+.picked__list > span {
+  font-size: 8.2pt;
+  line-height: 1.5;
+  color: var(--ink-700);
+  padding: 0 var(--sp-3);
+  border-left: 0.3mm solid var(--rule);
+}
+.picked__list > span:first-child { padding-left: 0; border-left: none; }
+
+/* ---- 対応領域 ---------------------------------------------- */
+.areas { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-2) var(--sp-5); }
+.area__k {
+  display: block;
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--ink-900);
+  padding-bottom: 1.2mm;
+  border-bottom: 0.3mm solid var(--accent-line);
+}
+.area__v {
+  margin: 1.6mm 0 0;
+  font-size: var(--fs-label);
+  line-height: 1.55;
+  color: var(--ink-700);
+}
+
+/* ---- 技術スタック ------------------------------------------ */
+/* 左右を別の要素に分けています。1つのグリッドに流し込むと行の高さが
+   左右で共有され、片方が折り返したときにもう片方に隙間が空くためです
+   （目次の agenda__col と同じ理由）。 */
+.chips { display: grid; grid-template-columns: 1fr 1fr; gap: 0 var(--sp-5); align-items: start; }
+.chips__col { display: flex; flex-direction: column; gap: 1mm; }
+.chiprow { display: grid; grid-template-columns: 19mm 1fr; align-items: baseline; gap: 2mm; }
+.chiprow__k {
+  font-size: var(--fs-label);
+  font-weight: 700;
+  color: var(--ink-500);
+  text-align: right;
+  white-space: nowrap;
+}
+.chiprow__items { display: flex; flex-wrap: wrap; gap: 1.2mm; }
+.chip {
+  font-size: var(--fs-label);
+  line-height: 1;
+  padding: 1.1mm 2.2mm;
+  border-radius: var(--radius);
+  background: var(--paper-tint);
+  color: var(--ink-700);
+  white-space: nowrap;
+}
+
+/* ---- ロゴの面 ---------------------------------------------- */
+/* 端数の行が中央に寄るようにしています。31点のように割り切れない
+   数でも、意図した配置に見えるためです。 */
+.logowall {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2.4mm;
+}
+.logowall__cell {
+  flex: 0 0 auto;
+  width: 34mm;
+  height: 15mm;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 0.3mm solid var(--rule-soft);
+  border-radius: var(--radius);
+  background: var(--paper);
+  overflow: hidden;
+}
+.logowall__cell img { max-width: 84%; max-height: 74%; object-fit: contain; }
+
+/* ---- クロージング ------------------------------------------ */
+.closing__sub {
+  display: block;
+  color: var(--accent-mid);
+}
+.closing__body {
+  margin: 0 0 var(--sp-4);
+  font-size: var(--fs-body);
+  line-height: 1.85;
+  color: var(--ink-700);
+}
+.closing__body:last-child { margin-bottom: 0; }
+
+/* ---- クロージング（藍地） ----------------------------------- */
+.closing { background: var(--accent); color: #fff; }
+.closing .slide__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-bottom: calc(var(--optical-lift) * 2);
+}
+.closing .slide__header { border-bottom-color: rgba(255, 255, 255, .22); }
+.closing .slide__brand  { color: rgba(255, 255, 255, .45); }
+.closing .slide__footer { border-top-color: rgba(255, 255, 255, .22); color: rgba(255, 255, 255, .5); }
+.closing .slide__pageno { color: rgba(255, 255, 255, .7); }
+
+.closing__eyebrow {
+  display: block;
+  font-size: var(--fs-label);
+  letter-spacing: 0.22em;
+  font-weight: 700;
+  color: rgba(255, 255, 255, .6);
+  margin-bottom: var(--sp-2);
+}
+.closing .closing__msg {
+  margin: 0;
+  font-size: 20pt;
+  font-weight: 700;
+  line-height: 1.48;
+  color: #fff;
+}
+/* 2行目は色相を変えず、階調をひとつ落として受けます。 */
+.closing .closing__sub { color: var(--accent-line); }
+.closing__rule {
+  width: 18mm;
+  height: 0.6mm;
+  background: rgba(255, 255, 255, .5);
+  margin: var(--sp-4) 0 var(--sp-2);
+}
+.closing .closing__body { color: rgba(255, 255, 255, .82); }
+.closing .closing__name { color: #fff; }
+.closing .caption { color: rgba(255, 255, 255, .55); }
+
+/* 藍地に載る表。罫と地色を白抜き側へ寄せます。 */
+.closing .slide__body table th,
+.closing .slide__body table td { border-bottom-color: rgba(255, 255, 255, .18); color: rgba(255, 255, 255, .82); }
+.closing .slide__body table tbody tr:last-child td { border-bottom-color: rgba(255, 255, 255, .3); }
+.closing .t-def table td:first-child,
+.closing .t-def table th:first-child { background: rgba(255, 255, 255, .07); color: #fff; }
+
+/* 藍地に載るリンクと強調。
+   .slide__body a の既定色は --accent で、藍地ではそれが背景と同色になる。
+   strong のラインマーカーも同様に、暗い地の上では見えない。
+   どちらも白抜き側の階調へ寄せる。 */
+.closing .slide__body a,
+.section .slide__body a,
+.cover .slide__body a {
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, .45);
+}
+.closing strong {
+  color: inherit;
+  background: linear-gradient(transparent 68%, var(--marker-on-dark) 68%);
+}
+/* 上の白抜き指定（0,2,1）は deck.css の `.section .xref--sys`（0,2,0）より
+   強いので、対象読者を示す差し色が消えてしまう。ここで詳細度を上げて戻す。
+   画面と紙のどちらでも効くよう、メディアクエリの外に置いている。 */
+.section .slide__body a.xref--sys {
+  color: var(--sys-on-dark);
+  border-bottom-color: color-mix(in srgb, var(--sys-on-dark) 55%, transparent);
+}

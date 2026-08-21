@@ -1,4 +1,4 @@
-import { Slide, Cols, Card, KeyPoint, Note, Table } from '../../components';
+import { Slide, Cols, Card, KeyPoint, Note, Table, Img, LogoWall, LinkButton, ChipRow, Ref } from '../../components';
 
 {/* ---------------- 17-1 ---------------- */}
 <Slide
@@ -6,21 +6,47 @@ import { Slide, Cols, Card, KeyPoint, Note, Table } from '../../components';
   chapterTitle="会社概要と実績"
   no="17-1"
   title="会社概要"
-  variant="center"
 >
 
-<Table def k="34mm" nohead>
+<Cols n={2}>
+  <div>
+    <Table def k="24mm" nohead dense>
 
 |  |  |
 | --- | --- |
-| **社名** | スタジオスプーン株式会社 |
-| **創業** | 2011年4月（2013年7月法人化・現在14期） |
-| **所在地** | 東京都世田谷区 |
-| **組織** | 13名（全員正規雇用）。フルリモート体制 |
-| **事業内容** | ブランド支援、Webサイト・Webシステム・アプリケーション開発、グラフィックデザイン、撮影・映像制作、イラストレーション、アニメーション（2D・3D） |
-| **強み** | 編集・表現・技術の3領域を社内で完結 |
+| **社名** | スタジオスプーン株式会社（Studio Spoon Inc.） |
+| **設立** | 2013年7月（2011年4月創業・現在14期） |
+| **拠点** | 東京本社：世田谷区玉川　／　神戸オフィス：神戸市中央区 |
+| **代表** | 代表取締役　中村 明史・中村 昌司 |
+| **事業内容** | ブランド支援・デジタルクリエイティブ全般（Web／アプリ／UI・UX／CI・VI／写真・動画／3D／映像制作／ARほか） |
+| **資本金** | 3,000,000円 |
+| **組織** | 13名（全員正規雇用）・フルリモート体制 |
 
-</Table>
+    </Table>
+
+    <div class="mt-4">
+      <LinkButton href="https://introduction.studio-spoon.co.jp/company/" label="会社案内">
+      introduction.studio-spoon.co.jp/company
+      </LinkButton>
+    </div>
+  </div>
+
+  <div class="awards">
+    <h4>認定・受賞</h4>
+    <ul class="awards__list">
+      <li>WEB GRAND PRIX グランプリ（2024・第12回コーポレートサイト賞）</li>
+      <li>FWA OF THE DAY（2023）</li>
+      <li>AWWWARDS ×2</li>
+      <li>CSS Design Awards ×11</li>
+      <li>CSS Winner ×3</li>
+      <li>DesignAwards.Asia ×5</li>
+      <li>App Store App of the Day ×複数回</li>
+    </ul>
+    <div class="awards__logos">
+      <Img src="company/awards.webp" alt="受賞・認定機関のロゴ" />
+    </div>
+  </div>
+</Cols>
 
 </Slide>
 
@@ -29,7 +55,115 @@ import { Slide, Cols, Card, KeyPoint, Note, Table } from '../../components';
   chapter="17"
   chapterTitle="会社概要と実績"
   no="17-2"
-  title="主な実績"
+  title="4つの強みと、選ばれてきた理由"
+  variant="tight"
+>
+
+<Cols n="2-1">
+  <div class="strengths">
+    <Card label="STRENGTH 01" title="編集力">
+    リサーチ・情報整理・企画・コピーを重視。「何をどう伝えるか」からご一緒に考えます。
+    <p class="apply">紙の情報をWebで引ける形へ再整理することに活かします</p>
+    </Card>
+    <Card label="STRENGTH 02" title="表現力">
+    「記憶に残る」ビジュアルへ。分かりやすさの上に、ひとさじの遊び心を添えます。
+    <p class="apply">営業の現場でそのままお見せできる画面づくりに活かします</p>
+    </Card>
+    <Card label="STRENGTH 03" title="技術力">
+    企画も表現も、形になって初めて届きます。CMSから業務システムまで幅広く実装します。
+    <p class="apply">一覧表との同期と、図面の出し分けの実装に活かします</p>
+    </Card>
+    <Card label="STRENGTH 04" title="ホスピタリティ">
+    課題や思いをすくいあげ、丁寧にお伝えすることを土台に据えています。
+    <p class="apply">要件定義から公開後の運用まで、丁寧な伴走に活かします</p>
+    </Card>
+  </div>
+
+  <Img src="company/strengths-circles.svg" alt="編集力・表現力・技術力の3領域を、ホスピタリティが包む関係を示した図" />
+</Cols>
+
+<div class="picked mt-3">
+  <span class="picked__h">こんなときに、選ばれています</span>
+  <div class="picked__list">
+    <span>① クリエイティブとシステムの両輪、どちらも譲れないとき</span>
+    <span>② 「何をどう伝えるか」から一緒に考えてほしいとき</span>
+    <span>③ 「自分たちらしく伝わる」を大切にしたいとき</span>
+    <span>④ 他社で「作れない」と言われた表現や仕組みを実現したいとき</span>
+    <span>⑤ アイデアとホスピタリティが不足しているとき</span>
+  </div>
+</div>
+
+</Slide>
+
+{/* ---------------- 17-3 ---------------- */}
+<Slide
+  chapter="17"
+  chapterTitle="会社概要と実績"
+  no="17-3"
+  title="対応領域と技術スタック"
+  variant="tight"
+>
+
+<h4>対応領域</h4>
+
+<div class="areas">
+  <div>
+    <span class="area__k">Web制作</span>
+    <p class="area__v">企画・制作・運営／採用・ブランド・EC・メディア・LP／ヘッドレスCMS・WordPress・Shopify</p>
+  </div>
+  <div>
+    <span class="area__k">システム・アプリ</span>
+    <p class="area__v">会員制／予約／クラウド契約／パーソナル診断／シミュレーション／プロモーション</p>
+  </div>
+  <div>
+    <span class="area__k">デザイン</span>
+    <p class="area__v">UI/UX・CI/VI・ロゴ・パッケージ・名刺・パンフレット／イラスト・KV・アイコン</p>
+  </div>
+  <div>
+    <span class="area__k">写真・映像</span>
+    <p class="area__v">撮影ディレクション・編集／モーショングラフィックス／SNS・リール映像</p>
+  </div>
+  <div>
+    <span class="area__k">3D・インタラクティブ</span>
+    <p class="area__v">商品／空間／キャラクターの3D・3Dアニメ／WebGL・AR</p>
+  </div>
+  <div>
+    <span class="area__k">エンジニアリング支援</span>
+    <p class="area__v">他社様の制作に対するWeb技術のご提供</p>
+  </div>
+</div>
+
+<h4 class="mt-3">技術スタック</h4>
+
+<div class="chips">
+  <div class="chips__col">
+    <ChipRow k="言語" items="JavaScript, TypeScript, PHP, Python, GLSL" />
+    <ChipRow k="サーバー" items="Node.js, Express, Hono, Laravel, Django" />
+    <ChipRow k="ホスティング" items="Vercel, Cloudflare, AWS, GCP, Firebase" />
+    <ChipRow k="3D・演出" items="Three.js, Motion, GSAP, Lottie" />
+    <ChipRow k="その他" items="Electron, Tauri, Docker, GitHub, AR" />
+  </div>
+  <div class="chips__col">
+    <ChipRow k="開発ツール" items="Astro, React, Next.js, Gatsby, Remix, Vite" />
+    <ChipRow k="CMS" items="microCMS, Contentful, WordPress, MovableType, PowerCMS" />
+    <ChipRow k="DB" items="GraphQL, Prisma, PostgreSQL, MySQL, Supabase, Neon" />
+    <ChipRow k="EC・決済" items="Shopify, Stripe" />
+  </div>
+</div>
+
+<KeyPoint class="mt-3">
+本件で必要な「リサーチ・分析・編集・デザイン・設計・構築・データ連携・運用」は<strong>いずれも自社の対応領域の中にあり、窓口ひとつでまとめてお引き受けいたします。</strong>
+</KeyPoint>
+
+</Slide>
+
+{/* ---------------- 17-4 ---------------- */}
+<Slide
+  chapter="17"
+  chapterTitle="会社概要と実績"
+  no="17-4"
+  title="本件に近い実績"
+  variant="center"
 >
 
 <Cols n={2}>
@@ -57,5 +191,31 @@ import { Slide, Cols, Card, KeyPoint, Note, Table } from '../../components';
     </div>
   </div>
 </Cols>
+
+</Slide>
+
+{/* ---------------- 17-5 ---------------- */}
+<Slide
+  chapter="17"
+  chapterTitle="会社概要と実績"
+  no="17-5"
+  title="公共から大手ブランドまで、幅広い制作実績"
+  lead="東京都・TOYOTA・TOPPAN・I-ne・放送大学・カネカほか。大規模公共サイト・D2Cブランド・アプリ・映像まで、領域を横断して制作しています。"
+>
+
+<Img src="company/works-montage.webp" alt="これまでに制作したWebサイトの画面を並べた一覧" />
+
+</Slide>
+
+{/* ---------------- 17-6 ---------------- */}
+<Slide
+  chapter="17"
+  chapterTitle="会社概要と実績"
+  no="17-6"
+  title="お取引実績"
+  lead="公共・大手ブランドからD2Cまで、業種を問わずお声がけいただいております。"
+>
+
+<LogoWall dir="company/clients" />
 
 </Slide>

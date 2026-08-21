@@ -18,3 +18,7 @@ export { default as Table } from './Table.astro';
 export { default as Ref } from './Ref.astro';
 export { default as DemoLink } from './DemoLink.astro';
 export { default as Brand } from './Brand.astro';
+export { default as Img } from './Img.astro';
+export { default as LogoWall } from './LogoWall.astro';
+export { default as LinkButton } from './LinkButton.astro';
+export { default as ChipRow } from './ChipRow.astro';

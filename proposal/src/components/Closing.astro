@@ -1,17 +1,30 @@
 ---
+/* 結びのページ。表紙・章扉と同じ藍地で締めることで、
+   開きと閉じの地色が揃うようにしています。 */
 import { deck } from '../deck.config';
 import Brand from './Brand.astro';
-interface Props { msg?: string; }
-const { msg = '以上、ご検討のほど、<br />どうぞよろしくお願いいたします。' } = Astro.props;
+
+interface Props {
+  eyebrow?: string;
+  msg?: string;     // 見出し1行目
+  sub?: string;     // 見出し2行目（淡い階調で受ける）
+}
+const {
+  eyebrow = 'CLOSING',
+  msg = '編集・表現・技術の3つの力と',
+  sub = 'スタッフそれぞれのホスピタリティを活かして',
+} = Astro.props;
 ---
 <section id="closing" class="slide closing">
   <header class="slide__header">
     <div class="slide__chapter-label"></div>
     <Brand />
   </header>
-  <div class="slide__body" style="display:flex; flex-direction:column; justify-content:center">
+  <div class="slide__body">
+    {eyebrow && <span class="closing__eyebrow">{eyebrow}</span>}
     <p class="closing__msg" set:html={msg} />
-    <div class="cover__rule"></div>
+    {sub && <p class="closing__msg closing__sub" set:html={sub} />}
+    <div class="closing__rule"></div>
     <slot />
   </div>
   <footer class="slide__footer">
