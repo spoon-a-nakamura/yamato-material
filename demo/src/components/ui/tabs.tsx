@@ -25,6 +25,9 @@ export const TabsTrigger = React.forwardRef<
     ref={ref}
     className={cn(
       'inline-flex items-center gap-1.5 whitespace-nowrap rounded px-3 py-1.5 text-sm font-medium text-muted-foreground transition-colors',
+      // アイコンは lucide の既定（24px・線幅2）だと文字より大きく太って見えるため、
+      // 文字に対して控えめな 16px・線幅1.5 に揃える
+      '[&_svg]:size-4 [&_svg]:stroke-[1.5]',
       'hover:text-foreground data-[state=active]:bg-background data-[state=active]:text-foreground data-[state=active]:shadow-card',
       className
     )}

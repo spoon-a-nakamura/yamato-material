@@ -1,6 +1,8 @@
 'use client'
 import * as React from 'react'
-import { ChevronLeft, ClipboardCheck, ClipboardList, ExternalLink, FileText, Lock } from 'lucide-react'
+import {
+  ChevronLeft, ClipboardCheck, ClipboardList, Cylinder, DraftingCompass, ExternalLink, Ruler,
+} from 'lucide-react'
 import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
@@ -62,11 +64,13 @@ export function ProductScreen({ slug }: { slug: string }) {
         <div className="lg:sticky lg:top-[4.25rem] lg:self-start">
           <Tabs defaultValue="simple">
             <TabsList className="w-full no-print">
-              <TabsTrigger value="simple" className="flex-1"><FileText />簡易図面</TabsTrigger>
-              <TabsTrigger value="silhouette" className="flex-1">形状</TabsTrigger>
+              {/* 3つとも製図・計測系のアイコンで揃える。
+                  簡易図面＝寸法入りの図、形状＝容器の立体、詳細図面＝より精密な製図 */}
+              <TabsTrigger value="simple" className="flex-1"><Ruler />簡易図面</TabsTrigger>
+              <TabsTrigger value="silhouette" className="flex-1"><Cylinder />形状</TabsTrigger>
               {internal && (
                 <TabsTrigger value="detail" className="flex-1 data-[state=active]:text-internal-fg">
-                  <Lock />詳細図面
+                  <DraftingCompass />詳細図面
                 </TabsTrigger>
               )}
             </TabsList>
@@ -76,7 +80,7 @@ export function ProductScreen({ slug }: { slug: string }) {
                 <SimpleDrawing product={p} className="mx-auto h-[26rem]" />
               </div>
               <Notice className="mt-2">
-                この簡易図面は仕様値からプログラム描画したものです。お客さまにも公開する想定の情報です（提案書 8-3）。
+                この簡易図面はお客さまにも公開する想定の情報です（仮描画です）。
               </Notice>
             </TabsContent>
 
@@ -115,7 +119,7 @@ export function ProductScreen({ slug }: { slug: string }) {
                   <Badge variant="warn">Web移行対象範囲外</Badge>
                 </TooltipTrigger>
                 <TooltipContent>
-                  提案書 4-1 の移行対象ページ（29〜38・40〜62・65〜68）に含まれないSKUです。
+                  移行対象ページ（29〜38・40〜62・65〜68）に含まれないSKUです。
                 </TooltipContent>
               </Tooltip>
             )}
