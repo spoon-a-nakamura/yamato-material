@@ -1,0 +1,16 @@
+---
+/* 技術スタックの1行。項目は読点区切りの1本の文字列で渡します
+   （MDXの表よりも原稿が短く、増減もしやすいため）。 */
+interface Props {
+  k: string;         // 行の見出し（言語 / CMS など）
+  items: string;     // "JavaScript, TypeScript, PHP" のようにカンマ区切り
+}
+const { k, items } = Astro.props;
+const list = items.split(',').map((s) => s.trim()).filter(Boolean);
+---
+<div class="chiprow">
+  <span class="chiprow__k">{k}</span>
+  <span class="chiprow__items">
+    {list.map((it) => <span class="chip">{it}</span>)}
+  </span>
+</div>

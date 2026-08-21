@@ -1,0 +1,46 @@
+---
+/* 画像をビルド時に data URI として本文へ埋め込みます。
+
+   このデッキは「外部アセットへの参照を持たない1枚のHTML」を前提に組んで
+   あります（astro.config.mjs の inlineStylesheets 参照）。そのおかげで
+   /proposal/ 配下でも file:// で直接開いても、PDF出力でもパス解決に失敗
+   しません。画像も同じ約束に揃えるため、ここで埋め込んでしまいます。
+
+   SVGは data URI にせずマークアップのまま展開します。拡大しても粗くならず、
+   PDFでもベクタのまま残るためです。 */
+import { readFileSync } from 'node:fs';
+import path from 'node:path';
+
+interface Props {
+  src: string;       // src/images からの相対パス
+  alt?: string;
+  class?: string;
+}
+const { src, alt = '', class: cls = '' } = Astro.props;
+
+const abs = path.resolve('src/images', src);
+const ext = path.extname(abs).toLowerCase();
+
+const MIME: Record<string, string> = {
+  '.webp': 'image/webp',
+  '.png':  'image/png',
+  '.jpg':  'image/jpeg',
+  '.jpeg': 'image/jpeg',
+};
+
+const isSvg = ext === '.svg';
+let markup = '';
+let uri = '';
+
+if (isSvg) {
+  /* XML宣言とコメントは埋め込みに不要なので落とします。 */
+  markup = readFileSync(abs, 'utf8').replace(/<\?xml[^>]*\?>/g, '').trim();
+} else {
+  const mime = MIME[ext];
+  if (!mime) throw new Error(`<Img> が扱えない拡張子です: ${src}`);
+  uri = `data:${mime};base64,${readFileSync(abs).toString('base64')}`;
+}
+---
+{isSvg
+  ? <span class={`fig fig--svg ${cls}`} role="img" aria-label={alt} set:html={markup} />
+  : <img class={`fig ${cls}`} src={uri} alt={alt} />}

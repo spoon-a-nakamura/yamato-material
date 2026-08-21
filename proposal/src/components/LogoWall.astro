@@ -1,0 +1,30 @@
+---
+/* ロゴを並べる面。ディレクトリを読んでファイル名順に並べるので、
+   ロゴを足す・外すときはファイルを置き換えるだけで済みます。
+   画像は <Img> と同じ理由で data URI として埋め込みます。 */
+import { readdirSync, readFileSync } from 'node:fs';
+import path from 'node:path';
+
+interface Props {
+  dir: string;        // src/images からの相対パス
+  label?: string;     // 面全体の説明（個々のロゴには alt を付けません）
+}
+const { dir, label = 'お取引先企業のロゴ' } = Astro.props;
+
+const MIME: Record<string, string> = {
+  '.webp': 'image/webp', '.png': 'image/png', '.jpg': 'image/jpeg', '.jpeg': 'image/jpeg',
+};
+
+const base = path.resolve('src/images', dir);
+const logos = readdirSync(base)
+  .filter((f) => MIME[path.extname(f).toLowerCase()])
+  .sort()
+  .map((f) => `data:${MIME[path.extname(f).toLowerCase()]};base64,${readFileSync(path.join(base, f)).toString('base64')}`);
+
+if (logos.length === 0) throw new Error(`<LogoWall> に画像がありません: ${dir}`);
+---
+<div class="logowall" role="img" aria-label={label}>
+  {logos.map((uri) => (
+    <span class="logowall__cell"><img src={uri} alt="" /></span>
+  ))}
+</div>

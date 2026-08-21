@@ -10,9 +10,10 @@ interface Props {
   lead?: string;               // 主見出し直下のリード文
   variant?: string;            // 追加クラス（tight / center など）
   id?: string;                 // 目次からのアンカー先（任意）
+  audience?: string;           // 対象読者（"sys" でシステム部門の方向けの識別色が付く）
   class?: string;
 }
-const { chapter, chapterTitle, no, title, lead, variant = '', id, class: cls = '' } = Astro.props;
+const { chapter, chapterTitle, no, title, lead, variant = '', id, audience, class: cls = '' } = Astro.props;
 
 /* アンカーIDは「並び順」ではなく「内容」から決めます。
    スライドを追加・削除・並べ替えても、no が変わらない限りIDは変わりません。
@@ -24,6 +25,7 @@ const anchorId =
   id={anchorId}
   data-chapter={chapter !== undefined ? String(chapter) : undefined}
   data-no={no}
+  data-audience={audience}
   class={`slide ${variant ? variant.split(' ').map(v => `slide--${v}`).join(' ') : ''} ${cls}`}>
   <header class="slide__header">
     <div class="slide__chapter-label">

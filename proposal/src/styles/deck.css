@@ -363,7 +363,9 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   font-size: var(--fs-lead);
   line-height: 1.7;
   color: var(--ink-900);
+  & +* { margin-top: var(--sp-4); }
 }
+* + .keypoint { margin-top: var(--sp-4); }
 .keypoint > :first-child { margin-top: 0; }
 .keypoint > :last-child { margin-bottom: 0; }
 
@@ -871,10 +873,58 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
 .xref--broken { color: #b00020; border-bottom-color: #b00020; background: #fdeaec; }
 .xref--broken::after { content: " ⚠参照先なし"; font-size: .8em; }
 
+/* 章扉・表紙は藍地（--accent）。.xref の既定色も --accent なので、
+   そのままでは文字が背景と同色になって読めない。白抜き側の階調へ寄せる。 */
+.section .xref,
+.cover .xref {
+  color: #fff;
+  border-bottom-color: rgba(255, 255, 255, .45);
+}
+.section .xref__page,
+.cover .xref__page { color: rgba(255, 255, 255, .72); }
+
+/* ---- システム部門の方向けの章の識別 -----------------------
+   第12章はシステム部門の方が単独で読める章。目次・章扉・各ページの
+   3箇所で同じ差し色を使い、俯瞰でも流し読みでも判別できるようにする。 */
+
+/* 章扉（藍地）の参照リンクと項目 */
+.section .xref--sys {
+  color: var(--sys-on-dark);
+  border-bottom-color: color-mix(in srgb, var(--sys-on-dark) 55%, transparent);
+}
+.section__items .is-sys { color: var(--sys-on-dark); }
+
+/* 目次（白地） */
+.agenda__item.is-sys .agenda__no { color: var(--sys); }
+.agenda__item.is-sys .agenda__t { color: var(--sys); }
+.agenda__item.is-sys .agenda__t small { color: color-mix(in srgb, var(--sys) 78%, var(--paper)); }
+
+/* 目次ドロワー */
+.navmenu__item.is-sys .navmenu__no,
+.navmenu__item.is-sys .navmenu__t { color: var(--sys); }
+
+/* 各ページのヘッダ。ページをめくったときの識別はここが効く。 */
+.slide[data-audience="sys"] .slide__chapter-label { color: var(--sys); }
+.slide[data-audience="sys"] .slide__chapter-label b { color: var(--sys); }
+.slide[data-audience="sys"] .slide__header {
+  border-bottom-color: color-mix(in srgb, var(--sys) 45%, var(--rule));
+}
+.slide[data-audience="sys"] .slide__chapter-label::after {
+  content: "システム部門の方向け";
+  font-weight: 600;
+  color: var(--sys);
+  background: var(--sys-tint);
+  border-radius: 99mm;
+  padding: 0.4mm 2.2mm 0.6mm;
+  letter-spacing: 0.04em;
+}
+
 @media print {
   .navmenu, .navmenu__scrim { display: none !important; }
   .xref { color: inherit; border-bottom: none; }
   .xref--broken { background: none; }
+  /* 差し色は「リンクである」ことではなく「対象読者」を示しているので、紙でも残す。 */
+  .section .xref--sys { color: var(--sys-on-dark); }
 }
 
 /* ---- デモ（Webカタログ試作）へのリンク --------------------- */
