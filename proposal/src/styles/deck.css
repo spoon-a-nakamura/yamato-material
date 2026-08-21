@@ -766,6 +766,8 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   background: var(--accent-tint);
   color: var(--ink-900);
   box-shadow: inset 3px 0 0 var(--accent);
+  /* 角丸が残ると左のバーの上下端も丸まってしまうため、この行だけ角を落とす */
+  border-radius: 0;
 }
 .navmenu__item.is-current .navmenu__page { color: var(--accent); }
 
@@ -831,12 +833,26 @@ a.demolink {
   white-space: nowrap;   /* 文言が行中で分断されないように */
 }
 a.demolink::after { content: "\2197"; font-weight: 400; margin-left: 0.3em; }
+/* ボタンは先頭のアイコンが役目を果たすため、末尾の矢印は出さない */
+a.demolink--button::after { content: none; }
+.demolink__icon {
+  width: 4.4mm;
+  height: 4.4mm;
+  flex: 0 0 auto;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 1.9;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
 a.demolink:hover { border-bottom-color: var(--accent); }
 a.demolink:focus-visible { outline: 0.4mm solid var(--accent); outline-offset: 0.6mm; }
 
 /* 目立たせたい箇所（要点・デザイン方針・次のステップ）用 */
 a.demolink--button {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 2.2mm;
   background: var(--accent);
   color: #fff;
   border: 0.3mm solid var(--accent);

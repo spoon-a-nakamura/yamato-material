@@ -10,6 +10,10 @@ import { deck } from '../deck.config';
      <DemoLink to="/products/">一覧のデモ</DemoLink>     … 任意のパス
      <DemoLink product>商品詳細のデモ</DemoLink>         … サンプル商品の詳細
      <DemoLink variant="button">…</DemoLink>            … 囲み付きで目立たせる
+
+   variant="button" のときは先頭に画面のアイコンを添えます。
+   文字のグリフ（↗）では書体によって形が変わり印刷でも崩れるため、
+   インラインSVGにしています。色は currentColor で追従します。
    ============================================================ */
 interface Props {
   /** デモ内のパス。省略するとトップ。 */
@@ -23,9 +27,9 @@ const { to, product = false, variant = '' } = Astro.props;
 
 const path = product ? `/products/${deck.demoSampleProduct}/` : (to ?? '/');
 const href = `${deck.demoUrl.replace(/\/+$/, '')}/${String(path).replace(/^\/+/, '')}`;
-const variantClass = variant
-  ? variant.split(' ').filter(Boolean).map((v) => `demolink--${v}`).join(' ')
-  : '';
+const variants = variant ? variant.split(' ').filter(Boolean) : [];
+const variantClass = variants.map((v) => `demolink--${v}`).join(' ');
+const isButton = variants.includes('button');
 ---
 <a
   class={`demolink ${variantClass}`}
@@ -33,4 +37,11 @@ const variantClass = variant
   target="_blank"
   rel="noopener noreferrer"
   data-demo={path}
-><slot /></a>
+>
+  {isButton && (
+    <svg class="demolink__icon" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <rect x="2.5" y="3.5" width="19" height="13" rx="1.6" />
+      <path d="M8.5 20.5h7M12 16.5v4" />
+    </svg>
+  )}<slot />
+</a>
