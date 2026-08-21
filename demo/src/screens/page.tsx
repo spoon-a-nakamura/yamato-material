@@ -45,7 +45,9 @@ export function PageScreen({ pageNumber }: { pageNumber: number }) {
 
   return (
     <div className="mx-auto max-w-[1400px] px-3 py-5 sm:px-4">
-      <div className={cn('rounded-lg border-l-4 bg-card p-4 shadow-card', cc.border)}>
+      {/* 誌面の章を示す左罫線。角丸を付けると罫線の上下端が内側に寄って
+          「線が途中で切れている」ように見えるため、角は落としている */}
+      <div className={cn('border-l-4 bg-card p-4', cc.border)}>
         <div className="flex flex-wrap items-center gap-2">
           <CategoryBadge id={page.category} />
           {!page.inScope && <Badge variant="warn">Web移行対象範囲外のページ</Badge>}
