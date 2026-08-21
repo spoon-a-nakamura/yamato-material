@@ -1048,14 +1048,11 @@ a.slide__brand:focus-visible {
   font-weight: 500;
   color: var(--ink-900);
 }
-.t-money table td:nth-child(2),
-.t-money table th:nth-child(2) {
-  width: 20mm;
-  text-align: right;
-  white-space: nowrap;
-}
-.t-money table td:nth-child(3),
-.t-money table th:nth-child(3) {
+/* 金額は列数に関係なく最終列に置く。列を足したり減らしたりしても
+   幅と揃えが崩れないよう、位置指定（nth-child）ではなく last-child で
+   拾っている。中間に列を挟む場合はその列だけ個別に指定する。 */
+.t-money table td:last-child,
+.t-money table th:last-child {
   width: 32mm;
   text-align: right;
   white-space: nowrap;
