@@ -1,5 +1,6 @@
 'use client'
 import * as React from 'react'
+import { ArrowUpRight } from 'lucide-react'
 import { TooltipProvider } from '@/components/ui/tooltip'
 import { SiteHeader } from '@/components/site-header'
 import { Link, useNav } from '@/app/nav'
@@ -41,6 +42,43 @@ export function AppShell({ children }: { children: React.ReactNode }) {
   )
 }
 
+/**
+ * 外部・別アプリへのリンク。
+ * <Link> は内部ルーティング用（nav.href() を通してハッシュURLに変換する）ため、
+ * ここでは素の <a> を使う。別タブで開き、rel で参照元情報の受け渡しを止める。
+ */
+function ExternalLink({ href, children }: { href: string; children: React.ReactNode }) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-1 underline decoration-border underline-offset-2 transition-colors hover:text-foreground hover:decoration-foreground"
+    >
+      {children}
+      <ArrowUpRight className="size-3 shrink-0" aria-hidden />
+    </a>
+  )
+}
+
+/**
+ * 提案スライドの場所。
+ * 公開構成ではドメイン直下に
+ *   /proposal/  提案スライド
+ *   /demo/      このデモ（next.config.mjs の basePath）
+ * が並ぶ。
+ *
+ * 相対（../proposal/）にはできない。trailingSlash: true で全ページが
+ * ディレクトリ形式になるため、階層によって解決先がずれる：
+ *   /demo/                    → /proposal/           正しい
+ *   /demo/about/              → /demo/proposal/      ずれる
+ *   /demo/products/xxx/       → /demo/products/...   ずれる
+ * そのためドメイン直下からの絶対パスで持つ。
+ * basePath は素の <a href> には前置されないので、この値がそのまま使われる。
+ * 単一HTML版（file:// の1ファイル配布）からは解決できない。
+ */
+const PROPOSAL_URL = '/proposal/'
+
 function SiteFooter() {
   return (
     <footer className="mt-12 border-t bg-muted/40 no-print">
@@ -49,7 +87,11 @@ function SiteFooter() {
           ヤマトマテリアル株式会社 Webカタログ（デモ）
         </p>
         <Link href="/about" className="hover:text-foreground hover:underline">このデモについて</Link>
-        <p className="ml-auto">制作：スタジオスプーン株式会社</p>
+        <ExternalLink href={PROPOSAL_URL}>ご提案スライド</ExternalLink>
+        <p className="ml-auto">
+          制作：
+          <ExternalLink href="https://studio-spoon.co.jp/about/">スタジオスプーン株式会社</ExternalLink>
+        </p>
       </div>
     </footer>
   )
