@@ -547,6 +547,39 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   font-size: 12px;
   font-family: var(--font-sans);
 }
+/* 「元に戻る」。参照で飛んだときだけ現れ、戻り切ると消える。
+   隠すときは display:none にして、ツールバーの他のボタンの位置を
+   動かさないようにしている。 */
+.toolbar__btn--back { display: none; }
+.toolbar__btn--back.is-shown {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: var(--accent);
+  animation: toolbarBackIn .18s ease-out;
+}
+.toolbar__btn--back svg {
+  width: 14px; height: 14px;
+  fill: none; stroke: currentColor;
+  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+}
+.toolbar__count {
+  font-family: var(--font-num);
+  font-size: 10px;
+  line-height: 1;
+  padding: 2px 5px;
+  border-radius: 99px;
+  background: rgba(255, 255, 255, .22);
+}
+.toolbar__count:empty { display: none; }
+@keyframes toolbarBackIn {
+  from { opacity: 0; transform: translateY(4px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .toolbar__btn--back.is-shown { animation: none; }
+}
+
 .toolbar button, .toolbar a, .toolbar__btn {
   background: var(--ink-900); color: #fff;
   border: none; border-radius: 6px;

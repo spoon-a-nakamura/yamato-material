@@ -36,6 +36,14 @@ const frame = { base: 'base', swiss: 'base', mincho: 'base', tech: 'tech', air: 
       <slot />
     </main>
     <div class="toolbar">
+      <!-- 参照リンクで飛んだときだけ現れる。辿った分だけ順に戻れる。 -->
+      <button type="button" class="toolbar__btn toolbar__btn--back" data-nav-back>
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M9 14 4 9l5-5" />
+          <path d="M4 9h10a6 6 0 0 1 0 12h-3" />
+        </svg>
+        元に戻る<span class="toolbar__count" data-nav-back-count></span>
+      </button>
       <button type="button" class="toolbar__btn" data-nav-toggle aria-expanded="false" aria-controls="navmenu">
         目次
       </button>
@@ -172,6 +180,55 @@ const frame = { base: 'base', swiss: 'base', mincho: 'base', tech: 'tech', air: 
           }, { rootMargin: '-45% 0px -45% 0px' });
           slides.forEach(function (el) { io.observe(el); });
         }
+
+        /* ---- 7. 参照から戻る ---------------------------------- */
+        /* ブラウザ履歴では「戻る先が残っているか」を読めず、ボタンを消す
+           条件が作れない。そのため飛ぶ直前のスクロール位置を自前で積む。 */
+        var backStack = [];
+        var backBtn = document.querySelector('[data-nav-back]');
+        var backCount = document.querySelector('[data-nav-back-count]');
+
+        var renderBack = function () {
+          var n = backStack.length;
+          backBtn.classList.toggle('is-shown', n > 0);
+          backCount.textContent = n > 1 ? String(n) : '';
+          backBtn.setAttribute('aria-label', n > 1 ? ('元に戻る（残り' + n + '件）') : '元に戻る');
+        };
+
+        /* デッキ内のアンカーへの遷移をすべて記録する。
+           目次スライド・本文の参照・ドロワーのいずれからでも戻れる。
+           デモへのリンクは別タブなので href が # で始まらず対象外。 */
+        /* リンクによるフラグメント遷移でも popstate は発火するため、
+           直後の1回だけ読み飛ばす目印を立てる。これがないと積んだ直後に
+           自分で取り消してしまい、ボタンが出ない。 */
+        var skipPop = false;
+
+        document.addEventListener('click', function (e) {
+          var a = e.target.closest && e.target.closest('a[href^="#"]');
+          if (!a || a === backBtn) return;
+          var id = a.getAttribute('href').slice(1);
+          if (!id || !document.getElementById(id)) return;
+          backStack.push(window.scrollY);
+          if (backStack.length > 20) backStack.shift();
+          renderBack();
+          skipPop = true;
+          /* 同じ位置へのリンクなど遷移が起きない場合に目印が残らないようにする */
+          setTimeout(function () { skipPop = false; }, 500);
+        });
+
+        backBtn.addEventListener('click', function () {
+          var y = backStack.pop();
+          renderBack();
+          if (y !== undefined) window.scrollTo({ top: y, behavior: 'smooth' });
+        });
+
+        /* ブラウザの戻るを使われた場合は1つ消費した扱いにして、ずれを防ぐ。 */
+        window.addEventListener('popstate', function () {
+          if (skipPop) { skipPop = false; return; }
+          if (backStack.length) { backStack.pop(); renderBack(); }
+        });
+
+        renderBack();
       })();
     </script>
   </body>
