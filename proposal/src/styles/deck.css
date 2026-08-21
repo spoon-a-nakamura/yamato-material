@@ -363,7 +363,9 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   font-size: var(--fs-lead);
   line-height: 1.7;
   color: var(--ink-900);
+  & +* { margin-top: var(--sp-4); }
 }
+* + .keypoint { margin-top: var(--sp-4); }
 .keypoint > :first-child { margin-top: 0; }
 .keypoint > :last-child { margin-bottom: 0; }
 
