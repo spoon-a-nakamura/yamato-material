@@ -85,6 +85,10 @@
      従来の 3mm + 1.5mm と合計が同じになる値にしており、版面の高さは増えない。 */
   --agenda-part-pad: 2.25mm;
 
+  /* variant="center" のページを、上下センターからどれだけ上へ持ち上げるか。
+     人の目は真ん中よりわずかに上を「中央」と感じるため（日の丸の考え方）。 */
+  --optical-lift: 3mm;
+
   /* strong に添える淡いラインマーカー。既に太字なので、ごく薄く。 */
   --marker: color-mix(in srgb, var(--accent) 14%, transparent);
   --marker-on-dark: rgba(255, 255, 255, 0.16);

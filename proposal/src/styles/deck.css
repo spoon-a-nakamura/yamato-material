@@ -129,7 +129,6 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
 }
 .slide__body > * { flex: 0 0 auto; }
 /* 内容が少ないスライドは版面の縦中央に寄せる */
-.slide--center .slide__body { justify-content: center; }
 .slide--tight .slide__body { padding-top: var(--sp-3); }
 /* 見出しも一段落とす。各テーマの級数に対する相対指定なので骨格を問わず効く
    （tech骨格はより強い値で上書きしている）。 */
@@ -140,7 +139,16 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
 .section.slide--tight { --fs-chapter-no: 42pt; }
 .section.slide--tight .section__lead { margin-top: var(--sp-3); }
 .section.slide--tight .section__items { margin-top: var(--sp-3); }
-.slide--center .slide__body { display: flex; flex-direction: column; justify-content: center; }
+/* 上下センターに置いたうえで、視覚的な重心をすこし上へ寄せる。
+   上の padding を落として下に倍量を入れているため、
+   中身に使える高さはほぼ変わらない（差は1px以下）。 */
+.slide--center .slide__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 0;
+  padding-bottom: calc(var(--optical-lift) * 2);
+}
 .slide--spread .slide__body { display: flex; flex-direction: column; justify-content: space-between; }
 .slide--spread .slide__body > * { flex: 0 0 auto; }
 
