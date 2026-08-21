@@ -115,7 +115,10 @@ const frame = { base: 'base', swiss: 'base', mincho: 'base', tech: 'tech', air: 
             list.appendChild(group);
           }
           var a = document.createElement('a');
-          a.className = 'navmenu__item' + (el.dataset.part ? ' navmenu__item--part' : '');
+          a.className = 'navmenu__item'
+            + (el.dataset.part ? ' navmenu__item--part' : '')
+            /* 対象読者が指定された章は、ドロワーでも同じ差し色で示します。 */
+            + (el.dataset.audience === 'sys' ? ' is-sys' : '');
           a.href = '#' + el.id;
           a.dataset.target = el.id;
           var no = document.createElement('span');

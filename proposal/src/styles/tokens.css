@@ -38,6 +38,13 @@
   --mark:         #8c4a2f;       /* 採用マーク等の差し色（控えめな錆色） */
   --mark-tint:    #f7f0ec;
 
+  /* システム部門の方が単独で読む章（第12章）を識別するための差し色。
+     藍系に近い青緑にしてあるので意匠から浮かず、それでも流し読み時に
+     「別カテゴリ」と分かる。コントラスト比は白地で6.10、藍地で6.67（AA適合）。 */
+  --sys:          #276b74;
+  --sys-on-dark:  #8fd0da;
+  --sys-tint:     #eaf3f5;
+
   /* ---- Typography ----------------------------------------- */
   --font-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
                "Yu Gothic Medium", "Yu Gothic", "Noto Sans CJK JP", "Meiryo",

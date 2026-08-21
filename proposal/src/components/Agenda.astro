@@ -5,7 +5,7 @@ interface Props {
   title?: string;
   /** 左列に入れる項目数。ここで左右を分割します。 */
   rows?: number;
-  items: { no?: string; t: string; s?: string; part?: string; ref?: string }[];
+  items: { no?: string; t: string; s?: string; part?: string; ref?: string; sys?: boolean }[];
 }
 const { title = '目次', rows = 13, items } = Astro.props;
 
@@ -53,7 +53,7 @@ const columns = [items.slice(0, rows), items.slice(rows)];
                 <span class="agenda__page" />
               </Tag>
             ) : (
-              <Tag class="agenda__item" data-ref={key}>
+              <Tag class={`agenda__item${it.sys ? ' is-sys' : ''}`} data-ref={key}>
                 <span class="agenda__no">{it.no}</span>
                 <span class="agenda__t">
                   <Fragment set:html={it.t} />
