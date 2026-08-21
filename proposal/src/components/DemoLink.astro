@@ -11,9 +11,10 @@ import { deck } from '../deck.config';
      <DemoLink product>商品詳細のデモ</DemoLink>         … サンプル商品の詳細
      <DemoLink variant="button">…</DemoLink>            … 囲み付きで目立たせる
 
-   variant="button" のときは先頭に画面のアイコンを添えます。
-   文字のグリフ（↗）では書体によって形が変わり印刷でも崩れるため、
-   インラインSVGにしています。色は currentColor で追従します。
+   variant="button" のときは、先頭に画面のアイコン、末尾に外部リンクを
+   示す斜め上の矢印を添えます。文字のグリフ（↗）では書体によって形が
+   変わり印刷でも崩れるため、いずれもインラインSVGにしています。
+   色は currentColor で追従します。
    ============================================================ */
 interface Props {
   /** デモ内のパス。省略するとトップ。 */
@@ -43,5 +44,10 @@ const isButton = variants.includes('button');
       <rect x="2.5" y="3.5" width="19" height="13" rx="1.6" />
       <path d="M8.5 20.5h7M12 16.5v4" />
     </svg>
-  )}<slot />
+  )}<slot />{isButton && (
+    <svg class="demolink__icon demolink__icon--out" viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+      <path d="M8 16 16 8" />
+      <path d="M9.5 8H16v6.5" />
+    </svg>
+  )}
 </a>

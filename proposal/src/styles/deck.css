@@ -888,6 +888,13 @@ a.demolink {
 a.demolink::after { content: "\2197"; font-weight: 400; margin-left: 0.3em; }
 /* ボタンは先頭のアイコンが役目を果たすため、末尾の矢印は出さない */
 a.demolink--button::after { content: none; }
+/* 末尾の矢印は「外部で開く」の合図なので、先頭のアイコンより一段小さく、
+   文字寄りに置く。 */
+.demolink__icon--out {
+  width: 3.4mm;
+  height: 3.4mm;
+  margin-left: -0.8mm;
+}
 .demolink__icon {
   width: 4.4mm;
   height: 4.4mm;
