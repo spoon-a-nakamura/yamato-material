@@ -44,6 +44,13 @@
   --sys:          #276b74;
   --sys-on-dark:  #8fd0da;
   --sys-tint:     #eaf3f5;
+  /* 面そのものの地色。ページをめくるだけで章の切り替わりが分かる程度に、
+     ごく淡く。この面の上に載る淡色地（--paper-tint / --accent-tint）も
+     同じ色familyへずらすので、階調の差は白地のときと同じ刻みを保つ。 */
+  --sys-page:       #f0f8f9;
+  --sys-page-tint:  #e3eff1;   /* 表の見出し・淡いカードの地 */
+  --sys-page-key:   #dbebee;   /* キーポイントの地 */
+  --sys-page-label: #d3e9ed;   /* ヘッダの対象読者ラベル */
 
   /* ---- Typography ----------------------------------------- */
   --font-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans",

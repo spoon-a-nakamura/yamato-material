@@ -904,6 +904,16 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
 .navmenu__item.is-sys .navmenu__t { color: var(--sys); }
 
 /* 各ページのヘッダ。ページをめくったときの識別はここが効く。 */
+/* 面の地色そのものを淡く変える。ラベルだけでは流し読みで拾いにくいので、
+   ページ全体で「ここから先は読み手が違う」と分かるようにしている。
+   面が白でなくなるため、この中の淡色地も同じ色familyへずらして、
+   カード（白）→ 面 → 表の見出し → キーポイント の階調を保つ。 */
+.slide[data-audience="sys"] {
+  background: var(--sys-page);
+  --paper-tint: var(--sys-page-tint);
+  --accent-tint: var(--sys-page-key);
+  --sys-tint: var(--sys-page-label);
+}
 .slide[data-audience="sys"] .slide__chapter-label { color: var(--sys); }
 .slide[data-audience="sys"] .slide__chapter-label b { color: var(--sys); }
 .slide[data-audience="sys"] .slide__header {

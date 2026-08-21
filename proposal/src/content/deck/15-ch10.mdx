@@ -1,4 +1,4 @@
-import { Slide, Cols, Card, KeyPoint, Note, Steps, Step, Table, Ref } from '../../components';
+import { Slide, Cols, Card, KeyPoint, Note, Steps, Step, Ref } from '../../components';
 
 {/* ---------------- 10-1 ---------------- */}
 <Slide
@@ -40,36 +40,6 @@ import { Slide, Cols, Card, KeyPoint, Note, Steps, Step, Table, Ref } from '../.
   chapter="10"
   chapterTitle="データ管理と運用設計"
   no="10-2"
-  title="同期を安全に行うための仕組み"
-  variant="center"
-  lead="一覧表が唯一の正となるため、表の上の入力ミスがそのまま公開に出ることのないよう、次の仕組みを備えます。"
->
-
-<Cols n="2-1">
-  <Table def k="34mm" dense>
-
-| 仕組み | 内容 |
-| --- | --- |
-| **反映前の検証** | 品番の重複、必須項目の欠落、数値項目への文字の混入などを検出します。エラーがある場合は**1件も反映しません** |
-| **差分の提示** | 「追加3件・更新12件・公開停止1件」のように内容をお示しし、ご確認の操作をもって確定します |
-| **削除は公開停止** | 一覧表から行が消えても、データは残したまま非公開にします。誤って消された場合も元に戻せます |
-| **履歴と巻き戻し** | 同期前の状態を保持します。反映後に問題が見つかった場合、ひとつ前の状態へ戻せます |
-| **項目名での対応付け** | 列は見出しの名前で対応付けます。並べ替えは影響しません。項目名が変わった場合は反映せずお知らせします |
-
-  </Table>
-
-  <Card tone="accent" label="ご安心いただきたい点" title="同期で消えないもの">
-  <strong>一覧表の同期対象は、商品情報だけです。</strong>営業ご担当者さまの検討リスト（<Ref ch="7">第7章</Ref>）と利用者アカウントはWebカタログ側で保持するデータですので、同期によって失われることはございません。
-  </Card>
-</Cols>
-
-</Slide>
-
-{/* ---------------- 10-3 ---------------- */}
-<Slide
-  chapter="10"
-  chapterTitle="データ管理と運用設計"
-  no="10-3"
   title="前提のご相談：一覧表の置き場所"
   lead="この運用には、一覧表がWebから参照できる場所に置かれている必要があります。現在は社内サーバーをお使いで、クラウドの共有ドライブはお持ちでないと伺いましたので、選択肢を整理してご提示いたします。"
 >
@@ -85,7 +55,7 @@ import { Slide, Cols, Card, KeyPoint, Note, Steps, Step, Table, Ref } from '../.
 
 <Cols n="2-1" class="mt-4">
   <KeyPoint>
-  いずれをお選びいただいても、<strong>同じ保存先が画像・図面の置き場所になります。</strong>一覧表の置き場所を決めることで、<Ref slide="10-4">画像・図面の受け渡し</Ref>の課題も同時に解決いたします。
+  いずれをお選びいただいても、<strong>同じ保存先が画像・図面の置き場所になります。</strong>一覧表の置き場所を決めることで、<Ref slide="10-3">画像・図面の受け渡し</Ref>の課題も同時に解決いたします。
   </KeyPoint>
 
   <Note>
@@ -95,11 +65,11 @@ import { Slide, Cols, Card, KeyPoint, Note, Steps, Step, Table, Ref } from '../.
 
 </Slide>
 
-{/* ---------------- 10-4 ---------------- */}
+{/* ---------------- 10-3 ---------------- */}
 <Slide
   chapter="10"
   chapterTitle="データ管理と運用設計"
-  no="10-4"
+  no="10-3"
   title="画像・図面の登録"
   variant="center"
   lead="前回のコーポレートサイト構築時、画像をサーバーにアップロードしてパスを指定する作業が負担であったとお聞きしました。パスが長くExcel上で確認しづらかったという点も含めて理解しています。"
@@ -113,7 +83,7 @@ import { Slide, Cols, Card, KeyPoint, Note, Steps, Step, Table, Ref } from '../.
       商品ごとに、写真・簡易図面のファイル名を規則化します（例：品番＋種別）。
       </Step>
       <Step title="指定の場所に置く">
-      <Ref slide="10-3">一覧表と同じ保存先</Ref>に置けば、システムが自動的に参照します。
+      <Ref slide="10-2">一覧表と同じ保存先</Ref>に置けば、システムが自動的に参照します。
       </Step>
       <Step title="ファイル名だけ記載">
       一覧表には長いパスではなく、<strong>ファイル名のみ</strong>を記載します。
@@ -130,11 +100,11 @@ import { Slide, Cols, Card, KeyPoint, Note, Steps, Step, Table, Ref } from '../.
 
 </Slide>
 
-{/* ---------------- 10-5 ---------------- */}
+{/* ---------------- 10-4 ---------------- */}
 <Slide
   chapter="10"
   chapterTitle="データ管理と運用設計"
-  no="10-5"
+  no="10-4"
   title="操作マニュアル"
   variant="center"
 >
