@@ -3,17 +3,27 @@ import { deck } from '../deck.config';
 import Brand from './Brand.astro';
 
 interface Props {
-  chapter?: string | number;   // 章番号（例: 2）
-  chapterTitle?: string;       // 章タイトル（例: 現状の理解）
-  no?: string;                 // スライド見出し番号（例: 2-1）
-  title?: string;              // スライド主見出し
-  lead?: string;               // 主見出し直下のリード文
-  variant?: string;            // 追加クラス（tight / center など）
-  id?: string;                 // 目次からのアンカー先（任意）
-  audience?: string;           // 対象読者（"sys" でシステム部門の方向けの識別色が付く）
+  chapter?: string | number; // 章番号（例: 2）
+  chapterTitle?: string; // 章タイトル（例: 現状の理解）
+  no?: string; // スライド見出し番号（例: 2-1）
+  title?: string; // スライド主見出し
+  lead?: string; // 主見出し直下のリード文
+  variant?: string; // 追加クラス（tight / center など）
+  id?: string; // 目次からのアンカー先（任意）
+  audience?: string; // 対象読者（"sys" でシステム部門さま向けの識別色が付く）
   class?: string;
 }
-const { chapter, chapterTitle, no, title, lead, variant = '', id, audience, class: cls = '' } = Astro.props;
+const {
+  chapter,
+  chapterTitle,
+  no,
+  title,
+  lead,
+  variant = '',
+  id,
+  audience,
+  class: cls = '',
+} = Astro.props;
 
 /* アンカーIDは「並び順」ではなく「内容」から決めます。
    スライドを追加・削除・並べ替えても、no が変わらない限りIDは変わりません。
@@ -21,34 +31,45 @@ const { chapter, chapterTitle, no, title, lead, variant = '', id, audience, clas
 const anchorId =
   id ?? (no ? `s-${no}` : chapter !== undefined ? `ch-${chapter}` : undefined);
 ---
+
 <section
   id={anchorId}
   data-chapter={chapter !== undefined ? String(chapter) : undefined}
   data-no={no}
   data-audience={audience}
-  class={`slide ${variant ? variant.split(' ').map(v => `slide--${v}`).join(' ') : ''} ${cls}`}>
-  <header class="slide__header">
-    <div class="slide__chapter-label">
+  class={`slide ${
+    variant
+      ? variant
+          .split(' ')
+          .map((v) => `slide--${v}`)
+          .join(' ')
+      : ''
+  } ${cls}`}
+>
+  <header class='slide__header'>
+    <div class='slide__chapter-label'>
       {chapter !== undefined && <b>{chapter}</b>}
       {chapterTitle && <span>{chapterTitle}</span>}
     </div>
     <Brand />
   </header>
 
-  {(no || title || lead) && (
-    <div class="slide__titleblock">
-      {no && <span class="slide__no">{no}</span>}
-      {title && <h2 class="slide__title" set:html={title} />}
-      {lead && <p class="slide__lead" set:html={lead} />}
-    </div>
-  )}
+  {
+    (no || title || lead) && (
+      <div class='slide__titleblock'>
+        {no && <span class='slide__no'>{no}</span>}
+        {title && <h2 class='slide__title' set:html={title} />}
+        {lead && <p class='slide__lead' set:html={lead} />}
+      </div>
+    )
+  }
 
-  <div class="slide__body">
+  <div class='slide__body'>
     <slot />
   </div>
 
-  <footer class="slide__footer">
+  <footer class='slide__footer'>
     <span>{deck.footerNote}</span>
-    <span class="slide__pageno"></span>
+    <span class='slide__pageno'></span>
   </footer>
 </section>

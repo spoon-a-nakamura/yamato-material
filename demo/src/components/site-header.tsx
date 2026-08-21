@@ -65,7 +65,7 @@ function InternalModeControl({ compact }: { compact?: boolean }) {
           {err && <p className="mt-2 text-xs text-destructive">パスコードが一致しません。</p>}
           <p className="mt-4 rounded bg-muted px-2.5 py-2 text-xs text-muted-foreground">
             デモ用パスコードは <code className="font-mono font-semibold">{DEMO_PASSCODE}</code> です。
-            本番では営業チーム共通の社内用アカウント1本で運用する想定です（個別アカウントは発行しません）。
+            本番では営業チーム共通の社内用アカウント1本で運用する想定です。
           </p>
         </DialogContent>
       </Dialog>
