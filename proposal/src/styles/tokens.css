@@ -7,75 +7,76 @@
   /* ---- Page geometry (A4 landscape) ---------------------- */
   --page-w: 297mm;
   --page-h: 210mm;
-  --page-gap: 10mm;              /* 画面表示時のスライド間GAP */
+  --page-gap: 10mm; /* 画面表示時のスライド間GAP */
 
-  --pad-x: 20mm;                 /* 左右の版面余白 */
+  --pad-x: 20mm; /* 左右の版面余白 */
   --pad-top: 14mm;
   --pad-bottom: 12mm;
-  --header-h: 9mm;               /* ヘッダ帯の高さ */
-  --footer-h: 8mm;               /* フッタ帯の高さ */
+  --header-h: 9mm; /* ヘッダ帯の高さ */
+  --footer-h: 8mm; /* フッタ帯の高さ */
 
   /* ---- Color ---------------------------------------------- */
-  --paper:        #ffffff;
-  --paper-tint:   #f6f7f8;       /* 表のゼブラ・カード地 */
-  --paper-shade:  #eef0f2;
+  --paper: #ffffff;
+  --paper-tint: #f6f7f8; /* 表のゼブラ・カード地 */
+  --paper-shade: #eef0f2;
 
-  --ink-900:      #16191d;       /* 見出し */
-  --ink-700:      #33383f;       /* 本文 */
-  --ink-500:      #5e6670;       /* 副次テキスト */
-  --ink-400:      #828c97;       /* キャプション */
-  --ink-300:      #a8b1ba;       /* ごく薄いラベル */
+  --ink-900: #16191d; /* 見出し */
+  --ink-700: #33383f; /* 本文 */
+  --ink-500: #5e6670; /* 副次テキスト */
+  --ink-400: #828c97; /* キャプション */
+  --ink-300: #a8b1ba; /* ごく薄いラベル */
 
-  --rule-strong:  #2b3138;       /* 見出し直下の強い罫 */
-  --rule:         #d5dade;       /* 通常の罫 */
-  --rule-soft:    #e7eaed;       /* 表の内側罫 */
+  --rule-strong: #2b3138; /* 見出し直下の強い罫 */
+  --rule: #d5dade; /* 通常の罫 */
+  --rule-soft: #e7eaed; /* 表の内側罫 */
 
-  --accent:       #1f3a5f;       /* 主アクセント（藍） */
-  --accent-mid:   #43617f;
-  --accent-tint:  #eef2f6;       /* アクセントの淡色地 */
-  --accent-line:  #c3cfdb;
+  --accent: #1f3a5f; /* 主アクセント（藍） */
+  --accent-mid: #43617f;
+  --accent-tint: #eef2f6; /* アクセントの淡色地 */
+  --accent-line: #c3cfdb;
 
-  --mark:         #8c4a2f;       /* 採用マーク等の差し色（控えめな錆色） */
-  --mark-tint:    #f7f0ec;
+  --mark: #8c4a2f; /* 採用マーク等の差し色（控えめな錆色） */
+  --mark-tint: #f7f0ec;
 
-  /* システム部門の方が単独で読む章（第12章）を識別するための差し色。
+  /* システム部門さまが単独で読む章（第12章）を識別するための差し色。
      藍系に近い青緑にしてあるので意匠から浮かず、それでも流し読み時に
      「別カテゴリ」と分かる。コントラスト比は白地で6.10、藍地で6.67（AA適合）。 */
-  --sys:          #276b74;
-  --sys-on-dark:  #8fd0da;
-  --sys-tint:     #eaf3f5;
+  --sys: #276b74;
+  --sys-on-dark: #8fd0da;
+  --sys-tint: #eaf3f5;
   /* 面そのものの地色。ページをめくるだけで章の切り替わりが分かる程度に、
      ごく淡く。この面の上に載る淡色地（--paper-tint / --accent-tint）も
      同じ色familyへずらすので、階調の差は白地のときと同じ刻みを保つ。 */
-  --sys-page:       #f0f8f9;
-  --sys-page-tint:  #e3eff1;   /* 表の見出し・淡いカードの地 */
-  --sys-page-key:   #dbebee;   /* キーポイントの地 */
-  --sys-page-label: #d3e9ed;   /* ヘッダの対象読者ラベル */
+  --sys-page: #f0f8f9;
+  --sys-page-tint: #e3eff1; /* 表の見出し・淡いカードの地 */
+  --sys-page-key: #dbebee; /* キーポイントの地 */
+  --sys-page-label: #d3e9ed; /* ヘッダの対象読者ラベル */
 
   /* ---- Typography ----------------------------------------- */
-  --font-sans: "Noto Sans JP", "Hiragino Kaku Gothic ProN", "Hiragino Sans",
-               "Yu Gothic Medium", "Yu Gothic", "Noto Sans CJK JP", "Meiryo",
-               system-ui, sans-serif;
-  --font-num:  "Inter", "Noto Sans JP", system-ui, sans-serif;
+  --font-sans:
+    'Noto Sans JP', 'Hiragino Kaku Gothic ProN', 'Hiragino Sans',
+    'Yu Gothic Medium', 'Yu Gothic', 'Noto Sans CJK JP', 'Meiryo', system-ui,
+    sans-serif;
+  --font-num: 'Inter', 'Noto Sans JP', system-ui, sans-serif;
 
-  --fs-cover:      32pt;
+  --fs-cover: 32pt;
   --fs-chapter-no: 52pt;
-  --fs-chapter:    26pt;
-  --fs-title:      22pt;   /* スライド主見出し */
-  --fs-lead:       12pt; /* 主見出し直下のリード文 */
-  --fs-h4:         13pt;   /* スライド内小見出し */
-  --fs-body:       12pt;
-  --fs-table:      10.4pt;
-  --fs-small:      10pt;
-  --fs-label:      8.6pt;  /* 章ラベル・キャプション */
+  --fs-chapter: 26pt;
+  --fs-title: 22pt; /* スライド主見出し */
+  --fs-lead: 12pt; /* 主見出し直下のリード文 */
+  --fs-h4: 13pt; /* スライド内小見出し */
+  --fs-body: 12pt;
+  --fs-table: 10.4pt;
+  --fs-small: 10pt;
+  --fs-label: 8.6pt; /* 章ラベル・キャプション */
 
-  --lh-tight:  1.35;
-  --lh-head:   1.45;
-  --lh-body:   1.75;
-  --lh-table:  1.6;
+  --lh-tight: 1.35;
+  --lh-head: 1.45;
+  --lh-body: 1.75;
+  --lh-table: 1.6;
 
-  --ls-label: 0.10em;
-  --ls-head:  0.01em;
+  --ls-label: 0.1em;
+  --ls-head: 0.01em;
 
   /* ---- Rhythm --------------------------------------------- */
   --sp-1: 1.5mm;

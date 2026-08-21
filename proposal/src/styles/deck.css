@@ -2,9 +2,16 @@
    Deck Base — A4 landscape slides, print-ready
    ============================================================ */
 
-*, *::before, *::after { box-sizing: border-box; }
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
 
-html { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+html {
+  -webkit-print-color-adjust: exact;
+  print-color-adjust: exact;
+}
 
 body {
   margin: 0;
@@ -13,7 +20,7 @@ body {
   font-size: var(--fs-body);
   line-height: var(--lh-body);
   color: var(--ink-700);
-  font-feature-settings: "palt" 1;
+  font-feature-settings: 'palt' 1;
   text-rendering: optimizeLegibility;
   counter-reset: slide;
 }
@@ -37,7 +44,9 @@ body {
   padding: var(--pad-top) var(--pad-x) var(--pad-bottom);
   display: flex;
   flex-direction: column;
-  box-shadow: 0 1px 2px rgba(20,25,30,.10), 0 8px 24px rgba(20,25,30,.10);
+  box-shadow:
+    0 1px 2px rgba(20, 25, 30, 0.1),
+    0 8px 24px rgba(20, 25, 30, 0.1);
   counter-increment: slide;
 }
 
@@ -75,14 +84,28 @@ a.slide__brand {
   text-decoration: none;
   color: inherit;
   border-bottom: 0.2mm solid transparent;
-  transition: border-bottom-color .15s ease, opacity .15s ease;
+  transition:
+    border-bottom-color 0.15s ease,
+    opacity 0.15s ease;
 }
-a.slide__brand:hover { border-bottom-color: currentColor; }
-a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset: 0.6mm; }
-@media print { a.slide__brand { border-bottom-color: transparent; } }
+a.slide__brand:hover {
+  border-bottom-color: currentColor;
+}
+a.slide__brand:focus-visible {
+  outline: 0.4mm solid currentColor;
+  outline-offset: 0.6mm;
+}
+@media print {
+  a.slide__brand {
+    border-bottom-color: transparent;
+  }
+}
 
 /* ---- Title block ----------------------------------------- */
-.slide__titleblock { flex: 0 0 auto; padding-top: var(--sp-4); }
+.slide__titleblock {
+  flex: 0 0 auto;
+  padding-top: var(--sp-4);
+}
 
 .slide__no {
   display: block;
@@ -106,10 +129,10 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   font-size: var(--fs-lead);
   line-height: 1.7;
   color: var(--ink-500);
-  max-width: 210mm;
+  /* max-width: 210mm; */
 }
 .slide__titleblock::after {
-  content: "";
+  content: '';
   display: block;
   width: 14mm;
   height: 0.5mm;
@@ -127,18 +150,30 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   justify-content: flex-start;
   gap: 0;
 }
-.slide__body > * { flex: 0 0 auto; }
+.slide__body > * {
+  flex: 0 0 auto;
+}
 /* 内容が少ないスライドは版面の縦中央に寄せる */
-.slide--tight .slide__body { padding-top: var(--sp-3); }
+.slide--tight .slide__body {
+  padding-top: var(--sp-3);
+}
 /* 見出しも一段落とす。各テーマの級数に対する相対指定なので骨格を問わず効く
    （tech骨格はより強い値で上書きしている）。 */
-.slide--tight .slide__title { font-size: calc(var(--fs-title) * 0.86); }
+.slide--tight .slide__title {
+  font-size: calc(var(--fs-title) * 0.86);
+}
 
 /* 章扉の tight。項目数が多い PART 扉用に、巨大数字とリード周りの空きを詰める。
    骨格を問わず効かせたいので共通側に置く（tech骨格ではさらに強く詰める）。 */
-.section.slide--tight { --fs-chapter-no: 42pt; }
-.section.slide--tight .section__lead { margin-top: var(--sp-3); }
-.section.slide--tight .section__items { margin-top: var(--sp-3); }
+.section.slide--tight {
+  --fs-chapter-no: 42pt;
+}
+.section.slide--tight .section__lead {
+  margin-top: var(--sp-3);
+}
+.section.slide--tight .section__items {
+  margin-top: var(--sp-3);
+}
 /* 上下センターに置いたうえで、視覚的な重心をすこし上へ寄せる。
    上の padding を落として下に倍量を入れているため、
    中身に使える高さはほぼ変わらない（差は1px以下）。 */
@@ -149,8 +184,14 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   padding-top: 0;
   padding-bottom: calc(var(--optical-lift) * 2);
 }
-.slide--spread .slide__body { display: flex; flex-direction: column; justify-content: space-between; }
-.slide--spread .slide__body > * { flex: 0 0 auto; }
+.slide--spread .slide__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.slide--spread .slide__body > * {
+  flex: 0 0 auto;
+}
 
 /* ---- Footer ---------------------------------------------- */
 .slide__footer {
@@ -165,14 +206,24 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   color: var(--ink-300);
   letter-spacing: 0.04em;
 }
-.slide__pageno { font-family: var(--font-num); font-weight: 600; color: var(--ink-400); }
-.slide__pageno::before { content: counter(slide, decimal-leading-zero); }
+.slide__pageno {
+  font-family: var(--font-num);
+  font-weight: 600;
+  color: var(--ink-400);
+}
+.slide__pageno::before {
+  content: counter(slide, decimal-leading-zero);
+}
 
 /* ============================================================
    Typography inside body
    ============================================================ */
-.slide__body > :first-child { margin-top: 0; }
-.slide__body > :last-child  { margin-bottom: 0; }
+.slide__body > :first-child {
+  margin-top: 0;
+}
+.slide__body > :last-child {
+  margin-bottom: 0;
+}
 
 /* 末尾要素の下マージンを落とす。
    従来は .card > :last-child のようにコンテナごとに指定していたため、
@@ -184,10 +235,20 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
 .slide__body ol:last-child,
 .slide__body table:last-child,
 .slide__body h4:last-child,
-.slide__body h5:last-child { margin-bottom: 0; }
+.slide__body h5:last-child {
+  margin-bottom: 0;
+}
 
-.slide__body p { margin: 0 0 var(--sp-3); max-width: 205mm; }
-.cols .slide__body p, .cols p, .card p, .keypoint p { max-width: none; }
+.slide__body p {
+  margin: 0 0 var(--sp-3);
+  max-width: 205mm;
+}
+.cols .slide__body p,
+.cols p,
+.card p,
+.keypoint p {
+  max-width: none;
+}
 /* strong は太字に加えて、ごく淡いラインマーカーを重ねる。
    下側3割程度だけを塗るため、蛍光ペンで軽く引いたような見え方になる。 */
 .slide__body strong {
@@ -196,12 +257,22 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   background: linear-gradient(transparent 68%, var(--marker) 68%);
 }
 /* リード文は .slide__body の外にあるため個別に指定する（色は変えない） */
-.slide__lead strong { background: linear-gradient(transparent 68%, var(--marker) 68%); }
+.slide__lead strong {
+  background: linear-gradient(transparent 68%, var(--marker) 68%);
+}
 /* 濃い地の上（章扉・表紙）では白のマーカーに切り替える */
-.section strong, .cover strong { color: inherit; background: linear-gradient(transparent 68%, var(--marker-on-dark) 68%); }
-.slide__body em { font-style: normal; background: linear-gradient(transparent 62%, var(--accent-tint) 62%); }
+.section strong,
+.cover strong {
+  color: inherit;
+  background: linear-gradient(transparent 68%, var(--marker-on-dark) 68%);
+}
+.slide__body em {
+  font-style: normal;
+  background: linear-gradient(transparent 62%, var(--accent-tint) 62%);
+}
 
-.slide__body h4, .h4 {
+.slide__body h4,
+.h4 {
   margin: var(--sp-4) 0 var(--sp-2);
   font-size: var(--fs-h4);
   font-weight: 700;
@@ -210,9 +281,12 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   padding-left: 3mm;
   border-left: 0.9mm solid var(--accent);
 }
-.slide__body h4:first-child { margin-top: 0; }
+.slide__body h4:first-child {
+  margin-top: 0;
+}
 
-.slide__body h5, .h5 {
+.slide__body h5,
+.h5 {
   margin: var(--sp-3) 0 var(--sp-1);
   font-size: var(--fs-body);
   font-weight: 700;
@@ -220,18 +294,39 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   letter-spacing: var(--ls-head);
 }
 
-.slide__body a { color: var(--accent); text-decoration: none; border-bottom: 0.2mm solid var(--accent-line); }
+.slide__body a {
+  color: var(--accent);
+  text-decoration: none;
+  border-bottom: 0.2mm solid var(--accent-line);
+}
 
 /* ---- Lists ------------------------------------------------ */
-.slide__body ul, .slide__body ol { margin: 0 0 var(--sp-3); padding-left: 0; list-style: none; }
+.slide__body ul,
+.slide__body ol {
+  margin: 0 0 var(--sp-3);
+  padding-left: 0;
+  list-style: none;
+}
 /* ul は前の要素との間に空きを取る */
-.slide__body ul { margin-top: var(--sp-3); }
-.slide__body > ul:first-child, .card > ul:first-child, .keypoint > ul:first-child { margin-top: 0; }
-.slide__body li { position: relative; padding-left: 6mm; margin-bottom: var(--sp-2); }
-.slide__body li:last-child { margin-bottom: 0; }
+.slide__body ul {
+  margin-top: var(--sp-3);
+}
+.slide__body > ul:first-child,
+.card > ul:first-child,
+.keypoint > ul:first-child {
+  margin-top: 0;
+}
+.slide__body li {
+  position: relative;
+  padding-left: 6mm;
+  margin-bottom: var(--sp-2);
+}
+.slide__body li:last-child {
+  margin-bottom: 0;
+}
 
 .slide__body ul > li::before {
-  content: "";
+  content: '';
   position: absolute;
   left: 1.4mm;
   /* 1行目の行送りの中央に合わせる（マーカー高さの半分ぶん戻す） */
@@ -241,8 +336,12 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   border-radius: 50%;
   background: var(--accent-mid);
 }
-.slide__body ol { counter-reset: ol; }
-.slide__body ol > li { counter-increment: ol; }
+.slide__body ol {
+  counter-reset: ol;
+}
+.slide__body ol > li {
+  counter-increment: ol;
+}
 .slide__body ol > li::before {
   content: counter(ol);
   position: absolute;
@@ -259,8 +358,14 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   line-height: 4.4mm;
   text-align: center;
 }
-.slide__body li > ul, .slide__body li > ol { margin: var(--sp-1) 0 0; }
-.slide__body li > ul > li::before { background: none; border: 0.3mm solid var(--accent-mid); }
+.slide__body li > ul,
+.slide__body li > ol {
+  margin: var(--sp-1) 0 0;
+}
+.slide__body li > ul > li::before {
+  background: none;
+  border: 0.3mm solid var(--accent-mid);
+}
 
 /* ---- Tables ---------------------------------------------- */
 .slide__body table {
@@ -286,8 +391,12 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   border-bottom: 0.4mm solid var(--rule-strong);
   white-space: nowrap;
 }
-.slide__body table tbody tr:last-child td { border-bottom: 0.4mm solid var(--rule); }
-.slide__body table td strong { color: var(--ink-900); }
+.slide__body table tbody tr:last-child td {
+  border-bottom: 0.4mm solid var(--rule);
+}
+.slide__body table td strong {
+  color: var(--ink-900);
+}
 
 /* 先頭列を見出し的に扱う定義表 */
 .t-def table td:first-child,
@@ -297,32 +406,73 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   color: var(--ink-900);
   background: var(--paper-tint);
 }
-.t-def table thead th:first-child { background: var(--paper-tint); }
+.t-def table thead th:first-child {
+  background: var(--paper-tint);
+}
 
 /* 数値・記号を中央に寄せる */
-.t-center table td:not(:first-child) { text-align: center; }
+.t-center table td:not(:first-child) {
+  text-align: center;
+}
 
 /* 密度の高い表 */
-.t-dense table { font-size: 8pt; }
-.t-dense table th, .t-dense table td { padding: 1.6mm 2.4mm; }
+.t-dense table {
+  font-size: 8pt;
+}
+.t-dense table th,
+.t-dense table td {
+  padding: 1.6mm 2.4mm;
+}
 
-.t-zebra table tbody tr:nth-child(even) td { background: var(--paper-tint); }
+.t-zebra table tbody tr:nth-child(even) td {
+  background: var(--paper-tint);
+}
 
 /* ============================================================
    Layout helpers
    ============================================================ */
-.cols { display: grid; gap: var(--sp-4); align-items: start; }
-.cols--2 { grid-template-columns: 1fr 1fr; }
-.cols--3 { grid-template-columns: repeat(3, 1fr); }
-.cols--4 { grid-template-columns: repeat(4, 1fr); }
-.cols--1-2 { grid-template-columns: 1fr 2fr; }
-.cols--2-1 { grid-template-columns: 2fr 1fr; }
-.cols > * > :first-child { margin-top: 0; }
-.cols > * > :last-child { margin-bottom: 0; }
+.cols {
+  display: grid;
+  gap: var(--sp-4);
+  align-items: start;
+}
+.cols--2 {
+  grid-template-columns: 1fr 1fr;
+}
+.cols--3 {
+  grid-template-columns: repeat(3, 1fr);
+}
+.cols--4 {
+  grid-template-columns: repeat(4, 1fr);
+}
+.cols--1-2 {
+  grid-template-columns: 1fr 2fr;
+}
+.cols--2-1 {
+  grid-template-columns: 2fr 1fr;
+}
+.cols > * > :first-child {
+  margin-top: 0;
+}
+.cols > * > :last-child {
+  margin-bottom: 0;
+}
 
-.stack-2 { display: flex; flex-direction: column; gap: var(--sp-2); }
-.stack-3 { display: flex; flex-direction: column; gap: var(--sp-3); }
-.stack-4 { display: flex; flex-direction: column; gap: var(--sp-4); }
+.stack-2 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+}
+.stack-3 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-3);
+}
+.stack-4 {
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-4);
+}
 
 /* ---- Card ------------------------------------------------- */
 .card {
@@ -332,11 +482,24 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   padding: var(--sp-3) var(--sp-3);
   background: var(--paper);
 }
-.card--tint { background: var(--paper-tint); border-color: transparent; }
-.card--accent { background: var(--accent-tint); border-color: var(--accent-line); }
-.card--mark { background: var(--mark-tint); border-color: #e2cfc5; }
-.card > :first-child { margin-top: 0; }
-.card > :last-child { margin-bottom: 0; }
+.card--tint {
+  background: var(--paper-tint);
+  border-color: transparent;
+}
+.card--accent {
+  background: var(--accent-tint);
+  border-color: var(--accent-line);
+}
+.card--mark {
+  background: var(--mark-tint);
+  border-color: #e2cfc5;
+}
+.card > :first-child {
+  margin-top: 0;
+}
+.card > :last-child {
+  margin-bottom: 0;
+}
 .card__label {
   display: block;
   font-size: var(--fs-label);
@@ -345,7 +508,9 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   color: var(--accent);
   margin-bottom: var(--sp-1);
 }
-.card--mark .card__label { color: var(--mark); }
+.card--mark .card__label {
+  color: var(--mark);
+}
 .card__title {
   margin: 0 0 var(--sp-2);
   font-size: var(--fs-h4);
@@ -363,11 +528,20 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   font-size: var(--fs-lead);
   line-height: 1.7;
   color: var(--ink-900);
-  & +* { margin-top: var(--sp-4); }
+  & + * {
+    margin-top: var(--sp-4) !important;
+  }
 }
-* + .keypoint { margin-top: var(--sp-4); }
-.keypoint > :first-child { margin-top: 0; }
-.keypoint > :last-child { margin-bottom: 0; }
+* + .keypoint {
+  margin-top: var(--sp-4) !important;
+}
+
+.keypoint > :first-child {
+  margin-top: 0;
+}
+.keypoint > :last-child {
+  margin-bottom: 0;
+}
 
 /* ---- Note ------------------------------------------------- */
 .note {
@@ -377,8 +551,12 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   border-top: 0.25mm solid var(--rule-soft);
   padding-top: var(--sp-2);
 }
-.note > :first-child { margin-top: 0; }
-.note > :last-child { margin-bottom: 0; }
+.note > :first-child {
+  margin-top: 0;
+}
+.note > :last-child {
+  margin-bottom: 0;
+}
 
 /* ---- Caption --------------------------------------------- */
 .caption {
@@ -390,8 +568,16 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
 }
 
 /* ---- Steps (numbered flow) -------------------------------- */
-.steps { display: grid; gap: var(--sp-2); counter-reset: step; }
-.steps--row { grid-auto-flow: column; grid-auto-columns: 1fr; gap: var(--sp-2); }
+.steps {
+  display: grid;
+  gap: var(--sp-2);
+  counter-reset: step;
+}
+.steps--row {
+  grid-auto-flow: column;
+  grid-auto-columns: 1fr;
+  gap: var(--sp-2);
+}
 .step {
   counter-increment: step;
   position: relative;
@@ -411,12 +597,24 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   font-weight: 700;
   color: #fff;
   background: var(--accent);
-  width: 4.6mm; height: 4.6mm; line-height: 4.6mm;
+  width: 4.6mm;
+  height: 4.6mm;
+  line-height: 4.6mm;
   border-radius: 50%;
   text-align: center;
 }
-.step__title { display: block; font-weight: 700; color: var(--ink-900); margin-bottom: var(--sp-1); font-size: var(--fs-body); }
-.step__body { font-size: var(--fs-small); color: var(--ink-500); line-height: 1.65; }
+.step__title {
+  display: block;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin-bottom: var(--sp-1);
+  font-size: var(--fs-body);
+}
+.step__body {
+  font-size: var(--fs-small);
+  color: var(--ink-500);
+  line-height: 1.65;
+}
 .step__tag {
   display: inline-block;
   align-self: flex-start;
@@ -429,14 +627,30 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   border-radius: 1.2mm;
   padding: 0.9mm 2.2mm;
 }
-.step { display: flex; flex-direction: column; }
-.step__body { flex: 1 1 auto; }
-.step > .step__tag { margin-top: auto; }
-.card .step__tag { margin-top: var(--sp-2); align-self: flex-start; }
+.step {
+  display: flex;
+  flex-direction: column;
+}
+.step__body {
+  flex: 1 1 auto;
+}
+.step > .step__tag {
+  margin-top: auto;
+}
+.card .step__tag {
+  margin-top: var(--sp-2);
+  align-self: flex-start;
+}
 
 /* ---- Arrow flow ------------------------------------------- */
-.flow { display: flex; align-items: stretch; gap: 0; }
-.flow__item { flex: 1 1 0; }
+.flow {
+  display: flex;
+  align-items: stretch;
+  gap: 0;
+}
+.flow__item {
+  flex: 1 1 0;
+}
 .flow__arrow {
   flex: 0 0 auto;
   align-self: center;
@@ -447,8 +661,17 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
 }
 
 /* ---- Before / After --------------------------------------- */
-.ba { display: grid; grid-template-columns: 1fr auto 1fr; gap: var(--sp-3); align-items: stretch; }
-.ba__arrow { align-self: center; color: var(--accent); font-size: 14pt; }
+.ba {
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  gap: var(--sp-3);
+  align-items: stretch;
+}
+.ba__arrow {
+  align-self: center;
+  color: var(--accent);
+  font-size: 14pt;
+}
 
 /* ---- Badge ------------------------------------------------ */
 .badge {
@@ -461,11 +684,20 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   background: var(--accent);
   color: #fff;
 }
-.badge--outline { background: transparent; color: var(--accent); border: 0.25mm solid var(--accent-line); }
-.badge--mark { background: var(--mark); }
+.badge--outline {
+  background: transparent;
+  color: var(--accent);
+  border: 0.25mm solid var(--accent-line);
+}
+.badge--mark {
+  background: var(--mark);
+}
 
 /* ---- Definition rows -------------------------------------- */
-.defrows { display: grid; gap: 0; }
+.defrows {
+  display: grid;
+  gap: 0;
+}
 .defrow {
   display: grid;
   grid-template-columns: 42mm 1fr;
@@ -473,54 +705,174 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   padding: var(--sp-2) 0;
   border-bottom: 0.25mm solid var(--rule-soft);
 }
-.defrow:first-child { border-top: 0.4mm solid var(--rule-strong); }
-.defrow:last-child { border-bottom: 0.4mm solid var(--rule); }
-.defrow__k { font-weight: 700; color: var(--ink-900); font-size: var(--fs-body); }
-.defrow__v { color: var(--ink-700); font-size: var(--fs-table); line-height: var(--lh-table); }
-.defrow__v > :first-child { margin-top: 0; }
-.defrow__v > :last-child { margin-bottom: 0; }
+.defrow:first-child {
+  border-top: 0.4mm solid var(--rule-strong);
+}
+.defrow:last-child {
+  border-bottom: 0.4mm solid var(--rule);
+}
+.defrow__k {
+  font-weight: 700;
+  color: var(--ink-900);
+  font-size: var(--fs-body);
+}
+.defrow__v {
+  color: var(--ink-700);
+  font-size: var(--fs-table);
+  line-height: var(--lh-table);
+}
+.defrow__v > :first-child {
+  margin-top: 0;
+}
+.defrow__v > :last-child {
+  margin-bottom: 0;
+}
 
 /* ---- Metric ---------------------------------------------- */
-.metric__value { font-family: var(--font-num); font-size: 22pt; font-weight: 700; color: var(--accent); line-height: 1.1; }
-.metric__unit { font-size: 11pt; font-weight: 700; margin-left: 1mm; }
-.metric__label { font-size: var(--fs-label); letter-spacing: var(--ls-label); color: var(--ink-400); }
+.metric__value {
+  font-family: var(--font-num);
+  font-size: 22pt;
+  font-weight: 700;
+  color: var(--accent);
+  line-height: 1.1;
+}
+.metric__unit {
+  font-size: 11pt;
+  font-weight: 700;
+  margin-left: 1mm;
+}
+.metric__label {
+  font-size: var(--fs-label);
+  letter-spacing: var(--ls-label);
+  color: var(--ink-400);
+}
 
 /* ============================================================
    Special slides
    ============================================================ */
 /* Cover */
 /* 表紙は章扉（.section）と同じ藍地。白抜きの階調も章扉に揃えている。 */
-.cover { justify-content: space-between; padding: 46mm var(--pad-x) 18mm; background: var(--accent); color: #fff; }
-.cover__eyebrow { font-size: var(--fs-label); letter-spacing: 0.18em; color: rgba(255,255,255,.6); font-weight: 700; }
-.cover__title { margin: var(--sp-4) 0 0; font-size: var(--fs-cover); font-weight: 700; line-height: 1.35; color: #fff; letter-spacing: 0.01em; }
-.cover__rule { width: 24mm; height: 0.7mm; background: rgba(255,255,255,.5); margin: var(--sp-5) 0 var(--sp-4); }
-.cover__to { font-size: 13pt; font-weight: 700; color: #fff; }
-.cover__meta { font-size: var(--fs-body); color: rgba(255,255,255,.78); line-height: 1.9; }
-.cover__foot { display: flex; align-items: flex-end; justify-content: space-between; border-top: 0.3mm solid rgba(255,255,255,.22); padding-top: var(--sp-3); }
-.cover .slide__brand { color: rgba(255,255,255,.45); }
+.cover {
+  justify-content: space-between;
+  padding: 46mm var(--pad-x) 18mm;
+  background: var(--accent);
+  color: #fff;
+}
+.cover__eyebrow {
+  font-size: var(--fs-label);
+  letter-spacing: 0.18em;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 700;
+}
+.cover__title {
+  margin: var(--sp-4) 0 0;
+  font-size: var(--fs-cover);
+  font-weight: 700;
+  line-height: 1.35;
+  color: #fff;
+  letter-spacing: 0.01em;
+}
+.cover__rule {
+  width: 24mm;
+  height: 0.7mm;
+  background: rgba(255, 255, 255, 0.5);
+  margin: var(--sp-5) 0 var(--sp-4);
+}
+.cover__to {
+  font-size: 13pt;
+  font-weight: 700;
+  color: #fff;
+}
+.cover__meta {
+  font-size: var(--fs-body);
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.9;
+}
+.cover__foot {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-top: 0.3mm solid rgba(255, 255, 255, 0.22);
+  padding-top: var(--sp-3);
+}
+.cover .slide__brand {
+  color: rgba(255, 255, 255, 0.45);
+}
 
 /* Section divider */
-.section { justify-content: center; background: var(--accent); color: #fff; }
-.section .slide__body { display: flex; flex-direction: column; justify-content: center; }
-.section .slide__header { border-bottom-color: rgba(255,255,255,.22); }
-.section .slide__chapter-label { color: rgba(255,255,255,.55); }
-.section .slide__brand { color: rgba(255,255,255,.45); }
+.section {
+  justify-content: center;
+  background: var(--accent);
+  color: #fff;
+}
+.section .slide__body {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.section .slide__header {
+  border-bottom-color: rgba(255, 255, 255, 0.22);
+}
+.section .slide__chapter-label {
+  color: rgba(255, 255, 255, 0.55);
+}
+.section .slide__brand {
+  color: rgba(255, 255, 255, 0.45);
+}
 .section .section__no {
   font-family: var(--font-num);
   font-size: var(--fs-chapter-no);
   font-weight: 300;
   line-height: 1;
-  color: rgba(255,255,255,.55);
+  color: rgba(255, 255, 255, 0.55);
   letter-spacing: 0.02em;
   margin-left: -2mm;
 }
-.section .section__title { margin: var(--sp-3) 0 0; font-size: var(--fs-chapter); font-weight: 700; line-height: 1.35; }
-.section .section__lead { margin: var(--sp-4) 0 0; font-size: var(--fs-lead); color: rgba(255,255,255,.78); line-height: 1.85; max-width: 168mm; }
-.section .section__rule { width: 18mm; height: 0.6mm; background: rgba(255,255,255,.5); margin: var(--sp-4) 0; }
-.section .section__items { margin-top: var(--sp-5); display: flex; flex-direction: column; gap: var(--sp-2); font-size: var(--fs-small); color: rgba(255,255,255,.7); border-top: 0.3mm solid rgba(255,255,255,.22); padding-top: var(--sp-3); max-width: 168mm; }
-.section__eyebrow { font-size: var(--fs-label); letter-spacing: 0.22em; color: rgba(255,255,255,.6); font-weight: 700; display:block; margin-bottom: var(--sp-2); }
-.section .slide__footer { border-top-color: rgba(255,255,255,.22); color: rgba(255,255,255,.5); }
-.section .slide__pageno { color: rgba(255,255,255,.7); }
+.section .section__title {
+  margin: var(--sp-3) 0 0;
+  font-size: var(--fs-chapter);
+  font-weight: 700;
+  line-height: 1.35;
+}
+.section .section__lead {
+  margin: var(--sp-4) 0 0;
+  font-size: var(--fs-lead);
+  color: rgba(255, 255, 255, 0.78);
+  line-height: 1.85;
+  max-width: 168mm;
+}
+.section .section__rule {
+  width: 18mm;
+  height: 0.6mm;
+  background: rgba(255, 255, 255, 0.5);
+  margin: var(--sp-4) 0;
+}
+.section .section__items {
+  margin-top: var(--sp-5);
+  display: flex;
+  flex-direction: column;
+  gap: var(--sp-2);
+  font-size: var(--fs-small);
+  color: rgba(255, 255, 255, 0.7);
+  border-top: 0.3mm solid rgba(255, 255, 255, 0.22);
+  padding-top: var(--sp-3);
+  max-width: 168mm;
+}
+.section__eyebrow {
+  font-size: var(--fs-label);
+  letter-spacing: 0.22em;
+  color: rgba(255, 255, 255, 0.6);
+  font-weight: 700;
+  display: block;
+  margin-bottom: var(--sp-2);
+}
+.section .slide__footer {
+  border-top-color: rgba(255, 255, 255, 0.22);
+  color: rgba(255, 255, 255, 0.5);
+}
+.section .slide__pageno {
+  color: rgba(255, 255, 255, 0.7);
+}
 
 /* Agenda */
 .agenda__item {
@@ -531,59 +883,104 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   padding: 1.5mm 0;
   border-bottom: 0.25mm solid var(--rule-soft);
 }
-.agenda__no { font-family: var(--font-num); font-size: var(--fs-label); font-weight: 700; color: var(--accent); }
-.agenda__t { font-size: var(--fs-small); color: var(--ink-900); font-weight: 500; line-height: 1.5; }
-.agenda__t small { display: block; font-size: var(--fs-label); color: var(--ink-400); font-weight: 400; margin-top: 0.4mm; }
+.agenda__no {
+  font-family: var(--font-num);
+  font-size: var(--fs-label);
+  font-weight: 700;
+  color: var(--accent);
+}
+.agenda__t {
+  font-size: var(--fs-small);
+  color: var(--ink-900);
+  font-weight: 500;
+  line-height: 1.5;
+}
+.agenda__t small {
+  display: block;
+  font-size: var(--fs-label);
+  color: var(--ink-400);
+  font-weight: 400;
+  margin-top: 0.4mm;
+}
 
 /* Closing */
-.closing { justify-content: center; }
-.closing__msg { font-size: 16pt; font-weight: 700; color: var(--ink-900); line-height: 1.6; }
+.closing {
+  justify-content: center;
+}
+.closing__msg {
+  font-size: 16pt;
+  font-weight: 700;
+  color: var(--ink-900);
+  line-height: 1.6;
+}
 
 /* ============================================================
    Print
    ============================================================ */
-@page { size: A4 landscape; margin: 0; }
+@page {
+  size: A4 landscape;
+  margin: 0;
+}
 
 @media print {
-  body { background: #fff; }
-  .deck { gap: 0; padding: 0; display: block; }
+  body {
+    background: #fff;
+  }
+  .deck {
+    gap: 0;
+    padding: 0;
+    display: block;
+  }
   .slide {
     box-shadow: none;
     margin: 0;
-    height: 209.9mm;   /* 丸め誤差による空白ページの発生を防ぐ安全マージン */
+    height: 209.9mm; /* 丸め誤差による空白ページの発生を防ぐ安全マージン */
     break-after: page;
     page-break-after: always;
     break-inside: avoid;
     page-break-inside: avoid;
   }
-  .slide:last-child { break-after: auto; page-break-after: auto; }
-  .toolbar { display: none !important; }
+  .slide:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+  .toolbar {
+    display: none !important;
+  }
 }
 
 /* ---- Screen only toolbar ---------------------------------- */
 .toolbar {
   position: fixed;
-  right: 12px; bottom: 12px;
+  right: 12px;
+  bottom: 12px;
   z-index: 50;
-  display: flex; gap: 8px;
+  display: flex;
+  gap: 8px;
   font-size: 12px;
   font-family: var(--font-sans);
 }
 /* 「元に戻る」。参照で飛んだときだけ現れ、戻り切ると消える。
    隠すときは display:none にして、ツールバーの他のボタンの位置を
    動かさないようにしている。 */
-.toolbar__btn--back { display: none; }
+.toolbar__btn--back {
+  display: none;
+}
 .toolbar__btn--back.is-shown {
   display: inline-flex;
   align-items: center;
   gap: 6px;
   background: var(--accent);
-  animation: toolbarBackIn .18s ease-out;
+  animation: toolbarBackIn 0.18s ease-out;
 }
 .toolbar__btn--back svg {
-  width: 14px; height: 14px;
-  fill: none; stroke: currentColor;
-  stroke-width: 2; stroke-linecap: round; stroke-linejoin: round;
+  width: 14px;
+  height: 14px;
+  fill: none;
+  stroke: currentColor;
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-linejoin: round;
 }
 .toolbar__count {
   font-family: var(--font-num);
@@ -591,44 +988,85 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   line-height: 1;
   padding: 2px 5px;
   border-radius: 99px;
-  background: rgba(255, 255, 255, .22);
+  background: rgba(255, 255, 255, 0.22);
 }
-.toolbar__count:empty { display: none; }
+.toolbar__count:empty {
+  display: none;
+}
 @keyframes toolbarBackIn {
-  from { opacity: 0; transform: translateY(4px); }
-  to   { opacity: 1; transform: none; }
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .toolbar__btn--back.is-shown { animation: none; }
+  .toolbar__btn--back.is-shown {
+    animation: none;
+  }
 }
 
-.toolbar button, .toolbar a, .toolbar__btn {
-  background: var(--ink-900); color: #fff;
-  border: none; border-radius: 6px;
-  padding: 7px 12px; cursor: pointer;
+.toolbar button,
+.toolbar a,
+.toolbar__btn {
+  background: var(--ink-900);
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  padding: 7px 12px;
+  cursor: pointer;
   text-decoration: none;
-  box-shadow: 0 2px 8px rgba(0,0,0,.25);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.25);
 }
 
 /* ---- Table variants (added) ------------------------------- */
-.t-nohead table thead { display: none; }
-.t-nohead table tbody tr:first-child td { border-top: 0.4mm solid var(--rule-strong); }
-.t-def table td:first-child { width: var(--k, 30%); }
-.t-def table tbody tr:first-child td:first-child { }
-.t-num table td { font-variant-numeric: tabular-nums; }
-.t-right table td:last-child, .t-right table th:last-child { text-align: right; white-space: nowrap; }
+.t-nohead table thead {
+  display: none;
+}
+.t-nohead table tbody tr:first-child td {
+  border-top: 0.4mm solid var(--rule-strong);
+}
+.t-def table td:first-child {
+  width: var(--k, 30%);
+}
+.t-def table tbody tr:first-child td:first-child {
+}
+.t-num table td {
+  font-variant-numeric: tabular-nums;
+}
+.t-right table td:last-child,
+.t-right table th:last-child {
+  text-align: right;
+  white-space: nowrap;
+}
 
 /* 金額表（項目｜数量｜金額）。数量と金額を右端に寄せ、項目に幅を残す。 */
-.t-money table td:nth-child(1) { font-weight: 500; color: var(--ink-900); }
-.t-money table td:nth-child(2), .t-money table th:nth-child(2) {
-  width: 20mm; text-align: right; white-space: nowrap;
+.t-money table td:nth-child(1) {
+  font-weight: 500;
+  color: var(--ink-900);
 }
-.t-money table td:nth-child(3), .t-money table th:nth-child(3) {
-  width: 32mm; text-align: right; white-space: nowrap;
+.t-money table td:nth-child(2),
+.t-money table th:nth-child(2) {
+  width: 20mm;
+  text-align: right;
+  white-space: nowrap;
 }
-.t-money table td { font-variant-numeric: tabular-nums; }
+.t-money table td:nth-child(3),
+.t-money table th:nth-child(3) {
+  width: 32mm;
+  text-align: right;
+  white-space: nowrap;
+}
+.t-money table td {
+  font-variant-numeric: tabular-nums;
+}
 /* 合計行を罫で切り出す */
-.t-money table tbody tr:last-child td { border-top: 0.4mm solid var(--rule-strong); }
+.t-money table tbody tr:last-child td {
+  border-top: 0.4mm solid var(--rule-strong);
+}
 
 /* ---- Agenda (column flow) --------------------------------- */
 /* 左右2列。行トラックを共有しないよう、列ごとに要素を分けて縦積みにする。
@@ -643,7 +1081,7 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
 .agenda__col {
   display: flex;
   flex-direction: column;
-  min-width: 0;          /* 長い項目名でのカラム破綻を防ぐ */
+  min-width: 0; /* 長い項目名でのカラム破綻を防ぐ */
 }
 /* PART見出し。章の区切りが見えるよう、上に空きを取り、淡い地色を敷く。
    地色は box-shadow で左右へ広げているため、文字位置は動かない。 */
@@ -659,9 +1097,13 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
     calc(var(--agenda-bleed) * -1) 0 0 var(--agenda-part-bg),
     var(--agenda-bleed) 0 0 var(--agenda-part-bg);
 }
-.agenda__part:first-child { margin-top: 0; }
+.agenda__part:first-child {
+  margin-top: 0;
+}
 /* 列頭の文字位置を左右で揃える（列2の先頭は通常の項目行のため） */
-.agenda__col > .agenda__item:first-child { padding-top: var(--agenda-part-pad); }
+.agenda__col > .agenda__item:first-child {
+  padding-top: var(--agenda-part-pad);
+}
 .agenda__part-no {
   font-family: var(--font-num);
   font-size: var(--fs-label);
@@ -669,15 +1111,30 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
   font-weight: 700;
   color: var(--accent);
 }
-.agenda__part-t { font-size: var(--fs-small); font-weight: 700; color: var(--ink-900); letter-spacing: 0.02em; }
+.agenda__part-t {
+  font-size: var(--fs-small);
+  font-weight: 700;
+  color: var(--ink-900);
+  letter-spacing: 0.02em;
+}
 
 /* ---- Agenda: ページ番号アンカー ---------------------------- */
-html { scroll-behavior: smooth; }
-.slide { scroll-margin-top: var(--page-gap); }
+html {
+  scroll-behavior: smooth;
+}
+.slide {
+  scroll-margin-top: var(--page-gap);
+}
 
-.agenda__item { grid-template-columns: 8mm 1fr auto; }
-.agenda__part { position: relative; }
-.agenda__part .agenda__page { margin-left: auto; }
+.agenda__item {
+  grid-template-columns: 8mm 1fr auto;
+}
+.agenda__part {
+  position: relative;
+}
+.agenda__part .agenda__page {
+  margin-left: auto;
+}
 
 .agenda__page {
   font-family: var(--font-num);
@@ -687,27 +1144,46 @@ html { scroll-behavior: smooth; }
   font-variant-numeric: tabular-nums;
   align-self: baseline;
 }
-.agenda__part .agenda__page { color: var(--accent); }
+.agenda__part .agenda__page {
+  color: var(--accent);
+}
 
-a.agenda__item, a.agenda__part {
+a.agenda__item,
+a.agenda__part {
   color: inherit;
   text-decoration: none;
-  transition: background-color .15s ease, box-shadow .15s ease;
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 /* 左右の box-shadow が背景を --agenda-bleed 分だけ外へ延長します。
    外側の影は境界ボックス内には描かれないため、行の罫には干渉しません。 */
-a.agenda__item:hover, a.agenda__part:hover {
+a.agenda__item:hover,
+a.agenda__part:hover {
   background: var(--agenda-hover);
   box-shadow:
     calc(var(--agenda-bleed) * -1) 0 0 var(--agenda-hover),
     var(--agenda-bleed) 0 0 var(--agenda-hover);
 }
-a.agenda__item:hover .agenda__page, a.agenda__part:hover .agenda__page { color: var(--accent); }
-a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm solid var(--accent); outline-offset: 0.6mm; }
+a.agenda__item:hover .agenda__page,
+a.agenda__part:hover .agenda__page {
+  color: var(--accent);
+}
+a.agenda__item:focus-visible,
+a.agenda__part:focus-visible {
+  outline: 0.4mm solid var(--accent);
+  outline-offset: 0.6mm;
+}
 
 @media print {
-  html { scroll-behavior: auto; }
-  a.agenda__item:hover, a.agenda__part:hover { background: none; box-shadow: none; }
+  html {
+    scroll-behavior: auto;
+  }
+  a.agenda__item:hover,
+  a.agenda__part:hover {
+    background: none;
+    box-shadow: none;
+  }
 }
 
 /* ============================================================
@@ -718,37 +1194,51 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
    ============================================================ */
 .navmenu {
   position: fixed;
-  top: 0; right: 0;
+  top: 0;
+  right: 0;
   z-index: 60;
   /* 開閉アニメーション。display:none では遷移できないため
      visibility と transform で出し入れする。 */
   transform: translateX(100%);
   visibility: hidden;
-  transition: transform .28s cubic-bezier(.22,.75,.2,1), visibility .28s linear;
+  transition:
+    transform 0.28s cubic-bezier(0.22, 0.75, 0.2, 1),
+    visibility 0.28s linear;
   width: min(420px, 92vw);
   height: 100dvh;
   display: flex;
   flex-direction: column;
   background: var(--paper);
   border-left: 1px solid var(--rule);
-  box-shadow: -8px 0 32px rgba(16, 24, 32, .14);
+  box-shadow: -8px 0 32px rgba(16, 24, 32, 0.14);
   font-family: var(--font-sans);
 }
-.navmenu.is-open { transform: translateX(0); visibility: visible; }
+.navmenu.is-open {
+  transform: translateX(0);
+  visibility: visible;
+}
 
 .navmenu__scrim {
   position: fixed;
   inset: 0;
   z-index: 55;
-  background: rgba(13, 31, 51, .32);
+  background: rgba(13, 31, 51, 0.32);
   opacity: 0;
   visibility: hidden;
-  transition: opacity .28s ease, visibility .28s linear;
+  transition:
+    opacity 0.28s ease,
+    visibility 0.28s linear;
 }
-.navmenu__scrim.is-open { opacity: 1; visibility: visible; }
+.navmenu__scrim.is-open {
+  opacity: 1;
+  visibility: visible;
+}
 
 @media (prefers-reduced-motion: reduce) {
-  .navmenu, .navmenu__scrim { transition: none; }
+  .navmenu,
+  .navmenu__scrim {
+    transition: none;
+  }
 }
 
 .navmenu__head {
@@ -762,7 +1252,7 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
 .navmenu__title {
   font-family: var(--font-num);
   font-size: 12px;
-  letter-spacing: .12em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
   color: var(--ink-500);
 }
@@ -771,13 +1261,17 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   border: 1px solid var(--rule);
   background: var(--paper);
   color: var(--ink-500);
-  width: 28px; height: 28px;
+  width: 28px;
+  height: 28px;
   line-height: 1;
   font-size: 16px;
   cursor: pointer;
   border-radius: 4px;
 }
-.navmenu__close:hover { background: var(--paper-tint); color: var(--ink-900); }
+.navmenu__close:hover {
+  background: var(--paper-tint);
+  color: var(--ink-900);
+}
 
 .navmenu__filter {
   flex: 0 0 auto;
@@ -790,7 +1284,10 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   border: 1px solid var(--rule);
   border-radius: 4px;
 }
-.navmenu__filter:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; }
+.navmenu__filter:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
 
 .navmenu__list {
   flex: 1 1 auto;
@@ -798,8 +1295,12 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   overscroll-behavior: contain;
   padding: 0 10px 24px;
 }
-.navmenu__group { padding-top: 10px; }
-.navmenu__group[hidden] { display: none; }
+.navmenu__group {
+  padding-top: 10px;
+}
+.navmenu__group[hidden] {
+  display: none;
+}
 
 .navmenu__item {
   display: grid;
@@ -813,9 +1314,16 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   font-size: 13px;
   line-height: 1.5;
 }
-.navmenu__item[hidden] { display: none; }
-.navmenu__item:hover { background: var(--paper-tint); }
-.navmenu__item:focus-visible { outline: 2px solid var(--accent); outline-offset: -2px; }
+.navmenu__item[hidden] {
+  display: none;
+}
+.navmenu__item:hover {
+  background: var(--paper-tint);
+}
+.navmenu__item:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: -2px;
+}
 /* 現在位置。PART見出しと地色が同じでは区別できないため、左に細いバーを足す。 */
 .navmenu__item.is-current {
   background: var(--accent-tint);
@@ -824,7 +1332,9 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   /* 角丸が残ると左のバーの上下端も丸まってしまうため、この行だけ角を落とす */
   border-radius: 0;
 }
-.navmenu__item.is-current .navmenu__page { color: var(--accent); }
+.navmenu__item.is-current .navmenu__page {
+  color: var(--accent);
+}
 
 /* PART見出し。印刷版の目次と同じ考え方で、上に空きを取り淡い地色を敷く。 */
 .navmenu__item--part {
@@ -836,8 +1346,12 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   border-bottom: 1px solid var(--rule);
   border-radius: 4px 4px 0 0;
 }
-.navmenu__group:first-child .navmenu__item--part { margin-top: 0; }
-.navmenu__item--part:hover { background: var(--accent-line); }
+.navmenu__group:first-child .navmenu__item--part {
+  margin-top: 0;
+}
+.navmenu__item--part:hover {
+  background: var(--accent-line);
+}
 
 .navmenu__no {
   font-family: var(--font-num);
@@ -845,8 +1359,14 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   color: var(--ink-400);
   white-space: nowrap;
 }
-.navmenu__item--part .navmenu__no { color: var(--accent); font-size: 10px; letter-spacing: .06em; }
-.navmenu__t { overflow-wrap: anywhere; }
+.navmenu__item--part .navmenu__no {
+  color: var(--accent);
+  font-size: 10px;
+  letter-spacing: 0.06em;
+}
+.navmenu__t {
+  overflow-wrap: anywhere;
+}
 .navmenu__page {
   font-family: var(--font-num);
   font-size: 11px;
@@ -861,8 +1381,12 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   border-bottom: 0.2mm solid var(--accent-line);
   white-space: nowrap;
 }
-.xref__page::before { content: "（P."; }
-.xref__page::after  { content: "）"; }
+.xref__page::before {
+  content: '（P.';
+}
+.xref__page::after {
+  content: '）';
+}
 .xref__page {
   font-family: var(--font-num);
   font-size: 0.86em;
@@ -870,21 +1394,30 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   margin-left: 0.05em;
 }
 /* 解決できなかった参照は、画面上では必ず目立たせる（黙って壊れないように） */
-.xref--broken { color: #b00020; border-bottom-color: #b00020; background: #fdeaec; }
-.xref--broken::after { content: " ⚠参照先なし"; font-size: .8em; }
+.xref--broken {
+  color: #b00020;
+  border-bottom-color: #b00020;
+  background: #fdeaec;
+}
+.xref--broken::after {
+  content: ' ⚠参照先なし';
+  font-size: 0.8em;
+}
 
 /* 章扉・表紙は藍地（--accent）。.xref の既定色も --accent なので、
    そのままでは文字が背景と同色になって読めない。白抜き側の階調へ寄せる。 */
 .section .xref,
 .cover .xref {
   color: #fff;
-  border-bottom-color: rgba(255, 255, 255, .45);
+  border-bottom-color: rgba(255, 255, 255, 0.45);
 }
 .section .xref__page,
-.cover .xref__page { color: rgba(255, 255, 255, .72); }
+.cover .xref__page {
+  color: rgba(255, 255, 255, 0.72);
+}
 
-/* ---- システム部門の方向けの章の識別 -----------------------
-   第12章はシステム部門の方が単独で読める章。目次・章扉・各ページの
+/* ---- システム部門さま向けの章の識別 -----------------------
+   第12章はシステム部門さまが単独で読める章。目次・章扉・各ページの
    3箇所で同じ差し色を使い、俯瞰でも流し読みでも判別できるようにする。 */
 
 /* 章扉（藍地）の参照リンクと項目 */
@@ -892,35 +1425,49 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
   color: var(--sys-on-dark);
   border-bottom-color: color-mix(in srgb, var(--sys-on-dark) 55%, transparent);
 }
-.section__items .is-sys { color: var(--sys-on-dark); }
+.section__items .is-sys {
+  color: var(--sys-on-dark);
+}
 
 /* 目次（白地） */
-.agenda__item.is-sys .agenda__no { color: var(--sys); }
-.agenda__item.is-sys .agenda__t { color: var(--sys); }
-.agenda__item.is-sys .agenda__t small { color: color-mix(in srgb, var(--sys) 78%, var(--paper)); }
+.agenda__item.is-sys .agenda__no {
+  color: var(--sys);
+}
+.agenda__item.is-sys .agenda__t {
+  color: var(--sys);
+}
+.agenda__item.is-sys .agenda__t small {
+  color: color-mix(in srgb, var(--sys) 78%, var(--paper));
+}
 
 /* 目次ドロワー */
 .navmenu__item.is-sys .navmenu__no,
-.navmenu__item.is-sys .navmenu__t { color: var(--sys); }
+.navmenu__item.is-sys .navmenu__t {
+  color: var(--sys);
+}
 
 /* 各ページのヘッダ。ページをめくったときの識別はここが効く。 */
 /* 面の地色そのものを淡く変える。ラベルだけでは流し読みで拾いにくいので、
    ページ全体で「ここから先は読み手が違う」と分かるようにしている。
    面が白でなくなるため、この中の淡色地も同じ色familyへずらして、
    カード（白）→ 面 → 表の見出し → キーポイント の階調を保つ。 */
-.slide[data-audience="sys"] {
+.slide[data-audience='sys'] {
   background: var(--sys-page);
   --paper-tint: var(--sys-page-tint);
   --accent-tint: var(--sys-page-key);
   --sys-tint: var(--sys-page-label);
 }
-.slide[data-audience="sys"] .slide__chapter-label { color: var(--sys); }
-.slide[data-audience="sys"] .slide__chapter-label b { color: var(--sys); }
-.slide[data-audience="sys"] .slide__header {
+.slide[data-audience='sys'] .slide__chapter-label {
+  color: var(--sys);
+}
+.slide[data-audience='sys'] .slide__chapter-label b {
+  color: var(--sys);
+}
+.slide[data-audience='sys'] .slide__header {
   border-bottom-color: color-mix(in srgb, var(--sys) 45%, var(--rule));
 }
-.slide[data-audience="sys"] .slide__chapter-label::after {
-  content: "システム部門の方向け";
+.slide[data-audience='sys'] .slide__chapter-label::after {
+  content: 'システム部門さま向け';
   font-weight: 600;
   color: var(--sys);
   background: var(--sys-tint);
@@ -930,11 +1477,21 @@ a.agenda__item:focus-visible, a.agenda__part:focus-visible { outline: 0.4mm soli
 }
 
 @media print {
-  .navmenu, .navmenu__scrim { display: none !important; }
-  .xref { color: inherit; border-bottom: none; }
-  .xref--broken { background: none; }
+  .navmenu,
+  .navmenu__scrim {
+    display: none !important;
+  }
+  .xref {
+    color: inherit;
+    border-bottom: none;
+  }
+  .xref--broken {
+    background: none;
+  }
   /* 差し色は「リンクである」ことではなく「対象読者」を示しているので、紙でも残す。 */
-  .section .xref--sys { color: var(--sys-on-dark); }
+  .section .xref--sys {
+    color: var(--sys-on-dark);
+  }
 }
 
 /* ---- デモ（Webカタログ試作）へのリンク --------------------- */
@@ -943,11 +1500,17 @@ a.demolink {
   font-weight: 700;
   text-decoration: none;
   border-bottom: 0.25mm solid var(--accent-line);
-  white-space: nowrap;   /* 文言が行中で分断されないように */
+  white-space: nowrap; /* 文言が行中で分断されないように */
 }
-a.demolink::after { content: "\2197"; font-weight: 400; margin-left: 0.3em; }
+a.demolink::after {
+  content: '\2197';
+  font-weight: 400;
+  margin-left: 0.3em;
+}
 /* ボタンは先頭のアイコンが役目を果たすため、末尾の矢印は出さない */
-a.demolink--button::after { content: none; }
+a.demolink--button::after {
+  content: none;
+}
 /* 末尾の矢印は「外部で開く」の合図なので、先頭のアイコンより一段小さく、
    文字寄りに置く。 */
 .demolink__icon--out {
@@ -965,8 +1528,13 @@ a.demolink--button::after { content: none; }
   stroke-linecap: round;
   stroke-linejoin: round;
 }
-a.demolink:hover { border-bottom-color: var(--accent); }
-a.demolink:focus-visible { outline: 0.4mm solid var(--accent); outline-offset: 0.6mm; }
+a.demolink:hover {
+  border-bottom-color: var(--accent);
+}
+a.demolink:focus-visible {
+  outline: 0.4mm solid var(--accent);
+  outline-offset: 0.6mm;
+}
 
 /* 目立たせたい箇所（要点・デザイン方針・次のステップ）用 */
 a.demolink--button {
@@ -981,26 +1549,54 @@ a.demolink--button {
   font-size: var(--fs-body);
   line-height: 1.4;
   letter-spacing: 0.01em;
-  box-shadow: 0 0.6mm 1.6mm rgba(20, 25, 30, .16);
-  transition: background-color .15s ease, box-shadow .15s ease;
+  box-shadow: 0 0.6mm 1.6mm rgba(20, 25, 30, 0.16);
+  transition:
+    background-color 0.15s ease,
+    box-shadow 0.15s ease;
 }
 a.demolink--button:hover {
   background: var(--accent-mid);
   border-color: var(--accent-mid);
-  box-shadow: 0 0.9mm 2.4mm rgba(20, 25, 30, .22);
+  box-shadow: 0 0.9mm 2.4mm rgba(20, 25, 30, 0.22);
 }
-@media print { a.demolink--button { box-shadow: none; } }
+@media print {
+  a.demolink--button {
+    box-shadow: none;
+  }
+}
 
 /* ---- Utility ---------------------------------------------- */
-.mt-2 { margin-top: var(--sp-2); }
-.mt-3 { margin-top: var(--sp-3); }
-.mt-4 { margin-top: var(--sp-4); }
-.mt-5 { margin-top: var(--sp-5); }
-.mb-0 { margin-bottom: 0; }
-.grow { flex: 1 1 auto; }
+.mt-2 {
+  margin-top: var(--sp-2);
+}
+.mt-3 {
+  margin-top: var(--sp-3);
+}
+.mt-4 {
+  margin-top: var(--sp-4);
+}
+.mt-5 {
+  margin-top: var(--sp-5);
+}
+.mb-0 {
+  margin-bottom: 0;
+}
+.grow {
+  flex: 1 1 auto;
+}
 
 /* stack 内のカードは内容なりの高さに */
-.stack-2 > .card, .stack-3 > .card, .stack-4 > .card { height: auto; }
+.stack-2 > .card,
+.stack-3 > .card,
+.stack-4 > .card {
+  height: auto;
+}
 
-.closing__name { font-size: var(--fs-h4); font-weight: 700; color: var(--ink-900); }
-.closing .caption { margin-bottom: var(--sp-1); }
+.closing__name {
+  font-size: var(--fs-h4);
+  font-weight: 700;
+  color: var(--ink-900);
+}
+.closing .caption {
+  margin-bottom: var(--sp-1);
+}
