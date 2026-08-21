@@ -18,15 +18,11 @@ export const deck = {
   footerNote: 'Webカタログ構築のご提案書｜スタジオスプーン株式会社',
 
   /* ---- デモ（Webカタログ試作）の公開先 ------------------------
-     デプロイ構成では以下のように並びます（.github/workflows/deployment.yaml）。
-       提案書デッキ → /yamato-material/proposal/
-       デモ         → /yamato-material/demo/
-     そのため既定は相対パスにしています。公開サイト上ではこれで解決します。
-
-     ⚠ PDFやローカルHTMLから開く場合、相対パスは解決できません。
-       PDFで配布する際は絶対URL（例 https://example.com/yamato-material/demo/）
-       に書き換えてください。npm run check が相対パスのまま残っていれば警告します。 */
-  demoUrl: '../demo/',
+     絶対URLにしている。相対パス（../demo/）だと公開サイト上でしか
+     解決できず、PDFやローカルHTMLから開いたときにリンクが切れるため。
+     公開先が変わったらこの1行を書き換える。
+     ※ このホストは https が有効でないため http のままにしている。 */
+  demoUrl: 'http://yamato-material.checked.jp/demo/',
 
   /* 商品詳細画面へリンクするときのサンプル商品。
      実在する slug を指定します（demo/src/data/dataset.json の slug）。 */
