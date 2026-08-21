@@ -174,6 +174,18 @@ a.slide__brand:focus-visible { outline: 0.4mm solid currentColor; outline-offset
 .slide__body > :first-child { margin-top: 0; }
 .slide__body > :last-child  { margin-bottom: 0; }
 
+/* 末尾要素の下マージンを落とす。
+   従来は .card > :last-child のようにコンテナごとに指定していたため、
+   .step__body のように後から増えた入れ物で抜けが生じ、
+   カードの下に無駄な空きが残っていた（p 23件・table 17件）。
+   コンテナ側ではなく要素側で一括指定して、抜けが出ない形にする。 */
+.slide__body p:last-child,
+.slide__body ul:last-child,
+.slide__body ol:last-child,
+.slide__body table:last-child,
+.slide__body h4:last-child,
+.slide__body h5:last-child { margin-bottom: 0; }
+
 .slide__body p { margin: 0 0 var(--sp-3); max-width: 205mm; }
 .cols .slide__body p, .cols p, .card p, .keypoint p { max-width: none; }
 /* strong は太字に加えて、ごく淡いラインマーカーを重ねる。
